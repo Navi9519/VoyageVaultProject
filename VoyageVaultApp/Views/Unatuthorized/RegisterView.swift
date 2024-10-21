@@ -61,7 +61,7 @@ struct RegisterView: View {
                     
                     TxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password).padding(.top, 20)
                     
-                    BtnComponent(text: "Register")
+                    BtnComponent(text: "Register", width: 86, height: 40)
                         .padding(.top,20)
                     
                 }
