@@ -22,23 +22,20 @@ struct LandingView: View {
                 
                 Spacer()
                 
-                ZStack {
-                    Image("input&btn")
+                VStack(spacing: 20) {
                     
-                    NavigationLink("Sign in", destination: LoginView()).foregroundStyle(.white).font(.title2).bold()
+                    BtnComponent(text: "Log in")
+                    
+                    
+                    BtnComponent(text: "Create account")
+                    
+                }
+                Spacer()
                     
                 }
                 
+          
                 
-                ZStack {
-                    Image("input&btn")
-                    
-                    NavigationLink("Create Account", destination: RegisterView()).foregroundStyle(.white).font(.title2).bold()
-                    
-                }.padding(.top, 20)
-                
-                
-                Spacer()
             }
             
             
@@ -46,7 +43,7 @@ struct LandingView: View {
         }
         
     }
-}
+
 
 #Preview {
     LandingView()

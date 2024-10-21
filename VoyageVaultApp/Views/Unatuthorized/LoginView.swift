@@ -36,33 +36,12 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                VStack (alignment: .leading) {
-                    Text("E-mail").font(.title3).bold()
-
-                    TextField("Enter email", text: $email)
-                        .frame(width: 300, height: 40)
-                        .background(.yellow)
-                        .clipShape(.buttonBorder)
-                }
+                TxtFieldComponent(title: "Email", txtFieldText: "Enter email", input: $email)
                 
                 
-                VStack(alignment: .leading) {
-                    Text("Password").font(.title3).bold()
-                    
-                    TextField("Enter password", text: $password)
-                        .frame(width: 300, height: 40)
-                        .background(.yellow)
-                        .clipShape(.buttonBorder)
-                }.padding(.top, 20)
+                secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password)
                 
-                Button("Login", action: {
-                    
-                })
-                .frame(width: 70, height: 40)
-                .background(.yellow)
-                .clipShape(.buttonBorder)
-                .padding(.top, 20)
-                .foregroundStyle(.white).bold()
+                BtnComponent(text: "Login").padding(.vertical,20)
 
                 Spacer()
               
