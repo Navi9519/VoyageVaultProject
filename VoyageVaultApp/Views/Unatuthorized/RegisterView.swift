@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RegisterView: View {
     
+    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    
     @State var firstName: String = ""
     @State var surName: String = ""
     @State var age: String = ""
@@ -61,8 +63,21 @@ struct RegisterView: View {
                     
                     TxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password).padding(.top, 20)
                     
-                    BtnComponent(text: "Register", width: 86, height: 40)
-                        .padding(.top,20)
+                    Button(action: {
+                        
+                        firebaseAuth.registerUser(firstName: firstName, surName: surName, age: age, nationality: nationality, email: email, password: password)
+                        
+                    }, label: {
+                        Text("Register")
+                    }).frame(width: 185, height: 40)
+                        .foregroundStyle(.white)
+                        .font(.system(size: 20))
+                        .bold()
+                        .background(
+                        LinearGradient(colors: [
+                            Color("backgroundOne"),
+                            Color("backgroundTwo")            ], startPoint: .leading, endPoint: .trailing)
+                    ).clipShape(.buttonBorder).shadow(radius: 10)
                     
                 }
                 .padding(.vertical,20)
@@ -84,5 +99,5 @@ struct RegisterView: View {
 }
 
 #Preview {
-    RegisterView()
+    RegisterView().environmentObject(FirebaseAuth())
 }

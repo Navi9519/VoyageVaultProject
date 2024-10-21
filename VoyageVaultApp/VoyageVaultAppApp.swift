@@ -21,11 +21,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 struct VoyageVaultAppApp: App {
     
+    @StateObject var firebaseAuth = FirebaseAuth()
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(firebaseAuth)
         }
     }
 }

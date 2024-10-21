@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct City {
+struct City: Codable {
     
     var name: String
     var country: String
@@ -19,7 +19,7 @@ struct City {
 }
 
 
-struct Position {
+struct Position: Codable {
     
     var latitude: Double
     var longitude: Double
