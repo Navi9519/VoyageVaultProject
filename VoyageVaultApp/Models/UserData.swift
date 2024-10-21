@@ -10,21 +10,18 @@ import UIKit
 import SwiftUICore
 
 
-struct UserData {
-    
-    var id: String
+struct UserData: Codable {
+
     var firstName: String
     var surName: String
-    var age: Int
-    var email: String
-    var password: String
+    var age: String
     var nationality: String
-    var profileImg: String
+    var profileImg: String?
     var favoriteDestinations: [Destination] = []
     var trips: [Destination]
     var friends: [UserData] = []
     var messages: [Message] = []
-    var images: [Image] = []
+    var images: [String] = []
 
     
 }
