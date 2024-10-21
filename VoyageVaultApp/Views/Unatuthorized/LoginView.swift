@@ -41,7 +41,7 @@ struct LoginView: View {
                 
                 secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password)
                 
-                BtnComponent(text: "Login").padding(.vertical,20)
+                BtnComponent(text: "Login", width: 86, height: 40).padding(.vertical,20)
 
                 Spacer()
               

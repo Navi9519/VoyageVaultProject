@@ -10,11 +10,14 @@ import SwiftUI
 struct BtnComponent: View {
     
     var text: String
+    var width: CGFloat
+    var height: CGFloat
+    
     
     var body: some View {
         
         NavigationLink(text, destination: LoginView())
-            .frame(width: 86, height: 40)
+            .frame(width: width, height: height)
             .foregroundStyle(.white)
             .font(.system(size: 20))
             .bold()
@@ -27,5 +30,5 @@ struct BtnComponent: View {
 }
 
 #Preview {
-    BtnComponent(text: "Login")
+    BtnComponent(text: "Login", width: 86, height: 40)
 }

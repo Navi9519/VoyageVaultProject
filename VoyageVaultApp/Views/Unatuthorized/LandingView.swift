@@ -24,10 +24,10 @@ struct LandingView: View {
                 
                 VStack(spacing: 20) {
                     
-                    BtnComponent(text: "Log in")
+                    BtnComponent(text: "Log in", width: 250, height: 60)
                     
                     
-                    BtnComponent(text: "Create account")
+                    BtnComponent(text: "Create account", width: 250,height: 60)
                     
                 }
                 Spacer()
