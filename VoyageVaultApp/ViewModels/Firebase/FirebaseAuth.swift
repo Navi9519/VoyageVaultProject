@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 import FirebaseAuth
 import FirebaseFirestore
 
@@ -43,10 +44,8 @@ class FirebaseAuth: ObservableObject {
             
             
         }
-        
-        
-        
+           
         
     }
-    
+
 }
