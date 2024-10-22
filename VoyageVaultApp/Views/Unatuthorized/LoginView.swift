@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    
     @State var email = ""
     @State var password = ""
     
@@ -64,5 +66,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView().environmentObject(FirebaseAuth())
 }
