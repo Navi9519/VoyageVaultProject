@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    
     var body: some View {
         
         NavigationStack {
@@ -21,5 +24,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView().environmentObject(FirebaseAuth())
 }

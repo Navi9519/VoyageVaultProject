@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    
     @State var email = ""
     @State var password = ""
     
@@ -36,12 +38,15 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                TxtFieldComponent(title: "Email", txtFieldText: "Enter email", input: $email)
+                TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope.fill", input: $email)
                 
                 
-                secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password)
+                secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: $password)
                 
-                BtnComponent(text: "Login", width: 86, height: 40).padding(.vertical,20)
+                // TODO: Change this navigation to HomeView() when HomeView is created
+                BtnComponent(text: "Login", width: 86, height: 40, destination: {
+                    LandingView()
+                }).padding(.vertical,20)
 
                 Spacer()
               
@@ -61,5 +66,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView().environmentObject(FirebaseAuth())
 }

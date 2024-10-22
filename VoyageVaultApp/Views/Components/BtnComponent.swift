@@ -7,16 +7,18 @@
 
 import SwiftUI
 
-struct BtnComponent: View {
+// <Destination: View>: allows us to specify the desination dynamically. Forces Destination to be a type that conforms to the "View" protocol
+struct BtnComponent<Destination: View>: View {
     
     var text: String
     var width: CGFloat
     var height: CGFloat
+    var destination: () -> Destination // By using a closure, the destination view is created only when it’s required
     
     
     var body: some View {
         
-        NavigationLink(text, destination: LoginView())
+        NavigationLink(text, destination: destination)
             .frame(width: width, height: height)
             .foregroundStyle(.white)
             .font(.system(size: 20))
@@ -24,11 +26,11 @@ struct BtnComponent: View {
             .background(
             LinearGradient(colors: [
                 Color("backgroundOne"),
-                Color("backgroundTwo")            ], startPoint: .leading, endPoint: .trailing)
+                Color("backgroundTwo")], startPoint: .leading, endPoint: .trailing)
         ).clipShape(.buttonBorder).shadow(radius: 10)
     }
 }
 
 #Preview {
-    BtnComponent(text: "Login", width: 86, height: 40)
+    BtnComponent(text: "Login", width: 86, height: 40, destination: {LoginView()})
 }

@@ -47,5 +47,11 @@ class FirebaseAuth: ObservableObject {
            
         
     }
+    
+    func loginUser(email: String, password: String) {
+        
+        auth.signIn(withEmail: email, password: password)
+        
+    }
 
 }
