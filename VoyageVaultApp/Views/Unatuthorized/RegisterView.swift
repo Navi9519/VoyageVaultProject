@@ -18,9 +18,13 @@ struct RegisterView: View {
     @State var password: String = ""
     @State var nationality: String = ""
     
+    
+    
     var dynamicScreenHeight = UIScreen.main.bounds.height
     
     var body: some View {
+        
+        
         ZStack {
             Image("background_pic")
                 .resizable()
@@ -61,11 +65,23 @@ struct RegisterView: View {
                     
                     TxtFieldComponent(title: "Email", txtFieldText: "Enter email", input: $email).padding(.top, 20)
                     
-                    TxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password).padding(.top, 20)
+                    secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password).padding(.top, 20)
                     
                     Button(action: {
                         
-                        firebaseAuth.registerUser(firstName: firstName, surName: surName, age: age, nationality: nationality, email: email, password: password)
+                        // TODO: Check this condition later and fix a pop up specifying which input field(s) thats invalid
+                        if(firstName.count < 2 || surName.count < 2 || age.isEmpty || nationality.count < 4 || !email.contains("@") || password.count < 6) {
+                            
+                            print("invalid input, please try again")
+                        }  else {
+                            
+                            firebaseAuth.registerUser(firstName: firstName, surName: surName, age: age, nationality: nationality, email: email, password: password)
+        
+                        
+                        }
+                          
+                        
+                        
                         
                     }, label: {
                         Text("Register")
@@ -82,9 +98,12 @@ struct RegisterView: View {
                 }
                 .padding(.vertical,20)
                 
+                
+                
                 Spacer()
+                
                
-                NavigationLink(destination: RegisterView(), label: {
+                NavigationLink(destination: LoginView(), label: {
                     Text("Already have an account? Login").underline()
                         .foregroundStyle(.white)
                 })

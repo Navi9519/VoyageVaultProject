@@ -41,7 +41,10 @@ struct LoginView: View {
                 
                 secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password)
                 
-                BtnComponent(text: "Login", width: 86, height: 40).padding(.vertical,20)
+                // TODO: Change this navigation to HomeView() when HomeView is created
+                BtnComponent(text: "Login", width: 86, height: 40, destination: {
+                    LandingView()
+                }).padding(.vertical,20)
 
                 Spacer()
               
