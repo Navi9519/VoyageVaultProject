@@ -105,6 +105,7 @@ struct RegisterView: View {
                 .padding(.vertical, 30)
                 
             
+                Spacer()
     
                 
             }
