@@ -26,7 +26,7 @@ struct BtnComponent<Destination: View>: View {
             .background(
             LinearGradient(colors: [
                 Color("backgroundOne"),
-                Color("backgroundTwo")            ], startPoint: .leading, endPoint: .trailing)
+                Color("backgroundTwo")], startPoint: .leading, endPoint: .trailing)
         ).clipShape(.buttonBorder).shadow(radius: 10)
     }
 }

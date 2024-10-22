@@ -44,10 +44,9 @@ struct RegisterView: View {
                 }
                 .frame(height: dynamicScreenHeight / 3)
                 
-                Spacer()
                 
                 VStack {
-                    HStack (alignment: .bottom) {
+                    HStack (alignment: .bottom, spacing: 20) {
                         TxtFieldComponentSmall(title: "First name", txtFieldText: "Enter first name", input: $firstName)
                         
                         
@@ -55,7 +54,7 @@ struct RegisterView: View {
                             .padding(.top, 20)
                     }
                     
-                    HStack(alignment: .bottom) {
+                    HStack(alignment: .bottom, spacing: 20) {
                         TxtFieldComponentSmall(title: "Age", txtFieldText: "Enter age", input: $age)
                         
                         
@@ -63,13 +62,15 @@ struct RegisterView: View {
                             .padding(.top, 20)
                     }
                     
-                    TxtFieldComponent(title: "Email", txtFieldText: "Enter email", input: $email).padding(.top, 20)
+                    TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope.fill", input: $email).padding(.top, 20)
                     
-                    secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", input: $password).padding(.top, 20)
+                    secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: $password).padding(.top, 20)
+                    
+                    Spacer()
                     
                     Button(action: {
                         
-                        // TODO: Check this condition later and fix a pop up specifying which input field(s) thats invalid
+                        // TODO: Check this condition later and fix a pop up specifying which input field(s) that are invalid
                         if(firstName.count < 2 || surName.count < 2 || age.isEmpty || nationality.count < 4 || !email.contains("@") || password.count < 6) {
                             
                             print("invalid input, please try again")
@@ -95,20 +96,15 @@ struct RegisterView: View {
                             Color("backgroundTwo")            ], startPoint: .leading, endPoint: .trailing)
                     ).clipShape(.buttonBorder).shadow(radius: 10)
                     
-                }
-                .padding(.vertical,20)
+                    NavigationLink(destination: LoginView(), label: {
+                        Text("Already have an account? Login").underline()
+                            .foregroundStyle(.white)
+                    })
+                    
+                }.padding(.top, 0)
+                .padding(.vertical, 30)
                 
-                
-                
-                Spacer()
-                
-               
-                NavigationLink(destination: LoginView(), label: {
-                    Text("Already have an account? Login").underline()
-                        .foregroundStyle(.white)
-                })
-
-                Spacer()
+            
     
                 
             }
