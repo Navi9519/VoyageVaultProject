@@ -1,20 +1,15 @@
 //
-//  ExploreView.swift
+//  FriendListView.swift
 //  VoyageVaultApp
 //
 //  Created by Ivan Dedic on 2024-10-23.
 //
 
 import SwiftUI
-import MapKit
 
-struct ExploreView: View {
+struct FriendListView: View {
     
-    @State var input = ""
-    let locationManager = LocationManager()
-    
-    @State var position = MapCameraPosition
-        .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 59.309857850079666, longitude: 18.022240207022453), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)))
+    @State var input: String = ""
     
     
     var body: some View {
@@ -43,23 +38,29 @@ struct ExploreView: View {
                
                 VStack(spacing: 30) {
                     
-                    VStack(spacing: 5) {
+                    VStack(spacing: 20) {
                         
-                        Text("Explore").font(.title).bold()
+                        Text("Find friends").font(.title).bold()
                         
-                        Text("Find your next adventure!").font(.title).bold()
+                        SearchFieldComponent(input: $input, txtFieldText: "Search Friends", image: "magnifyingglass")
                         
                     }
                     
-                    SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass")
-                
                     
-                        Map(position: $position) {
+                    VStack(spacing: 20) {
                         
+                        // TODO: Make this a list view of actuall users from DB
                         
-                    }.frame(width: 380, height: 400).cornerRadius(20)
+                        Text("Your Friends:").font(.title).bold()
+                        
+                        FriendCardComponent(firstName: "David", surName: "Espinoza", countryImg: "spain", profileImg: "person.crop.circle.fill", color1:  Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+                        
+                        FriendCardComponent(firstName: "Volodomyr", surName: "Zelensky", countryImg: "ukraine", profileImg: "person.crop.circle.fill", color1:  Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+                    }
                     
                 }
+                
+               
                 
                 
                 Spacer()
@@ -70,11 +71,10 @@ struct ExploreView: View {
          // TODO: Popup view for selected location, when location is clicked the view with the selected City with corresponding data should appear. Create popup component with data from API
             
         }
-        
-        
+
     }
 }
 
 #Preview {
-    ExploreView()
+    FriendListView()
 }
