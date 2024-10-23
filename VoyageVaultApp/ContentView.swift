@@ -13,11 +13,25 @@ struct ContentView: View {
     
     var body: some View {
         
-        NavigationStack {
+        if firebaseAuth.currentUser != nil {
             
-            LandingView()
+            NavigationStack {
+                
+                HomeView()
+                
+            }
             
+        } else {
+            
+            NavigationStack {
+                
+                LandingView()
+                
+            }
         }
+        
+        
+       
         
        
     }

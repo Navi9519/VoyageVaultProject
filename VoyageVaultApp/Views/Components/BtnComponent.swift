@@ -2,35 +2,38 @@
 //  BtnComponent.swift
 //  VoyageVaultApp
 //
-//  Created by Ivan Dedic on 2024-10-21.
+//  Created by Ivan Dedic on 2024-10-23.
 //
 
 import SwiftUI
 
-// <Destination: View>: allows us to specify the desination dynamically. Forces Destination to be a type that conforms to the "View" protocol
-struct BtnComponent<Destination: View>: View {
-    
-    var text: String
-    var width: CGFloat
-    var height: CGFloat
-    var destination: () -> Destination // By using a closure, the destination view is created only when it’s required
-    
-    
-    var body: some View {
+struct BtnComponent: View {
         
-        NavigationLink(text, destination: destination)
-            .frame(width: width, height: height)
-            .foregroundStyle(.white)
-            .font(.system(size: 20))
-            .bold()
-            .background(
-            LinearGradient(colors: [
-                Color("backgroundOne"),
-                Color("backgroundTwo")], startPoint: .leading, endPoint: .trailing)
-        ).clipShape(.buttonBorder).shadow(radius: 10)
+        var text: String
+        var width: CGFloat
+        var height: CGFloat
+        var action: () -> Void
+    
+    
+        var body: some View {
+            
+            Button(action: {
+                action()
+            }, label: {
+                Text(text)
+            }).frame(width: width, height: height)
+                .foregroundStyle(.white)
+                .font(.system(size: 20))
+                .bold()
+                .background(
+                LinearGradient(colors: [
+                    Color("backgroundOne"),
+                    Color("backgroundTwo")], startPoint: .leading, endPoint: .trailing)
+            ).clipShape(.buttonBorder).shadow(radius: 10)
+        }
     }
-}
+
 
 #Preview {
-    BtnComponent(text: "Login", width: 86, height: 40, destination: {LoginView()})
+    BtnComponent(text: "Test", width: 86, height: 40, action: {print("hello")})
 }
