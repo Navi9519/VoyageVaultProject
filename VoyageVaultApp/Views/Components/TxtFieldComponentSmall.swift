@@ -18,7 +18,7 @@ struct TxtFieldComponentSmall: View {
         VStack (alignment: .leading) {
             Text(title).font(.title3).bold()
 
-            TextField(txtFieldText, text: $input)
+            TextField("", text: $input, prompt: Text(txtFieldText).foregroundStyle(.white))
                 .frame(width: 150, height: 40)
                 .foregroundStyle(Color.white)
                 .background(

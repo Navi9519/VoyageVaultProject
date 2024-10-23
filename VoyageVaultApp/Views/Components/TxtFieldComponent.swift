@@ -18,15 +18,14 @@ struct TxtFieldComponent: View {
     var body: some View {
       
         VStack (alignment: .leading) {
-            Text(title).font(.title3).bold().padding(.leading, 35)
+            Text(title).font(.title3).bold().padding(.leading, 16)
             
     
 
             HStack {
-                
-                Image(systemName: image).foregroundStyle(Color("backgroundOne")) .bold()
+            
                
-                TextField(txtFieldText, text: $input)
+                TextField("", text: $input)
                     .frame(width: 300, height: 40)
                     .foregroundStyle(Color.white)
                     .background(
@@ -37,7 +36,15 @@ struct TxtFieldComponent: View {
                                 endPoint: .trailing)
                     )
                     .clipShape(.buttonBorder)
-                    .shadow(radius: 10).textInputAutocapitalization(.never)
+                    .shadow(radius: 10).textInputAutocapitalization(.never).overlay(
+                        HStack {
+                            Image(systemName: image)
+                                .foregroundColor(.white)
+                                .padding(.leading, 12)
+                            Spacer()
+                        }
+                    )
+                    .padding(.horizontal)
             }
            
         }
