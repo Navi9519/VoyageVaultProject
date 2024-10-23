@@ -16,7 +16,7 @@ struct SecureTxtFieldComponent: View {
     var body: some View {
       
         VStack (alignment: .leading) {
-   feature/exploreview
+  
             Text(title).font(.title3).bold().padding(.leading, 16)
             HStack {
 
@@ -32,7 +32,7 @@ struct SecureTxtFieldComponent: View {
                                 endPoint: .trailing)
                     )
                     .clipShape(.buttonBorder)
-  feature/exploreview
+  
                     .shadow(radius: 10).textInputAutocapitalization(.never).overlay(
                         HStack {
                             Image(systemName: image)
