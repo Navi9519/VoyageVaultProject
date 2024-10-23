@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CardComponent: View {
+struct CardComponent<Destination: View>: View {
     
     var title: String
     var description: String
@@ -16,49 +16,54 @@ struct CardComponent: View {
     var color1: Color
     var color2: Color
     
+    var destination: () -> Destination // By using a closure, the destination view is created only when it’s required
+    
     var dynamicScreenWidth = UIScreen.main.bounds.width
     var dynamicScreenHeight = UIScreen.main.bounds.height
-
+    
     
     var body: some View {
-        
-        ZStack {
-            
-            LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
-            
-            
-            HStack (spacing: 10) {
-                Image(image)
-                    .resizable()
-                    .frame(width: 59, height: 59)
-                    .shadow(radius: 5)
+        NavigationLink (destination: destination) {
+            ZStack {
+                
+                LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
+                
+                
+                HStack (spacing: 10) {
+                    Image(image)
+                        .resizable()
+                        .frame(width: 59, height: 59)
+                        .shadow(radius: 5)
                     
-                VStack (spacing: 10) {
-                    Text(title)
-                        .font(.system(size: 25))
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-
-                    Text(description)
-                        .italic()
-                        .font(.system(size: 15))
-                        .fontWeight(.semibold)
-                        .frame(alignment: .center)
-                        .multilineTextAlignment(.center)
-
+                    VStack (spacing: 10) {
+                        Text(title)
+                            .foregroundStyle(.black)
+                            .font(.system(size: 25))
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.center)
+                        
+                        Text(description)
+                            .foregroundStyle(.black)
+                            .italic()
+                            .font(.system(size: 15))
+                            .fontWeight(.semibold)
+                            .frame(alignment: .center)
+                            .multilineTextAlignment(.center)
+                        
+                    }
+                    .padding(.horizontal,20)
+                    //.padding(.vertical,10) // Optional
                 }
-                .padding(.horizontal,20)
-                //.padding(.vertical,10) // Optional
+                .padding()
             }
-            .padding()
+            .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.18) // Frame for the entire card
+            .clipShape(.buttonBorder)
         }
-        .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.18) // Frame for the entire card
-        .clipShape(.buttonBorder)
     }
-
-        
+    
+    
 }
 
 #Preview {
-    CardComponent(title: "Upcoming trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
+    CardComponent(title: "Upcoming trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"),destination: {LandingView()})
 }
