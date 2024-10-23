@@ -55,11 +55,10 @@ struct ExploreView: View {
                     
                     
                     TextField("", text: $input).frame(width: 300, height: 40)
-                        .foregroundStyle(Color.white)
                         .background(.white).cornerRadius(25).textInputAutocapitalization(.never).overlay(
+                            
                             HStack {
                                 Image(systemName: "magnifyingglass")
-                                    .foregroundColor(.gray)
                                     .padding(.leading, 12)
                                 Spacer()
                             }
@@ -80,7 +79,7 @@ struct ExploreView: View {
                 
             }.frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 40)
             
-         
+         // TODO: Popup view for selected location, when location is clicked the view with the selected City with corresponding data should appear. Create popup component with data from API
             
         }
         
