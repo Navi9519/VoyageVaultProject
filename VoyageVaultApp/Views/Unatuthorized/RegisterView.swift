@@ -65,7 +65,7 @@ struct RegisterView: View {
                     
                     TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope.fill", input: $email).padding(.top, 20)
                     
-                    secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: $password).padding(.top, 20)
+                    SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: $password).padding(.top, 20)
                     
                     Spacer()
                     
