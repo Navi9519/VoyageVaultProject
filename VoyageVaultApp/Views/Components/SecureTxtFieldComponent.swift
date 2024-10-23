@@ -20,7 +20,7 @@ struct SecureTxtFieldComponent: View {
             Text(title).font(.title3).bold().padding(.leading, 16)
             HStack {
 
-                SecureField("", text: $input)
+                SecureField("", text: $input, prompt: Text("Add Password").foregroundStyle(.white))
 
                     .frame(width: 300, height: 40)
                     .foregroundStyle(Color.white)
@@ -37,7 +37,7 @@ struct SecureTxtFieldComponent: View {
                         HStack {
                             Image(systemName: image)
                                 .foregroundColor(.white)
-                                .padding(.leading, 12)
+                                .padding(.leading, 270)
                             Spacer()
                         }
                     )

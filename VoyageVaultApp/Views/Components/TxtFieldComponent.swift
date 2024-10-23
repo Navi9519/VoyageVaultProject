@@ -25,7 +25,7 @@ struct TxtFieldComponent: View {
             HStack {
             
                
-                TextField("", text: $input)
+                TextField("", text: $input, prompt: Text("Add Email").foregroundStyle(.white))
                     .frame(width: 300, height: 40)
                     .foregroundStyle(Color.white)
                     .background(
@@ -40,7 +40,7 @@ struct TxtFieldComponent: View {
                         HStack {
                             Image(systemName: image)
                                 .foregroundColor(.white)
-                                .padding(.leading, 12)
+                                .padding(.leading, 270)
                             Spacer()
                         }
                     )
