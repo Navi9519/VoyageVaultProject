@@ -42,7 +42,17 @@ struct HomeView: View {
                 
                 Spacer()
                 
-                CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                VStack {
+                    CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                    
+                    CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                    
+                    CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                }
+                
+                Spacer()
+                
+               
                 
                 
             }
