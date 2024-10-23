@@ -37,22 +37,31 @@ struct HomeView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(30)
-                .background(.gray)
-                .padding(.vertical,30)
-                
-                Spacer()
+                .padding(.top,30)
                 
                 VStack {
-                    CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
-                    
-                    CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
-                    
-                    CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                    Text("Time until your next trip: ")
+                        .foregroundStyle(.white)
+                        .font(.title3)
+                    Text("24 days, 16 hours and 5 min")
+                        .foregroundStyle(.white)
                 }
+                .shadow(radius: 10)
                 
+                
+
                 Spacer()
                 
-               
+                VStack (spacing: 30){
+                    CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                    
+                    CardComponent(title: "Friend list", description: "Manage your Friend List to stay connected and explore the world together with your travel buddies!", image: "imgFriendList", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                    
+                    CardComponent(title: "Explore", description: "Tap Explore to discover exciting destinations, activities, and hidden gems around the world!", image: "imgExplore", color1: Color("blueColorOne"), color2: Color("blueColorTwo"))
+                }.shadow(radius: 10)
+                
+                
+                Spacer()
                 
                 
             }

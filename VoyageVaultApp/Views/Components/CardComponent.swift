@@ -27,7 +27,7 @@ struct CardComponent: View {
             LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
             
             
-            HStack (spacing: 15) {
+            HStack (spacing: 10) {
                 Image(image)
                     .resizable()
                     .frame(width: 59, height: 59)
@@ -48,11 +48,11 @@ struct CardComponent: View {
 
                 }
                 .padding(.horizontal,20)
-                .padding(.vertical,10) // Optional
+                //.padding(.vertical,10) // Optional
             }
             .padding()
         }
-        .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.20) // Frame for the entire card
+        .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.18) // Frame for the entire card
         .clipShape(.buttonBorder)
     }
 
