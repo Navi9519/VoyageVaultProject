@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ExploreView: View {
     
     @State var input = ""
+    let locationManager = LocationManager()
     
+    @State var position = MapCameraPosition
+        .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 59.309857850079666, longitude: 18.022240207022453), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)))
     
     
     var body: some View {
@@ -21,7 +25,9 @@ struct ExploreView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack(alignment: .center) {
+            VStack(alignment: .center, spacing: 40) {
+                
+                
                 
                 HStack {
                     
@@ -32,20 +38,37 @@ struct ExploreView: View {
                     Image(systemName: "person.crop.circle.fill").resizable().scaledToFit().frame(width: 59, height: 59)
                 }.frame(width: 300)
                 
+                
                
-                
-                Spacer()
-                
-                Text("Find your next adventure!").font(.title).bold()
-                HStack {
+                VStack(spacing: 30) {
+                    
+                    VStack(spacing: 5) {
+                        
+                        Text("Explore").font(.title).bold()
+                        
+                        Text("Find your next adventure!").font(.title).bold()
+                        
+                    }
+                    
+                    
+                    
                     
                     TextField("", text: $input, prompt: Text("Search")).frame(width: 300, height: 40)
                         .foregroundStyle(Color.white)
                         .background(.white).cornerRadius(25).textInputAutocapitalization(.never)
                     
-                   // Image(systemName: "magnifyingglass")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, -16)
+                    /* Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                        .padding(.trailing, -16) */
+                    
+                    
+                    
+                    
+                    Map(position: $position) {
+                        
+                        
+                    }.frame(width: 380, height: 400).cornerRadius(20)
+                    
                 }
                 
                 
