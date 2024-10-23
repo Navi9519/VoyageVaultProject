@@ -38,20 +38,29 @@ struct FriendListView: View {
                
                 VStack(spacing: 30) {
                     
-                    VStack(spacing: 5) {
+                    VStack(spacing: 20) {
                         
-                        Text("Explore").font(.title).bold()
+                        Text("Find friends").font(.title).bold()
                         
-                        Text("Find your next adventure!").font(.title).bold()
+                        SearchFieldComponent(input: $input, txtFieldText: "Search Friends", image: "magnifyingglass")
                         
                     }
                     
-                    SearchFieldComponent(input: $input, txtFieldText: "Search Friends", image: "magnifyingglass")
-                
                     
-                    
+                    VStack(spacing: 20) {
+                        
+                        // TODO: Make this a list view of actuall users from DB
+                        
+                        Text("Your Friends:").font(.title).bold()
+                        
+                        FriendCardComponent(firstName: "David", surName: "Espinoza", countryImg: "spain", profileImg: "person.crop.circle.fill", color1:  Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+                        
+                        FriendCardComponent(firstName: "Volodomyr", surName: "Zelensky", countryImg: "ukraine", profileImg: "person.crop.circle.fill", color1:  Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+                    }
                     
                 }
+                
+               
                 
                 
                 Spacer()
