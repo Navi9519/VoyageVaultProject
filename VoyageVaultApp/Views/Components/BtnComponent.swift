@@ -12,7 +12,11 @@ struct BtnComponent: View {
         var text: String
         var width: CGFloat
         var height: CGFloat
+        var colorOne: String
+        var colorTwo: String
+        var txtColor: Color
         var action: () -> Void
+        
     
     
         var body: some View {
@@ -22,18 +26,18 @@ struct BtnComponent: View {
             }, label: {
                 Text(text)
             }).frame(width: width, height: height)
-                .foregroundStyle(.white)
+                .foregroundStyle(txtColor)
                 .font(.system(size: 20))
                 .bold()
                 .background(
                 LinearGradient(colors: [
-                    Color("backgroundOne"),
-                    Color("backgroundTwo")], startPoint: .leading, endPoint: .trailing)
+                    Color(colorOne),
+                    Color(colorTwo)], startPoint: .leading, endPoint: .trailing)
             ).clipShape(.buttonBorder).shadow(radius: 10)
         }
     }
 
 
 #Preview {
-    BtnComponent(text: "Test", width: 86, height: 40, action: {print("hello")})
+    BtnComponent(text: "Test", width: 86, height: 40, colorOne: "backgroundOne", colorTwo: "backgroundTwo", txtColor: .white, action: {print("hello")})
 }

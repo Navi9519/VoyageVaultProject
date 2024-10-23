@@ -46,7 +46,7 @@ struct LoginView: View {
                 // TODO: Change this navigation to HomeView() when HomeView is created
                 
                 
-                BtnComponent(text: "Login", width: 86, height: 40){
+                BtnComponent(text: "Login", width: 86, height: 40, colorOne: "backgroundOne", colorTwo: "backgroundTwo", txtColor: .white){
                     firebaseAuth.loginUser(email: email, password: password)
                 }.padding(.top,10)
                 
