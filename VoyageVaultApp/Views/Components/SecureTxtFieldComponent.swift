@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct secureTxtFieldComponent: View {
+struct SecureTxtFieldComponent: View {
     var title: String
     var txtFieldText: String
     var image: String
@@ -49,5 +49,5 @@ struct secureTxtFieldComponent: View {
 
 
 #Preview {
-    secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: .constant(""))
+    SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: .constant(""))
 }
