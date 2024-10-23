@@ -1,5 +1,5 @@
 //
-//  FriendListView.swift
+//  AddNewTripView.swift
 //  VoyageVaultApp
 //
 //  Created by Ivan Dedic on 2024-10-23.
@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-struct FriendListView: View {
+struct AddNewTripView: View {
     
-    @State var input: String = ""
+    @State var input = ""
     
-    
+    var dynamicScreenWidth = UIScreen.main.bounds.width
+    var dynamicScreenHeight = UIScreen.main.bounds.height
+
     var body: some View {
         
         ZStack {
@@ -21,7 +23,7 @@ struct FriendListView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack(alignment: .center, spacing: 40) {
+            VStack(alignment: .center, spacing: 60) {
                 
                 
                 
@@ -38,29 +40,30 @@ struct FriendListView: View {
                
                 VStack(spacing: 30) {
                     
-                    VStack(spacing: 20) {
+                    VStack(spacing: 40) {
                         
-                        Text("Find friends").font(.title).bold()
+                        Text("Add a new adventure!").font(.title).bold()
                         
-                        SearchFieldComponent(input: $input, txtFieldText: "Search Friends", image: "magnifyingglass")
+                        SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass")
                         
                     }
                     
-                    
-                    VStack(spacing: 20) {
-                        
-                        // TODO: Make this a list view of actuall users from DB
-                        
-                        Text("Your Friends:").font(.title).bold()
-                        
-                        FriendCardComponent(firstName: "David", surName: "Espinoza", countryImg: "spain", profileImg: "person.crop.circle.fill", color1:  Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
-                        
-                        FriendCardComponent(firstName: "Volodomyr", surName: "Zelensky", countryImg: "ukraine", profileImg: "person.crop.circle.fill", color1:  Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
-                    }
+                
                     
                 }
                 
-               
+    
+                
+                VStack(spacing: 80) {
+                    
+                    DatePickerCardComponent(location: "Malaga", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
+                
+                    
+                    BtnComponent(text: "Add", width: 200, height: 80, colorOne: "blueColorTwo", colorTwo: "blueColorTwo", txtColor: .black) {
+                        
+                        print("Add new trip")
+                    }
+                }
                 
                 
                 Spacer()
@@ -68,12 +71,15 @@ struct FriendListView: View {
                 
             }.frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 40)
             
+
             
         }
-
+        
+        
     }
 }
 
+
 #Preview {
-    FriendListView()
+    AddNewTripView()
 }
