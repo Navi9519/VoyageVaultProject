@@ -16,7 +16,27 @@ class FirebaseAuth: ObservableObject {
     var db = Firestore.firestore()
     let auth = Auth.auth()
     
+    
     let COLLECTION_USER_DATA = "user_data"
+    @Published var currentUser: User?
+    
+    
+    init() {
+        
+      let _ = auth.addStateDidChangeListener {auth, user in
+            
+          if let user = user {
+              
+              self.currentUser = user
+              
+          } else {
+              
+              self.currentUser = nil
+          }
+            
+            
+        }
+    }
     
     
     func registerUser(firstName: String, surName: String, age: String, nationality: String, email: String, password: String) {

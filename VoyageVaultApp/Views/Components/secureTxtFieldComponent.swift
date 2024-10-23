@@ -33,7 +33,7 @@ struct secureTxtFieldComponent: View {
                                 endPoint: .trailing)
                     )
                     .clipShape(.buttonBorder)
-                    .shadow(radius: 10)
+                    .shadow(radius: 10).textInputAutocapitalization(.never)
             }
 
             

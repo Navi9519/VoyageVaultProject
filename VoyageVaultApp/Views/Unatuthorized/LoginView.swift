@@ -44,9 +44,15 @@ struct LoginView: View {
                 secureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: $password)
                 
                 // TODO: Change this navigation to HomeView() when HomeView is created
-                BtnComponent(text: "Login", width: 86, height: 40, destination: {
-                    LandingView()
-                }).padding(.vertical,20)
+                
+                
+                BtnComponent(text: "Login", width: 86, height: 40){
+                    firebaseAuth.loginUser(email: email, password: password)
+                }.padding(.top,10)
+                
+//                NavLinkComponent(text: "Login", width: 86, height: 40, destination: {
+//                    LandingView()
+//                }).padding(.vertical,20)
 
                 Spacer()
               

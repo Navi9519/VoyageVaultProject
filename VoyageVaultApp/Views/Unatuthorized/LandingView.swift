@@ -24,10 +24,10 @@ struct LandingView: View {
                 
                 VStack(spacing: 20) {
                     
-                    BtnComponent(text: "Log in", width: 250, height: 60, destination: { LoginView() } )
+                    NavLinkComponent(text: "Log in", width: 250, height: 60, destination: { LoginView() } )
                     
                     
-                    BtnComponent(text: "Create account", width: 250,height: 60, destination: { RegisterView()
+                    NavLinkComponent(text: "Create account", width: 250,height: 60, destination: { RegisterView()
                     } )
                     
                 }
