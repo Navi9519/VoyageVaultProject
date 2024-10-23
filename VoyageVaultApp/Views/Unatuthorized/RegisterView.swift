@@ -10,6 +10,7 @@ import SwiftUI
 struct RegisterView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @Environment(\.dismiss) private var dismiss
     
     @State var firstName: String = ""
     @State var surName: String = ""
@@ -77,6 +78,8 @@ struct RegisterView: View {
                         }  else {
                             
                             firebaseAuth.registerUser(firstName: firstName, surName: surName, age: age, nationality: nationality, email: email, password: password)
+                            
+                                dismiss()
         
                         
                         }
