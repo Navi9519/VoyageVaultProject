@@ -20,6 +20,7 @@ struct ExploreView: View {
     var body: some View {
         
         ZStack {
+            
             Image("background_pic")
                 .resizable()
                 .scaledToFill()
@@ -53,18 +54,20 @@ struct ExploreView: View {
                     
                     
                     
-                    TextField("", text: $input, prompt: Text("Search")).frame(width: 300, height: 40)
+                    TextField("", text: $input).frame(width: 300, height: 40)
                         .foregroundStyle(Color.white)
-                        .background(.white).cornerRadius(25).textInputAutocapitalization(.never)
+                        .background(.white).cornerRadius(25).textInputAutocapitalization(.never).overlay(
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.gray)
+                                    .padding(.leading, 12)
+                                Spacer()
+                            }
+                        )
+                        .padding(.horizontal)
+                
                     
-                    /* Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
-                        .padding(.trailing, -16) */
-                    
-                    
-                    
-                    
-                    Map(position: $position) {
+                        Map(position: $position) {
                         
                         
                     }.frame(width: 380, height: 400).cornerRadius(20)
