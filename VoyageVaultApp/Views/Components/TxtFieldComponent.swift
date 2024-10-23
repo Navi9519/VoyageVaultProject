@@ -26,7 +26,7 @@ struct TxtFieldComponent: View {
                 
                 Image(systemName: image).foregroundStyle(Color("backgroundOne")) .bold()
                
-                TextField(txtFieldText, text: $input)
+                TextField("", text: $input, prompt: Text(txtFieldText).foregroundStyle(.white))
                     .frame(width: 300, height: 40)
                     .foregroundStyle(Color.white)
                     .background(

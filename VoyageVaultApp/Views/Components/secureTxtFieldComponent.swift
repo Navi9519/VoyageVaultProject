@@ -22,7 +22,7 @@ struct secureTxtFieldComponent: View {
                 
                 Image(systemName: image).foregroundStyle(Color("backgroundOne")).bold()
                 
-                SecureField(txtFieldText, text: $input)
+                SecureField("", text: $input, prompt: Text(txtFieldText).foregroundStyle(.white))
                     .frame(width: 300, height: 40)
                     .foregroundStyle(Color.white)
                     .background(
