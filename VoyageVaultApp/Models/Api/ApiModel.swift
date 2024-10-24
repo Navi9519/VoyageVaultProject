@@ -7,7 +7,23 @@
 
 import Foundation
 
-struct CountryApi: Codable {
+import Foundation
+
+// This struct represents the nested "data" object in the API response
+struct CountryData: Codable {
     var name: String
-    var flag: String
+    var unicodeFlag: String
 }
+
+// This struct represents the entire API response
+struct CountryApi: Codable {
+    var error: Bool
+    var msg: String
+    var data: CountryData
+}
+
+// The request body struct that will be sent to the API
+struct CountryRequest: Encodable {
+    let iso2: String
+}
+

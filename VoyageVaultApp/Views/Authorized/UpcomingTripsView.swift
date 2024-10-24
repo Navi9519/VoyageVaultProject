@@ -48,9 +48,12 @@ struct UpcomingTripsView: View {
                 
                 VStack (spacing: 30){
                     
-                    TripsCardComponent(country: "Spain", city: "Malaga", population: 245_345, currency: "Euro", flag: "\(countryManager.country?.flag ?? "spain")", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+    
                     
-                    TripsCardComponent(country: "Ukraine", city: "Kiev", population: 2_900_000, currency: "ryvnia", flag: "ukraine", daysUntilTrip: 142, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                    
+                    TripsCardComponent(country: countryManager.country?.name ?? "Spain", city: "Malaga", population: 245_345, currency: "Euro", flagURL: countryManager.country?.unicodeFlag, daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                    
+                    TripsCardComponent(country: "Ukraine", city: "Kiev", population: 2_900_000, currency: "ryvnia", flagURL: countryManager.country?.unicodeFlag, daysUntilTrip: 142, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
                 }
                 .shadow(radius: 10)
                 
@@ -63,7 +66,7 @@ struct UpcomingTripsView: View {
                     Task {
                         do {
                             
-                            try await countryManager.getCountryByISO(iso: "NG")
+                            try await countryManager.getCountryByISO(iso: "SE")
                             
                         } catch let error{
                             print(error.localizedDescription)

@@ -19,17 +19,21 @@ class Api {
         
         if let body = body {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let encoder = JSONEncoder()
+            
+            do {
+                request.httpBody = try encoder.encode(body)
+            }  catch {
+                throw APIError.invalidRequest
+            }
         }
         
-        let encoder = JSONEncoder()
+    
         
-        do {
-            request.httpBody = try encoder.encode(body)
-        }  catch {
-            throw APIError.invalidRequest
-        }
         
         let (data, response) = try await URLSession.shared.data(for: request)
+        
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200 && httpResponse.statusCode < 205 else { throw APIError.invalidResponse }
         

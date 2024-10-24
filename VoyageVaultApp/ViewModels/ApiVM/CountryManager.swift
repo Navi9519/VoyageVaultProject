@@ -1,27 +1,23 @@
-//
-//  CountryManager.swift
-//  VoyageVaultApp
-//
-//  Created by Nicholas Nieminen on 2024-10-24.
-//
-
 import Foundation
 
 class CountryManager: ObservableObject {
-    
+    @Published var country: CountryData?  // Updated to store CountryData (name and flag)
+
     let api = Api()
     
-    @Published var country: CountryApi? = nil
-    
-    let BASE_URL = "https://countriesnow.space"
-    
     func getCountryByISO(iso: String) async throws {
-        let retrivedCountry: CountryApi = try await api.post(url: "\(BASE_URL)/api/v0.1/countries/flag/images", body: iso)
+        // Create the request body struct
+        let requestBody = CountryRequest(iso2: iso)
         
-        DispatchQueue.main.async{
-            
-            self.country = retrivedCountry
+        // Call the post method, sending the `CountryRequest` as the body
+        let result: CountryApi = try await api.post(
+            url: "https://countriesnow.space/api/v0.1/countries/flag/unicode",
+            body: requestBody  // This sends the struct as JSON
+        )
+        
+        // Access the nested data for country and flag
+        DispatchQueue.main.async {
+            self.country = result.data  // result.data contains the CountryData (name, flag)
         }
     }
-    
 }

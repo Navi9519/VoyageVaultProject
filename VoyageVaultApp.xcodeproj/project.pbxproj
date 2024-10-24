@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		964316AA2CCAAFB900EC408D /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 964316A92CCAAFB900EC408D /* SVGKit */; };
+		964316AC2CCAAFB900EC408D /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 964316AB2CCAAFB900EC408D /* SVGKitSwift */; };
 		9671B1A82CC2755C00289713 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9671B1A72CC2755C00289713 /* FirebaseAuth */; };
 		9671B1AA2CC2755C00289713 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 9671B1A92CC2755C00289713 /* FirebaseAuthCombine-Community */; };
 		9671B1AC2CC2755C00289713 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9671B1AB2CC2755C00289713 /* FirebaseFirestore */; };
@@ -32,7 +34,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				964316AC2CCAAFB900EC408D /* SVGKitSwift in Frameworks */,
 				9671B1A82CC2755C00289713 /* FirebaseAuth in Frameworks */,
+				964316AA2CCAAFB900EC408D /* SVGKit in Frameworks */,
 				9671B1AE2CC2755C00289713 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				9671B1AA2CC2755C00289713 /* FirebaseAuthCombine-Community in Frameworks */,
 				9671B1B02CC2755C00289713 /* FirebaseStorage in Frameworks */,
@@ -86,6 +90,8 @@
 				9671B1AD2CC2755C00289713 /* FirebaseFirestoreCombine-Community */,
 				9671B1AF2CC2755C00289713 /* FirebaseStorage */,
 				9671B1B12CC2755C00289713 /* FirebaseStorageCombine-Community */,
+				964316A92CCAAFB900EC408D /* SVGKit */,
+				964316AB2CCAAFB900EC408D /* SVGKitSwift */,
 			);
 			productName = VoyageVaultApp;
 			productReference = 9671B1802CC26EF000289713 /* VoyageVaultApp.app */;
@@ -117,6 +123,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				9671B1A62CC2755C00289713 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				964316A82CCAAFB900EC408D /* XCRemoteSwiftPackageReference "SVGKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9671B1812CC26EF000289713 /* Products */;
@@ -348,6 +355,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		964316A82CCAAFB900EC408D /* XCRemoteSwiftPackageReference "SVGKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVGKit/SVGKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		9671B1A62CC2755C00289713 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -359,6 +374,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		964316A92CCAAFB900EC408D /* SVGKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 964316A82CCAAFB900EC408D /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKit;
+		};
+		964316AB2CCAAFB900EC408D /* SVGKitSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 964316A82CCAAFB900EC408D /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKitSwift;
+		};
 		9671B1A72CC2755C00289713 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9671B1A62CC2755C00289713 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
