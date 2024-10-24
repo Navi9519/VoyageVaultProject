@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct UpcomingTripsView: View {
+    
+    @StateObject var countryManager = CountryManager()
+    
     var body: some View {
         ZStack {
             Image("background_pic")
@@ -45,7 +48,7 @@ struct UpcomingTripsView: View {
                 
                 VStack (spacing: 30){
                     
-                    TripsCardComponent(country: "Spain", city: "Malaga", population: 245_345, currency: "Euro", flag: "spain", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                    TripsCardComponent(country: "Spain", city: "Malaga", population: 245_345, currency: "Euro", flag: "\(countryManager.country?.flag ?? "spain")", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
                     
                     TripsCardComponent(country: "Ukraine", city: "Kiev", population: 2_900_000, currency: "ryvnia", flag: "ukraine", daysUntilTrip: 142, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
                 }
@@ -54,6 +57,19 @@ struct UpcomingTripsView: View {
                 Spacer()
                 
                 NavLinkComponent(text: "Add new trip", width: 150, height: 50, destination: {AddNewTripView()}).shadow(radius: 10)
+                
+                //Test button
+                Button("test", action: {
+                    Task {
+                        do {
+                            
+                            try await countryManager.getCountryByISO(iso: "NG")
+                            
+                        } catch let error{
+                            print(error.localizedDescription)
+                        }
+                    }
+                })
                 
                 Spacer()
                 
