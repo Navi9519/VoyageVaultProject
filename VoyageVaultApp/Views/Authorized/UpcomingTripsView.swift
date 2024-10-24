@@ -15,8 +15,6 @@ struct UpcomingTripsView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            
-            
             VStack {
                 
                 HStack {
