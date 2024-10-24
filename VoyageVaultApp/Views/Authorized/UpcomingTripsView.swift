@@ -51,28 +51,31 @@ struct UpcomingTripsView: View {
     
                     
                     
-                    TripsCardComponent(country: countryManager.country?.name ?? "Spain", city: "Malaga", population: 245_345, currency: "Euro", flagURL: countryManager.country?.unicodeFlag, daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                    TripsCardComponent(country: countryManager.country?.name ?? "Spain", city: "Malaga", population: 245_345, currency: "Euro", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
                     
-                    TripsCardComponent(country: "Ukraine", city: "Kiev", population: 2_900_000, currency: "ryvnia", flagURL: countryManager.country?.unicodeFlag, daysUntilTrip: 142, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                    TripsCardComponent(country: "Ukraine", city: "Kiev", population: 2_900_000, currency: "ryvnia", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 142, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
                 }
                 .shadow(radius: 10)
                 
                 Spacer()
-                
-                NavLinkComponent(text: "Add new trip", width: 150, height: 50, destination: {AddNewTripView()}).shadow(radius: 10)
                 
                 //Test button
                 Button("test", action: {
                     Task {
                         do {
                             
-                            try await countryManager.getCountryByISO(iso: "SE")
+                            try await countryManager.getCountryByName(countryName: "sweden")
+                            print("clicked")
                             
                         } catch let error{
                             print(error.localizedDescription)
                         }
                     }
                 })
+                
+                NavLinkComponent(text: "Add new trip", width: 150, height: 50, destination: {AddNewTripView()}).shadow(radius: 10)
+                
+
                 
                 Spacer()
                 
