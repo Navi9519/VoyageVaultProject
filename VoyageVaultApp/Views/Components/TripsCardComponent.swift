@@ -29,13 +29,11 @@ struct TripsCardComponent: View {
             
             LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
             
-            
             VStack (spacing: 30) {
                 
                 Spacer()
                 
                 HStack {
-                    
                     
                     Text(flag)
                         .font(.system(size: 100))
@@ -68,8 +66,6 @@ struct TripsCardComponent: View {
                         Text("Country: \(country)").font(.title3).bold()
                         Text("Population: \(population)").font(.title3).bold()
                         Text("Currency: \(currency)").font(.title3).bold()
-                        
-                        
                     }
                     
                     Spacer()
@@ -82,12 +78,9 @@ struct TripsCardComponent: View {
                             .resizable()
                             .frame(width: 30, height: 30)
                     }
-                    
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal,30)
-                
-                
                 
                 Spacer()
                 
@@ -100,12 +93,9 @@ struct TripsCardComponent: View {
                 .stroke(Color.black, lineWidth: 1)
         )
         
-        
     }
 }
 
 #Preview {
     TripsCardComponent(country: "Spain", city: "Malaga", population: 571_026, currency: "Euro", flag: "🇪🇸", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
 }
-
-
