@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CardComponent<Destination: View>: View {
+struct HomeCardComponent<Destination: View>: View {
     
     var title: String
     var description: String
@@ -65,5 +65,5 @@ struct CardComponent<Destination: View>: View {
 }
 
 #Preview {
-    CardComponent(title: "Upcoming trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"),destination: {LandingView()})
+    HomeCardComponent(title: "Upcoming trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"),destination: {LandingView()})
 }

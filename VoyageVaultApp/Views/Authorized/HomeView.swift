@@ -53,11 +53,11 @@ struct HomeView: View {
                 Spacer()
                 
                 VStack (spacing: 30){
-                    CardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"),destination: {LandingView()})
+                    HomeCardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"),destination: {LandingView()})
                     
-                    CardComponent(title: "Friend list", description: "Manage your Friend List to stay connected and explore the world together with your travel buddies!", image: "imgFriendList", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"),destination: {LandingView()})
+                    HomeCardComponent(title: "Friend list", description: "Manage your Friend List to stay connected and explore the world together with your travel buddies!", image: "imgFriendList", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"),destination: {LandingView()})
                     
-                    CardComponent(title: "Explore", description: "Tap Explore to discover exciting destinations, activities, and hidden gems around the world!", image: "imgExplore", color1: Color("blueColorOne"), color2: Color("blueColorTwo"),destination: {LandingView()})
+                    HomeCardComponent(title: "Explore", description: "Tap Explore to discover exciting destinations, activities, and hidden gems around the world!", image: "imgExplore", color1: Color("blueColorOne"), color2: Color("blueColorTwo"),destination: {LandingView()})
                 }.shadow(radius: 10)
                 
                 
