@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    
     var body: some View {
         ZStack {
             Image("background_pic")
@@ -30,9 +33,16 @@ struct HomeView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .frame(width: 75,height: 75)
+                    Button(action: {
+                        firebaseAuth.signOutUser()
+                    }, label: {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width: 70,height: 70)
+                    }).foregroundStyle(.black)
+
+                    
+                   
                     
                 }
                 .frame(maxWidth: .infinity)
@@ -74,5 +84,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView().environmentObject(FirebaseAuth())
 }

@@ -73,5 +73,14 @@ class FirebaseAuth: ObservableObject {
         auth.signIn(withEmail: email, password: password)
         
     }
+    
+    func signOutUser() {
+        do {
+            try auth.signOut()
+            currentUser = nil
+        } catch _ {
+            
+        }
+    }
 
 }
