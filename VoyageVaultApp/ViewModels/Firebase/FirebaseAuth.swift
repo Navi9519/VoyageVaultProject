@@ -19,6 +19,9 @@ class FirebaseAuth: ObservableObject {
     
     let COLLECTION_USER_DATA = "user_data"
     @Published var currentUser: User?
+    @Published var currentUserData: UserData?
+    
+    var userDataListener: ListenerRegistration?
     
     
     init() {
@@ -28,10 +31,14 @@ class FirebaseAuth: ObservableObject {
           if let user = user {
               
               self.currentUser = user
+              self.startUserDataListener()
               
           } else {
               
               self.currentUser = nil
+              self.currentUserData = nil
+              self.userDataListener?.remove()
+              self.userDataListener = nil
           }
             
             
@@ -81,6 +88,37 @@ class FirebaseAuth: ObservableObject {
         } catch _ {
             
         }
+    }
+    
+    
+    func startUserDataListener() {
+        
+        guard let currentUser = currentUser else {return}
+        
+        userDataListener = db.collection(COLLECTION_USER_DATA).document(currentUser.uid).addSnapshotListener { snapshot, error in
+            
+            if let error = error {
+                
+                print("Error listening to user data \(error.localizedDescription)")
+                
+                return
+            }
+            
+            guard let snapshot = snapshot else {return}
+            
+            do {
+                
+                self.currentUserData = try snapshot.data(as: UserData.self)
+                
+            } catch _ {
+                
+                print("Omvanlingsfel! Kunde inte omvandla användarens data")
+                
+            }
+            
+            
+        }
+        
     }
 
 }
