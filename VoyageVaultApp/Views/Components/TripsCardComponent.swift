@@ -40,6 +40,7 @@ struct TripsCardComponent: View {
                     Text(flag)
                         .font(.system(size: 100))
                         .padding(.horizontal,20)
+                        .shadow(radius: 5)
                     
                     
                     VStack (spacing: 10) {
