@@ -16,3 +16,8 @@ struct Country: Codable {
     var currency: String
     var flag: String
 }
+
+struct Location: Codable {
+    var latitude: Double
+    var longitude: Double
+}
