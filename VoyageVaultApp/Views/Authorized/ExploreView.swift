@@ -28,28 +28,34 @@ struct ExploreView: View {
             
             VStack(alignment: .center, spacing: 40) {
                 
-                
-                
-                HStack {
-                    
-                    Text("back")
+                ZStack (alignment: .trailing){
                     
                     Spacer()
+                        
+                    VStack {
+                        
+                        Text("Explore")
+                            .font(.title)
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                        
+                        Text("Find your next adventure!")
+                            .font(.title3)
+                    }
+
+                    Spacer()
                     
-                    Image(systemName: "person.crop.circle.fill").resizable().scaledToFit().frame(width: 59, height: 59)
-                }.frame(width: 300)
+                    Image(systemName: "person.crop.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 59, height: 59)
+                        .padding(.trailing,20)
+                }
+                .frame(maxWidth: .infinity)
                 
-                
-               
                 VStack(spacing: 30) {
                     
-                    VStack(spacing: 5) {
-                        
-                        Text("Explore").font(.title).bold()
-                        
-                        Text("Find your next adventure!").font(.title).bold()
-                        
-                    }
+                    
                     
                     SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass")
                 
@@ -57,8 +63,9 @@ struct ExploreView: View {
                         Map(position: $position) {
                         
                         
-                    }.frame(width: 380, height: 400).cornerRadius(20)
-                    
+                    }
+                        .frame(width: 380, height: 400)
+                        .cornerRadius(20)
                 }
                 
                 
