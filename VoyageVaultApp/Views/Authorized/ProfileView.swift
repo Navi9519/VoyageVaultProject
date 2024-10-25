@@ -69,29 +69,25 @@ struct ProfileView: View {
                     .padding(30)
                     .padding(.top,30)
                     
-                    VStack {
-                        Text("Time until your next trip: ")
-                            .foregroundStyle(.white)
-                            .font(.title3)
-                        Text("24 days, 16 hours and 5 min")
-                            .foregroundStyle(.white)
-                    }
-                    .shadow(radius: 10)
-                    
-                    
-
-                    Spacer()
                     
                     VStack (spacing: 30){
-                        HomeCardComponent(title: "Upcoming Trips", description: "Join the Forum to connect with fellow travelers, share tips, and discover new adventures!", image: "imgCalender", color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"),destination: {UpcomingTripsView()})
                         
-                        HomeCardComponent(title: "Friend list", description: "Manage your Friend List to stay connected and explore the world together with your travel buddies!", image: "imgFriendList", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"),destination: {FriendListView()})
+                        FavoriteDestinationsCardComponent(title: "\(currentUserData.firstName)'s favorite cities:", cities: [
+                            CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
+                            CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
+                            CityTest(id: 3, name: "Tokyo", flag: "🇯🇵")
+                        ], color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
                         
-                        HomeCardComponent(title: "Explore", description: "Tap Explore to discover exciting destinations, activities, and hidden gems around the world!", image: "imgExplore", color1: Color("blueColorOne"), color2: Color("blueColorTwo"),destination: {ExploreView()})
+                        
+                        ImageVaultCardComponent(title: "\(currentUserData.firstName)'s vault", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                        
+                       
                     }.shadow(radius: 10)
                     
                     
-                    Spacer()
+                    
+                    
+                   
                     
                     
                 }
