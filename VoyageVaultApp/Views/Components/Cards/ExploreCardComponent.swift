@@ -55,7 +55,7 @@ struct ExploreCardComponent: View {
                                 Text("Population: \(population)").font(.title3).bold()
                                 Text("Currency: \(currency)").font(.title3).bold()
                             }
-                            .padding(.bottom,5)
+                            .padding(.bottom,20)
                             
                             Spacer()
                             
@@ -63,7 +63,7 @@ struct ExploreCardComponent: View {
                                 Image(systemName: "heart")
                                     .resizable()
                                     .frame(width: 30, height: 30)
-                                    .padding(.bottom,10)
+                                    .padding(.bottom,30)
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)

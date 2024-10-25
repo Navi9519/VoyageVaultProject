@@ -20,9 +20,12 @@ struct ExploreView: View {
    // Latitude: 63.1792
    // Longitude: 14.6357
     
-//    @State var schools: [School] = [School(name: "STI", location: Location(latitude: 59.309546700241086, longitude: 18.02162081571076)), School(name: "IT-Högskolan", location: Location(latitude: 59.31429345076597, longitude: 18.023755497467093))]
+    // Finland
+    // Latitude: 64.0000
+    // Longitude: 26.0000
     
-    @State var countrysOnMap: [Country] = [Country(name: "Sweden", capital: "Stockholm", cities: [], currency: "Krona", flag: "🇸🇪", location: Location(latitude: 60.4853, longitude: 15.4370))]
+    
+    @State var countrysOnMap: [Country] = [Country(name: "Sweden", capital: "Stockholm", cities: [], currency: "Krona", flag: "🇸🇪", location: Location(latitude: 60.4853, longitude: 15.4370)), Country(name: "Finland", capital: "Helsinki", cities: [], currency: "Euro", flag: "🇫🇮", location: Location(latitude: 64.0000, longitude: 26.0000))]
     
     @State var selectedCountry: Country? = nil
     
