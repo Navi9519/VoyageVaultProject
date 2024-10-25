@@ -77,17 +77,17 @@ struct ExploreView: View {
                                     Button(action: {
                                         print("\(country.name) pressed!")
                                         
-                                        if self.selectedCountry?.id == country.id {
-                                            self.selectedCountry = nil
-                                        } else {
-                                            self.selectedCountry = country
+                                        withAnimation {
+                                            if self.selectedCountry?.id == country.id {
+                                                self.selectedCountry = nil
+                                            } else {
+                                                self.selectedCountry = country
+                                            }
                                         }
-                         
                                         
                                     }, label: {
                                         VStack(spacing: 5) {
                                             Text(country.flag)
-                                                .foregroundStyle(.red)
                                                 .frame(width: 20,height: 20,alignment: .center)
                                             Text(country.name).font(.system(size: 12))
                                                 .foregroundStyle(.black)
@@ -105,6 +105,7 @@ struct ExploreView: View {
                     VStack {
                         if let selectedCountry = selectedCountry {
                             ExploreCardComponent(country: selectedCountry.name, city: selectedCountry.name, population: 200, currency: selectedCountry.currency, flag: selectedCountry.flag, daysUntilTrip: 24, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
                         }
                     }
 
