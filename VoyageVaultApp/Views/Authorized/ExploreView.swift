@@ -14,7 +14,7 @@ struct ExploreView: View {
     let locationManager = LocationManager()
     
     @State var position = MapCameraPosition
-        .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 59.309857850079666, longitude: 18.022240207022453), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)))
+        .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 54.5260, longitude: 15.2551), span: MKCoordinateSpan(latitudeDelta: 40.0, longitudeDelta: 40.0)))
     
     
     var body: some View {
