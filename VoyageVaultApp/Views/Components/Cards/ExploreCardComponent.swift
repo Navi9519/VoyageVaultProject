@@ -29,35 +29,24 @@ struct ExploreCardComponent: View {
                     
                     LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
                     
-                    VStack (spacing: 10) {
+                    VStack (spacing: 0) {
                         
                         
                         HStack {
                             
                             Text(flag)
-                                .font(.system(size: 100))
-                                .padding(.horizontal,20)
+                                .font(.system(size: 80))
+                                .padding(.horizontal,25)
                                 .shadow(radius: 5)
                             
+                            Spacer()
                             
-                            VStack (spacing: 10) {
                                 Text(country)
                                     .foregroundStyle(.black)
-                                    .font(.system(size: 40))
+                                    .font(.system(size: 35))
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.center)
-                                
-                                Text("in \(daysUntilTrip) days")
-                                    .foregroundStyle(.black)
-                                    .italic()
-                                    .font(.system(size: 18))
-                                    .fontWeight(.semibold)
-                                    .frame(alignment: .center)
-                                    .multilineTextAlignment(.center)
-                            }
-                            .padding(.horizontal,20)
-                            
-                            Spacer()
+                                    .padding(.horizontal,20)
                         }
                         
                         HStack(alignment: .bottom){
@@ -66,6 +55,7 @@ struct ExploreCardComponent: View {
                                 Text("Population: \(population)").font(.title3).bold()
                                 Text("Currency: \(currency)").font(.title3).bold()
                             }
+                            .padding(.bottom,5)
                             
                             Spacer()
                             
@@ -73,6 +63,7 @@ struct ExploreCardComponent: View {
                                 Image(systemName: "heart")
                                     .resizable()
                                     .frame(width: 30, height: 30)
+                                    .padding(.bottom,10)
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -81,7 +72,7 @@ struct ExploreCardComponent: View {
                         
                     }
                 }
-                .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.25) // Frame for the entire card
+                .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.20) // Frame for the entire card
                 .clipShape(.rect(cornerRadius: 10))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)

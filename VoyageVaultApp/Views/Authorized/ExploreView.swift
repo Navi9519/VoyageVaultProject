@@ -24,6 +24,8 @@ struct ExploreView: View {
     
     @State var countrysOnMap: [Country] = [Country(name: "Sweden", capital: "Stockholm", cities: [], currency: "Krona", flag: "🇸🇪", location: Location(latitude: 60.4853, longitude: 15.4370))]
     
+    @State var selectedCountry: Country? = nil
+    
     var body: some View {
         
         ZStack {
@@ -60,7 +62,7 @@ struct ExploreView: View {
                 }
                 .frame(maxWidth: .infinity)
                 
-                VStack(spacing: 30) {
+                VStack(spacing: 20) {
                     
                     SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass")
                 
@@ -74,6 +76,13 @@ struct ExploreView: View {
                                     
                                     Button(action: {
                                         print("\(country.name) pressed!")
+                                        
+                                        if self.selectedCountry?.id == country.id {
+                                            self.selectedCountry = nil
+                                        } else {
+                                            self.selectedCountry = country
+                                        }
+                         
                                         
                                     }, label: {
                                         VStack(spacing: 5) {
@@ -92,6 +101,13 @@ struct ExploreView: View {
                     }
                         .frame(width: 380, height: 400)
                         .cornerRadius(20)
+                    
+                    VStack {
+                        if let selectedCountry = selectedCountry {
+                            ExploreCardComponent(country: selectedCountry.name, city: selectedCountry.name, population: 200, currency: selectedCountry.currency, flag: selectedCountry.flag, daysUntilTrip: 24, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                        }
+                    }
+
                         
                 }
                 
