@@ -48,18 +48,18 @@ struct RegisterView: View {
                 
                 VStack {
                     HStack (alignment: .bottom, spacing: 20) {
-                        TxtFieldComponentSmall(title: "First name", txtFieldText: "Enter first name", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $firstName)
+                        TxtFieldComponentSmall(title: "First name", txtFieldText: "Enter first name", txtColor: Color(.white), colorOne: "backgroundOne",  colorTwo: "backgroundTwo", input: $firstName)
                         
                         
-                        TxtFieldComponentSmall(title: "Surname", txtFieldText: "Enter surname", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $surName)
+                        TxtFieldComponentSmall(title: "Surname", txtFieldText: "Enter surname", txtColor: Color(.white), colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $surName)
                             .padding(.top, 20)
                     }
                     
                     HStack(alignment: .bottom, spacing: 20) {
-                        TxtFieldComponentSmall(title: "Age", txtFieldText: "Enter age", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $age)
+                        TxtFieldComponentSmall(title: "Age", txtFieldText: "Enter age", txtColor: Color(.white), colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $age)
                         
                         
-                        TxtFieldComponentSmall(title: "Nationality", txtFieldText: "Enter nationality", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $nationality)
+                        TxtFieldComponentSmall(title: "Nationality", txtFieldText: "Enter nationality", txtColor: Color(.white), colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $nationality)
                             .padding(.top, 20)
                     }
                     

@@ -11,6 +11,7 @@ struct TxtFieldComponentSmall: View {
     
     var title: String
     var txtFieldText: String
+    var txtColor: Color
     var colorOne: String
     var colorTwo: String
     
@@ -20,9 +21,9 @@ struct TxtFieldComponentSmall: View {
         VStack (alignment: .leading) {
             Text(title).font(.title3).bold()
 
-            TextField("", text: $input, prompt: Text(txtFieldText).foregroundStyle(.white))
+            TextField("", text: $input, prompt: Text(txtFieldText).foregroundStyle(txtColor))
                 .frame(width: 150, height: 40)
-                .foregroundStyle(Color.white)
+                .foregroundStyle(txtColor)
                 .background(
                     LinearGradient(colors: [
                         Color(colorOne),
@@ -37,5 +38,5 @@ struct TxtFieldComponentSmall: View {
 }
 
 #Preview {
-    TxtFieldComponentSmall(title: "title", txtFieldText: "enter here", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: .constant(""))
+    TxtFieldComponentSmall(title: "title", txtFieldText: "enter here", txtColor: Color(.white), colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: .constant(""))
 }
