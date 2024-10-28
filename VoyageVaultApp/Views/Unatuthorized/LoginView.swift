@@ -14,6 +14,7 @@ struct LoginView: View {
     @State var email = ""
     @State var password = ""
     
+    
     var body: some View {
         ZStack {
             Image("background_pic")
@@ -47,12 +48,26 @@ struct LoginView: View {
                 
                 
                 BtnComponent(text: "Login", width: 86, height: 40, colorOne: "backgroundOne", colorTwo: "backgroundTwo", txtColor: .white){
+                    
+                    
                     firebaseAuth.loginUser(email: email, password: password)
                 }.padding(.top,10)
                 
-//                NavLinkComponent(text: "Login", width: 86, height: 40, destination: {
-//                    LandingView()
-//                }).padding(.vertical,20)
+                Spacer()
+                
+                if let errorMessage = firebaseAuth.errorMessage {
+                    
+                    withAnimation {
+                        
+                        ErrorMessage(message: errorMessage)
+                        
+                    }
+                    
+                   
+                    
+                }
+
+                
 
                 Spacer()
               
