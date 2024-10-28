@@ -20,6 +20,7 @@ class FirebaseAuth: ObservableObject {
     let COLLECTION_USER_DATA = "user_data"
     @Published var currentUser: User?
     @Published var currentUserData: UserData?
+    @Published var errorMessage: String?
     
     var userDataListener: ListenerRegistration?
     
@@ -54,6 +55,8 @@ class FirebaseAuth: ObservableObject {
                 
                 print(error.localizedDescription)
                 
+                self.errorMessage = error.localizedDescription
+                
                 return
             }
             
@@ -67,6 +70,7 @@ class FirebaseAuth: ObservableObject {
                    
             } catch let error {
                 print("failed to create userData \(error.localizedDescription)")
+                
             }
             
             
@@ -77,7 +81,21 @@ class FirebaseAuth: ObservableObject {
     
     func loginUser(email: String, password: String) {
         
-        auth.signIn(withEmail: email, password: password)
+      
+        
+        auth.signIn(withEmail: email, password: password) { authResult, error in
+            
+            if let error = error {
+                
+                print(error.localizedDescription)
+                
+                self.errorMessage = error.localizedDescription
+                
+                return
+            }
+            
+            
+        }
         
     }
     

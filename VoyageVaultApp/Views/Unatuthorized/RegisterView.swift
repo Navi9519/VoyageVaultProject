@@ -18,6 +18,7 @@ struct RegisterView: View {
     @State var email: String = ""
     @State var password: String = ""
     @State var nationality: String = ""
+   // @State var showError: Bool = false
     
     
     
@@ -41,7 +42,7 @@ struct RegisterView: View {
                         .bold()
                         .font(.largeTitle)
                         .padding(.top, 24)
-                        
+                    
                 }
                 .frame(height: dynamicScreenHeight / 3)
                 
@@ -69,23 +70,50 @@ struct RegisterView: View {
                     
                     Spacer()
                     
+        
+                    
+                 /*   if showError == true {
+                        
+                        withAnimation {
+                            
+                            ErrorMessage(message: "invalid input, please try again")
+                            
+                        }
+                        
+                    }
+                    
+                    */
+                   
+                    if let errorMessage = firebaseAuth.errorMessage {
+                        
+                        withAnimation {
+                            
+                            ErrorMessage(message: errorMessage)
+                            
+                        }
+                        
+                    }
+                    
+                    
+                    Spacer()
+                    
                     Button(action: {
                         
                         // TODO: Check this condition later and fix a pop up specifying which input field(s) that are invalid
                         if(firstName.count < 2 || surName.count < 2 || age.isEmpty || nationality.count < 4 || !email.contains("@") || password.count < 6) {
                             
+                           // showError = true
+                            
                             print("invalid input, please try again")
-                        }  else {
+                        } else {
                             
                             firebaseAuth.registerUser(firstName: firstName, surName: surName, age: age, nationality: nationality, email: email, password: password)
                             
-                                dismiss()
-        
-                        
+                            dismiss()
+                            
+                            
                         }
-                          
-                        
-                        
+                    
                         
                     }, label: {
                         Text("Register")
@@ -94,10 +122,14 @@ struct RegisterView: View {
                         .font(.system(size: 20))
                         .bold()
                         .background(
-                        LinearGradient(colors: [
-                            Color("backgroundOne"),
-                            Color("backgroundTwo")            ], startPoint: .leading, endPoint: .trailing)
-                    ).clipShape(.buttonBorder).shadow(radius: 10)
+                            LinearGradient(colors: [
+                                Color("backgroundOne"),
+                                Color("backgroundTwo")], startPoint: .leading, endPoint: .trailing)
+                        ).clipShape(.buttonBorder).shadow(radius: 10)
+                    
+                    
+                  
+                    
                     
                     NavigationLink(destination: LoginView(), label: {
                         Text("Already have an account? Login").underline()
@@ -105,14 +137,14 @@ struct RegisterView: View {
                     })
                     
                 }.padding(.top, 0)
-                .padding(.vertical, 30)
+                    .padding(.vertical, 30)
                 
-            
+                
                 Spacer()
-    
+                
                 
             }
-           
+            
         }
     }
 }
