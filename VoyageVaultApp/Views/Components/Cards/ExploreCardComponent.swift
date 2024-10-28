@@ -18,7 +18,7 @@ struct ExploreCardComponent: View {
             var color1: Color
             var color2: Color
             
-            
+     @State var addedToFavorite = false
             
             var dynamicScreenWidth = UIScreen.main.bounds.width
             var dynamicScreenHeight = UIScreen.main.bounds.height
@@ -60,10 +60,25 @@ struct ExploreCardComponent: View {
                             Spacer()
                             
                             HStack (spacing: 15){
-                                Image(systemName: "heart")
+                                
+                                Button(action: {
+                                    addedToFavorite.toggle()
+                                }, label:{
+                                    if (addedToFavorite == false) {
+                                    Image(systemName: "heart")
                                     .resizable()
                                     .frame(width: 30, height: 30)
+                                    .foregroundStyle(.black)
                                     .padding(.bottom,30)
+                                    } else {
+                                        Image(systemName: "heart.fill")
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundStyle(.red)
+                                        .padding(.bottom,30)
+                                    }
+                                })
+                                
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
