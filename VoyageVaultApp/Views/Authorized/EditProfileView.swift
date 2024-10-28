@@ -19,6 +19,10 @@ struct EditProfileView: View {
     @State var nationality: String = ""
     
     
+    var dynamicScreenWidth = UIScreen.main.bounds.width
+    var dynamicScreenHeight = UIScreen.main.bounds.height
+    
+    
     var body: some View {
         ZStack {
             Image("background_pic")
@@ -59,6 +63,52 @@ struct EditProfileView: View {
                             
                             Spacer()
                             
+                           
+
+                            
+                        }
+                        .padding(.vertical, 30)
+                        
+                        
+                        VStack (spacing: 30){
+                            
+                            
+                            VStack {
+                               
+                                Text("My Cities:").font(.title).bold()
+                                
+                                FavoriteDestinationsCardComponent(title: "\(currentUserData.firstName)'s favorite cities:", cities: [
+                                    CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
+                                    CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
+                                    CityTest(id: 3, name: "Tokyo", flag: "🇯🇵")
+                                ], color1: Color("blueColorOne"), color2: Color("blueColorTwo"))
+                                
+                            }
+                            
+                           
+                            
+                            
+                            VStack {
+                                
+                                Text("My friends:").font(.title).bold()
+                                
+                                FriendCardComponent(firstName: "Jari", surName: "Litmanen", countryImg: "ukraine", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
+                                    LandingView()
+                                })
+                                
+                            }
+                            
+                          
+                            VStack {
+                                
+                                Text("My Images:").font(.title).bold()
+                                
+                                ImageVaultCardComponent(title: "\(currentUserData.firstName)'s vault", color1: Color("blueColorOne"), color2: Color("blueColorTwo"))
+                                
+                            }
+                            
+                           
+                            
                             Button(action: {
                                 
                                 // TODO: Edit method to change the data in DB
@@ -76,22 +126,6 @@ struct EditProfileView: View {
                                     Color("blueColorTwo")            ], startPoint: .leading, endPoint: .trailing)
                             ).clipShape(.buttonBorder).shadow(radius: 10)
                             
-
-                            
-                        }
-                        .padding(.vertical, 30)
-                        
-                        
-                        VStack (spacing: 30){
-                            
-                            FavoriteDestinationsCardComponent(title: "\(currentUserData.firstName)'s favorite cities:", cities: [
-                                CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
-                                CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
-                                CityTest(id: 3, name: "Tokyo", flag: "🇯🇵")
-                            ], color1: Color("blueColorOne"), color2: Color("blueColorTwo"))
-                            
-                            
-                            ImageVaultCardComponent(title: "\(currentUserData.firstName)'s vault", color1: Color("blueColorOne"), color2: Color("blueColorTwo"))
                             
                             
                         }.shadow(radius: 10)
