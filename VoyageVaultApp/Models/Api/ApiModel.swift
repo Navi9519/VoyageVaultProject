@@ -24,7 +24,7 @@ struct CountryApi: Codable {
 
 // The request body struct that will be sent to the API
 struct CountryRequest: Encodable {
-    let country: String
+    let iso2: String
 }
 
 struct CityData: Codable {
@@ -34,6 +34,7 @@ struct CityData: Codable {
     var longitude: Double
     var country: String
     var population: Int
+    var is_capital: Bool
 }
 
 

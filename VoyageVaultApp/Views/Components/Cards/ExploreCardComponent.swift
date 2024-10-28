@@ -11,7 +11,7 @@ struct ExploreCardComponent: View {
             var country: String
             var city: String
             var population: Int
-            var currency: String
+            var isCapital: Bool
             var flag: String
             var daysUntilTrip: Int
             
@@ -41,7 +41,7 @@ struct ExploreCardComponent: View {
                             
                             Spacer()
                             
-                                Text(country)
+                            Text(city)
                                     .foregroundStyle(.black)
                                     .font(.system(size: 35))
                                     .fontWeight(.bold)
@@ -53,7 +53,7 @@ struct ExploreCardComponent: View {
                             VStack (alignment: .leading){
                                 Text("Country: \(country)").font(.title3).bold()
                                 Text("Population: \(population)").font(.title3).bold()
-                                Text("Currency: \(currency)").font(.title3).bold()
+                                Text("Is capital: \(isCapital)").font(.title3).bold()
                             }
                             .padding(.bottom,20)
                             
@@ -100,5 +100,5 @@ struct ExploreCardComponent: View {
 
 
 #Preview {
-    ExploreCardComponent(country: "Spain", city: "Malaga", population: 571_026, currency: "Euro", flag: "🇪🇸", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+    ExploreCardComponent(country: "Spain", city: "Malaga", population: 571_026, isCapital: true, flag: "🇪🇸", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
 }
