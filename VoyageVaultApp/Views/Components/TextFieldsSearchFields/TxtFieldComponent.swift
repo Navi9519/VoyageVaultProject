@@ -12,6 +12,8 @@ struct TxtFieldComponent: View {
     var title: String
     var txtFieldText: String
     var image: String
+    var colorOne: String
+    var colorTwo: String
     @Binding var input: String
     
     
@@ -30,8 +32,8 @@ struct TxtFieldComponent: View {
                     .foregroundStyle(Color.white)
                     .background(
                         LinearGradient(colors: [
-                            Color("backgroundOne"),
-                            Color("backgroundTwo")],
+                            Color(colorOne),
+                            Color(colorTwo)],
                                 startPoint: .leading,
                                 endPoint: .trailing)
                     )
@@ -53,5 +55,5 @@ struct TxtFieldComponent: View {
 }
 
 #Preview {
-    TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope",input: .constant("") )
+    TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: .constant("") )
 }

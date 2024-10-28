@@ -38,10 +38,10 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope.fill", input: $email)
+                TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope.fill", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $email)
                 
                 
-                SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: $password)
+                SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $password)
                 
                 // TODO: Change this navigation to HomeView() when HomeView is created
                 

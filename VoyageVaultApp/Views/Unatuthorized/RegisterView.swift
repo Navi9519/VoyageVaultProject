@@ -48,24 +48,24 @@ struct RegisterView: View {
                 
                 VStack {
                     HStack (alignment: .bottom, spacing: 20) {
-                        TxtFieldComponentSmall(title: "First name", txtFieldText: "Enter first name", input: $firstName)
+                        TxtFieldComponentSmall(title: "First name", txtFieldText: "Enter first name", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $firstName)
                         
                         
-                        TxtFieldComponentSmall(title: "Surname", txtFieldText: "Enter surname", input: $surName)
+                        TxtFieldComponentSmall(title: "Surname", txtFieldText: "Enter surname", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $surName)
                             .padding(.top, 20)
                     }
                     
                     HStack(alignment: .bottom, spacing: 20) {
-                        TxtFieldComponentSmall(title: "Age", txtFieldText: "Enter age", input: $age)
+                        TxtFieldComponentSmall(title: "Age", txtFieldText: "Enter age", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $age)
                         
                         
-                        TxtFieldComponentSmall(title: "Nationality", txtFieldText: "Enter nationality", input: $nationality)
+                        TxtFieldComponentSmall(title: "Nationality", txtFieldText: "Enter nationality", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $nationality)
                             .padding(.top, 20)
                     }
                     
-                    TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope.fill", input: $email).padding(.top, 20)
+                    TxtFieldComponent(title: "Email", txtFieldText: "Enter email", image: "envelope.fill", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $email).padding(.top, 20)
                     
-                    SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: $password).padding(.top, 20)
+                    SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $password).padding(.top, 20)
                     
                     Spacer()
                     
