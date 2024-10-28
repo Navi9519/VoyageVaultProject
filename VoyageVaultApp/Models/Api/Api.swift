@@ -48,7 +48,7 @@ class Api {
     }
     
     
-    func get<R: Decodable>(url: String) async throws -> R {
+    func get<R: Decodable>(url: String, headers: [String: String]? = nil) async throws -> R {
         
         //Validera URL
         guard let url = URL(string: url) else {throw APIError.invalidURL}
@@ -56,6 +56,10 @@ class Api {
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"
+        
+        headers?.forEach { key, value in
+            request.setValue(value, forHTTPHeaderField: key)
+        }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         

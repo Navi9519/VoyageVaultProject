@@ -27,3 +27,14 @@ struct CountryRequest: Encodable {
     let country: String
 }
 
+struct CityData: Codable {
+    
+    var name: String
+    var latitude: Double
+    var longitude: Double
+    var country: String
+    var population: Int
+}
+
+
+

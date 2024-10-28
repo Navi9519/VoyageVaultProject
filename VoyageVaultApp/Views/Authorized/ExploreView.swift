@@ -13,6 +13,8 @@ struct ExploreView: View {
     @State var input = ""
     let locationManager = LocationManager()
     
+    @StateObject var countryManager = CountryManager()
+    
     @State var position = MapCameraPosition
         .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 54.5260, longitude: 15.2551), span: MKCoordinateSpan(latitudeDelta: 40.0, longitudeDelta: 40.0)))
     
@@ -25,9 +27,11 @@ struct ExploreView: View {
     // Longitude: 26.0000
     
     
-    @State var countrysOnMap: [Country] = [Country(name: "Sweden", capital: "Stockholm", cities: [], currency: "Krona", flag: "🇸🇪", location: Location(latitude: 60.4853, longitude: 15.4370)), Country(name: "Finland", capital: "Helsinki", cities: [], currency: "Euro", flag: "🇫🇮", location: Location(latitude: 64.0000, longitude: 26.0000))]
+//    @State var countrysOnMap: [Country] = [Country(name: "Sweden", capital: "Stockholm", cities: [], currency: "Krona", flag: "🇸🇪", location: Location(latitude: 60.4853, longitude: 15.4370)), Country(name: "Finland", capital: "Helsinki", cities: [], currency: "Euro", flag: "🇫🇮", location: Location(latitude: 64.0000, longitude: 26.0000))]
     
     @State var selectedCountry: Country? = nil
+    @State var selectedCity: CityData? = nil
+
     
     var body: some View {
         
@@ -69,41 +73,51 @@ struct ExploreView: View {
                     
                     SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass")
                 
+                    Button("Search", action: {
+                        Task {
+                            do {
+                                try await countryManager.getCityByName(cityName: input)
+                                
+                                if let city = countryManager.city {
+                                    position = .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude), span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)))
+                                }
+                                    
+                            } catch {
+                                print("Error fetching city data: \(error)")
+                            }
+                        }
+                        
+                    })
+                    
+                    if let city = countryManager.city {
+                    
                         Map(position: $position) {
                         
                             UserAnnotation()
-                            
-                            ForEach(countrysOnMap) { country in
                                 
-                                Annotation("", coordinate: CLLocationCoordinate2D(latitude: country.location.latitude, longitude: country.location.longitude), content: {
-                                    
-                                    Button(action: {
-                                        print("\(country.name) pressed!")
+                                Annotation("", coordinate: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude), content: {
                                         
-                                        withAnimation {
-                                            if self.selectedCountry?.id == country.id {
-                                                self.selectedCountry = nil
-                                            } else {
-                                                self.selectedCountry = country
-                                            }
-                                        }
+                                        Button(action: {
+                                            print("\(city.name) pressed!")
+                                            
+                                            withAnimation {
+                                                self.selectedCity = city
+                                                }
+                                        }, label: {
+                                                Text(city.name)
+                                                    .frame(width: 20,height: 20,alignment: .center)
+                                                    .background(.red)
+                                        })
                                         
-                                    }, label: {
-                                        VStack(spacing: 5) {
-                                            Text(country.flag)
-                                                .frame(width: 20,height: 20,alignment: .center)
-                                            Text(country.name).font(.system(size: 12))
-                                                .foregroundStyle(.black)
-                                        }
                                     })
-                                    
-                                })
-                                
                             }
-                        
+                            .frame(width: 380, height: 400)
+                            .cornerRadius(20)
+                                                        
+                    } else {
+                        Text("Write something in the search bar")
                     }
-                        .frame(width: 380, height: 400)
-                        .cornerRadius(20)
+                        
                     
                     VStack {
                         if let selectedCountry = selectedCountry {
