@@ -6,9 +6,9 @@ class CountryManager: ObservableObject {
 
     let api = Api()
     
-    func getCountryByName(countryName: String) async throws {
+    func getCountryByIso(iso: String) async throws {
         // Create the request body struct
-        let requestBody = CountryRequest(country: countryName)
+        let requestBody = CountryRequest(iso2: iso)
         
         // Call the post method, sending the `CountryRequest` as the body
         let result: CountryApi = try await api.post(

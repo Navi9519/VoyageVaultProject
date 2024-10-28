@@ -61,7 +61,7 @@ struct UpcomingTripsView: View {
                     Task {
                         do {
                             
-                            try await countryManager.getCountryByName(countryName: "sweden")
+                            try await countryManager.getCountryByIso(iso: "SE")
                             print("clicked")
                             
                         } catch let error{

@@ -99,6 +99,10 @@ struct ExploreView: View {
                                         
                                         Button(action: {
                                             print("\(city.name) pressed!")
+                                            Task {
+                                               try await countryManager.getCountryByIso(iso: city.country)
+
+                                            }
                                             
                                             withAnimation {
                                                 self.selectedCity = city
@@ -120,8 +124,16 @@ struct ExploreView: View {
                         
                     
                     VStack {
-                        if let selectedCountry = selectedCountry {
-                            ExploreCardComponent(country: selectedCountry.name, city: selectedCountry.name, population: 200, currency: selectedCountry.currency, flag: selectedCountry.flag, daysUntilTrip: 24, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                        if let selectedCity = selectedCity {
+                            ExploreCardComponent(
+                                country: countryManager.country?.name ?? "",
+                                city: selectedCity.name,
+                                population: selectedCity.population,
+                                isCapital: selectedCity.is_capital,
+                                flag: countryManager.country?.unicodeFlag ?? "",
+                                daysUntilTrip: 24,
+                                color1: Color("orangeColorOne"),
+                                color2: Color("orangeColorTwo"))
                                 .transition(.move(edge: .bottom).combined(with: .opacity))
                         }
                     }
