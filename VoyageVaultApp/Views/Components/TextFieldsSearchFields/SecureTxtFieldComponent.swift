@@ -11,6 +11,8 @@ struct SecureTxtFieldComponent: View {
     var title: String
     var txtFieldText: String
     var image: String
+    var colorOne: String
+    var colorTwo: String
     @Binding var input: String
     
     var body: some View {
@@ -26,8 +28,8 @@ struct SecureTxtFieldComponent: View {
                     .foregroundStyle(Color.white)
                     .background(
                         LinearGradient(colors: [
-                            Color("backgroundOne"),
-                            Color("backgroundTwo")],
+                            Color(colorOne),
+                            Color(colorTwo)],
                                 startPoint: .leading,
                                 endPoint: .trailing)
                     )
@@ -53,5 +55,5 @@ struct SecureTxtFieldComponent: View {
 
 
 #Preview {
-    SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", input: .constant(""))
+    SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: .constant(""))
 }
