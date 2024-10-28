@@ -96,6 +96,15 @@ struct EditProfileView: View {
                                     LandingView()
                                 })
                                 
+                                FriendCardComponent(firstName: "Zlatan", surName: "Ibrahimovic", countryImg: "spain", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
+                                    LandingView()
+                                })
+                                
+                                FriendCardComponent(firstName: "Donald", surName: "Trump", countryImg: "spain", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
+                                    LandingView()
+                                })
+                                
+                                
                             }
                             
                           
