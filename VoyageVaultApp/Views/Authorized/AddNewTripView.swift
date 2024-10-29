@@ -44,7 +44,7 @@ struct AddNewTripView: View {
                         
                         Text("Add a new adventure!").font(.title).bold()
                         
-                        SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass")
+                        SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass", searchAction: {})
                         
                     }
                     

@@ -71,9 +71,8 @@ struct ExploreView: View {
                 
                 VStack(spacing: 20) {
                     
-                    SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass")
-                
-                    Button("Search", action: {
+                    SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass", searchAction: {
+                        
                         Task {
                             do {
                                 try await countryManager.getCityByName(cityName: input)
@@ -88,6 +87,8 @@ struct ExploreView: View {
                         }
                         
                     })
+                
+
                     
                     if let city = countryManager.city {
                     

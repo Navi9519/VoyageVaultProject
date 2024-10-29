@@ -42,7 +42,7 @@ struct FriendListView: View {
                         
                         Text("Find friends").font(.title).bold()
                         
-                        SearchFieldComponent(input: $input, txtFieldText: "Search Friends", image: "magnifyingglass")
+                        SearchFieldComponent(input: $input, txtFieldText: "Search Friends", image: "magnifyingglass", searchAction: {})
                         
                     }
                     

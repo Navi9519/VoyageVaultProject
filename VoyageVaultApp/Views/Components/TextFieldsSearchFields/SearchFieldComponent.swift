@@ -12,6 +12,7 @@ struct SearchFieldComponent: View {
     @Binding var input: String
     var txtFieldText: String
     var image: String
+    var searchAction: () -> Void
     
     var body: some View {
         
@@ -19,8 +20,13 @@ struct SearchFieldComponent: View {
             .background(.white).cornerRadius(25).textInputAutocapitalization(.never).overlay(
                 
                 HStack {
-                    Image(systemName: image)
-                        .padding(.leading, 270)
+                    
+                    Button(action: searchAction, label: {
+                        Image(systemName: image)
+                            .padding(.leading, 270)
+                    }).foregroundStyle(.black)
+                    
+                   
                     Spacer()
                 }
             )
@@ -33,5 +39,5 @@ struct SearchFieldComponent: View {
 }
 
 #Preview {
-    SearchFieldComponent(input: .constant(""), txtFieldText: "Search country", image: "magnifyingglass")
+    SearchFieldComponent(input: .constant(""), txtFieldText: "Search country", image: "magnifyingglass", searchAction: {})
 }
