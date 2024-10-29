@@ -127,9 +127,19 @@ struct ExploreView: View {
                                 flag: countryManager.country?.unicodeFlag ?? "",
                                 daysUntilTrip: 24,
                                 color1: Color("orangeColorOne"),
-                                color2: Color("orangeColorTwo"), addedToFavorite: $addToFavorite, addToFavoriteAction: {
+                                color2: Color("orangeColorTwo"), addedToFavorite: $addToFavorite,
                                     
+                                    addToFavoriteAction: {
                                     addToFavorite.toggle()
+                                        
+                                        firebaseAuth.addFavoriteDestiantion(city: selectedCity)
+                                        
+                                        guard let user = firebaseAuth.currentUserData else {return}
+                                        print(user.favoriteDestinations)
+                                      /*  ForEach(user.favoriteDestinations) {
+                                            destination in
+                                        } */
+                                        
                                 })
                                 .transition(.move(edge: .bottom).combined(with: .opacity))
                         }
