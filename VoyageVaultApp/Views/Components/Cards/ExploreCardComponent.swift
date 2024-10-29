@@ -18,7 +18,8 @@ struct ExploreCardComponent: View {
             var color1: Color
             var color2: Color
             
-        @State var addedToFavorite = false
+            @Binding var addedToFavorite: Bool
+            var addToFavoriteAction: () -> Void
             
             var dynamicScreenWidth = UIScreen.main.bounds.width
             var dynamicScreenHeight = UIScreen.main.bounds.height
@@ -61,9 +62,7 @@ struct ExploreCardComponent: View {
                             
                             HStack (spacing: 15){
                                 
-                                Button(action: {
-                                    addedToFavorite.toggle()
-                                }, label:{
+                                Button(action: addToFavoriteAction, label:{
                                     if (addedToFavorite == false) {
                                     Image(systemName: "heart")
                                     .resizable()
@@ -100,5 +99,7 @@ struct ExploreCardComponent: View {
 
 
 #Preview {
-    ExploreCardComponent(country: "Spain", city: "Malaga", population: 571_026, isCapital: true, flag: "🇪🇸", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+    ExploreCardComponent(country: "Spain", city: "Malaga", population: 571_026, isCapital: true, flag: "🇪🇸", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"), addedToFavorite: .constant(false), addToFavoriteAction: {
+        
+    })
 }

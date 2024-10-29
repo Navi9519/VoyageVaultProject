@@ -10,7 +10,9 @@ import MapKit
 
 struct ExploreView: View {
     
-    @State var input = ""
+    
+    @EnvironmentObject  var firebaseAuth: FirebaseAuth
+   
     let locationManager = LocationManager()
     
     @StateObject var countryManager = CountryManager()
@@ -18,17 +20,8 @@ struct ExploreView: View {
     @State var position = MapCameraPosition
         .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 54.5260, longitude: 15.2551), span: MKCoordinateSpan(latitudeDelta: 40.0, longitudeDelta: 40.0)))
     
-   // Sweden
-   // Latitude: 63.1792
-   // Longitude: 14.6357
-    
-    // Finland
-    // Latitude: 64.0000
-    // Longitude: 26.0000
-    
-    
-//    @State var countrysOnMap: [Country] = [Country(name: "Sweden", capital: "Stockholm", cities: [], currency: "Krona", flag: "🇸🇪", location: Location(latitude: 60.4853, longitude: 15.4370)), Country(name: "Finland", capital: "Helsinki", cities: [], currency: "Euro", flag: "🇫🇮", location: Location(latitude: 64.0000, longitude: 26.0000))]
-    
+    @State var input = ""
+    @State var addToFavorite: Bool = false
     @State var selectedCountry: Country? = nil
     @State var selectedCity: CityData? = nil
 
@@ -134,7 +127,10 @@ struct ExploreView: View {
                                 flag: countryManager.country?.unicodeFlag ?? "",
                                 daysUntilTrip: 24,
                                 color1: Color("orangeColorOne"),
-                                color2: Color("orangeColorTwo"))
+                                color2: Color("orangeColorTwo"), addedToFavorite: $addToFavorite, addToFavoriteAction: {
+                                    
+                                    addToFavorite.toggle()
+                                })
                                 .transition(.move(edge: .bottom).combined(with: .opacity))
                         }
                     }
