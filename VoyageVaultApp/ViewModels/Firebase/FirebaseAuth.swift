@@ -99,6 +99,7 @@ class FirebaseAuth: ObservableObject {
         
     }
     
+    
     func signOutUser() {
         do {
             try auth.signOut()
@@ -108,6 +109,8 @@ class FirebaseAuth: ObservableObject {
         }
     }
     
+    
+    /////  THE CODE BELOW SHOULD BE MOVED TO A SEPARATE DB FILE /////////////
     
     func startUserDataListener() {
         
@@ -138,5 +141,50 @@ class FirebaseAuth: ObservableObject {
         }
         
     }
+    
+    
+    func addFavoriteDestiantion(city: CityData) {
+        
+        guard var currentUserData = self.currentUserData else {return}
+        guard var currentUser = self.currentUser else {return}
+        
+        let cityData = [
+                "name": city.name,
+                "latitude": city.latitude,
+                "longitude": city.longitude,
+                "country": city.country,
+                "population": city.population,
+                "is_capital": city.is_capital
+            ] as [String : Any]
+       
+        //updateData() -> Updates only the specified fields without affecting other fields in the document.
+        // FieldValue.arrayUnion([cityData]) is a special Firestore function that adds new items to an array field while avoiding duplicates.
+        //For individual field updates or incremental additions (like adding a favorite city), updateData with FieldValue.arrayUnion is more efficient and safe.
+        
+        
+        db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([
+            "favoriteDestinations": FieldValue.arrayUnion([cityData])
+        ]) { error in
+            
+            if let error = error {
+                print("Error updating firestore \(error.localizedDescription)")
+            } else {
+                
+                currentUserData.favoriteDestinations.append(city)
+                
+            }
+             
+            
+        }
+        
+        
+        
+        
+      
+            
+    }
+    
+    
+        
+    }
 
-}

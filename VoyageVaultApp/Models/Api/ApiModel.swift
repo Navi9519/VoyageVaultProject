@@ -9,20 +9,20 @@ import Foundation
 
 import Foundation
 
-// This struct represents the nested "data" object in the API response
+// This struct represents the nested "data" object in the API response to get flag
 struct CountryData: Codable {
     var name: String
     var unicodeFlag: String
 }
 
-// This struct represents the entire API response
+// This struct represents the entire API response of country API
 struct CountryApi: Codable {
     var error: Bool
     var msg: String
     var data: CountryData
 }
 
-// The request body struct that will be sent to the API
+// The request body struct that will be sent to the API for fetching country ISO
 struct CountryRequest: Encodable {
     let iso2: String
 }
