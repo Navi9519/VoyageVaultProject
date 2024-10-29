@@ -18,7 +18,7 @@ struct RegisterView: View {
     @State var email: String = ""
     @State var password: String = ""
     @State var nationality: String = ""
-   // @State var showError: Bool = false
+    @State var errorMessage: String?
     
     
     
@@ -71,20 +71,9 @@ struct RegisterView: View {
                     Spacer()
                     
         
-                    
-                 /*   if showError == true {
-                        
-                        withAnimation {
-                            
-                            ErrorMessage(message: "invalid input, please try again")
-                            
-                        }
-                        
-                    }
-                    
-                    */
+                
                    
-                    if let errorMessage = firebaseAuth.errorMessage {
+                    if let errorMessage = errorMessage ??  firebaseAuth.errorMessage {
                         
                         withAnimation {
                             
@@ -99,22 +88,14 @@ struct RegisterView: View {
                     
                     Button(action: {
                         
-                        // TODO: Check this condition later and fix a pop up specifying which input field(s) that are invalid
-                        if(firstName.count < 2 || surName.count < 2 || age.isEmpty || nationality.count < 4 || !email.contains("@") || password.count < 6) {
-                            
-                           // showError = true
-                            
-                            print("invalid input, please try again")
-                        } else {
+                        if(validateInputs()) {
                             
                             firebaseAuth.registerUser(firstName: firstName, surName: surName, age: age, nationality: nationality, email: email, password: password)
-                            
-                            dismiss()
-                            
-                            
+                                
+                                dismiss()
                         }
-                    
                         
+                          
                     }, label: {
                         Text("Register")
                     }).frame(width: 185, height: 40)
@@ -147,7 +128,35 @@ struct RegisterView: View {
             
         }
     }
-}
+    
+    
+    // Method to check for valid inputs, if valid, return true
+    private func validateInputs() -> Bool {
+            if firstName.count < 2 {
+                errorMessage = "First name must be at least 2 characters long."
+                return false
+            }
+            
+            if surName.count < 2 {
+                errorMessage = "Surname must be at least 2 characters long."
+                return false
+            }
+            
+            if age.isEmpty {
+                errorMessage = "Please enter your age."
+                return false
+            }
+            
+            if nationality.count < 4 {
+                errorMessage = "Nationality must be at least 4 characters long."
+                return false
+            }
+            
+        
+            errorMessage = nil
+            return true
+        }
+    }
 
 #Preview {
     RegisterView().environmentObject(FirebaseAuth())
