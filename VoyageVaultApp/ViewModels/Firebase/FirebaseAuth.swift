@@ -146,7 +146,7 @@ class FirebaseAuth: ObservableObject {
     func addFavoriteDestiantion(city: CityData) {
         
         guard var currentUserData = self.currentUserData else {return}
-        guard var currentUser = self.currentUser else {return}
+        guard let currentUser = self.currentUser else {return}
         
         let cityData = [
                 "name": city.name,
@@ -170,6 +170,7 @@ class FirebaseAuth: ObservableObject {
                 print("Error updating firestore \(error.localizedDescription)")
             } else {
                 
+                // Localy appending the new city to the array if firestore update was succesful
                 currentUserData.favoriteDestinations.append(city)
                 
             }
