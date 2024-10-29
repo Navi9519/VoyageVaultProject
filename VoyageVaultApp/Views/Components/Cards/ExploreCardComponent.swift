@@ -18,7 +18,7 @@ struct ExploreCardComponent: View {
             var color1: Color
             var color2: Color
             
-     @State var addedToFavorite = false
+        @State var addedToFavorite = false
             
             var dynamicScreenWidth = UIScreen.main.bounds.width
             var dynamicScreenHeight = UIScreen.main.bounds.height

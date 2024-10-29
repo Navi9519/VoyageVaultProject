@@ -19,18 +19,22 @@ struct SearchFieldComponent: View {
         TextField(txtFieldText, text: $input).frame(width: 300, height: 40)
             .background(.white).cornerRadius(25).textInputAutocapitalization(.never).overlay(
                 
+               
+                
                 HStack {
+                    
+                    Spacer()
                     
                     Button(action: searchAction, label: {
                         Image(systemName: image)
-                            .padding(.leading, 270)
-                    }).foregroundStyle(.black)
+                        
+                            
+                    }).frame(width: 20).foregroundStyle(.black)
+            
                     
-                   
-                    Spacer()
                 }
             )
-            .padding(.horizontal)
+
     
         
     
