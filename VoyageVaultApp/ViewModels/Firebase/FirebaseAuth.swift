@@ -135,6 +135,15 @@ class FirebaseAuth: ObservableObject {
                 
                 print("Omvanlingsfel! Kunde inte omvandla användarens data")
                 
+                do {
+                    try self.auth.signOut()
+                } catch {
+                    
+                }
+                
+                
+
+                
             }
             
             
@@ -179,10 +188,34 @@ class FirebaseAuth: ObservableObject {
         }
         
         
-        
-        
-      
             
+    }
+    
+    func removeFavoriteDestination(city: CityData) {
+        guard var currentUserData = self.currentUserData else { return }
+        guard let currentUser = self.currentUser else { return }
+
+        let cityData = [
+            "name": city.name,
+            "latitude": city.latitude,
+            "longitude": city.longitude,
+            "country": city.country,
+            "population": city.population,
+            "is_capital": city.is_capital
+        ] as [String: Any]
+        
+        db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([
+            "favoriteDestinations": FieldValue.arrayRemove([cityData])
+        ]) { error in
+            if let error = error {
+                print("Error updating Firestore: \(error.localizedDescription)")
+            } else {
+                // Locally remove the city from the array if Firestore update was successful
+                if let index = currentUserData.favoriteDestinations.firstIndex(where: { $0.name == city.name }) {
+                    currentUserData.favoriteDestinations.remove(at: index)
+                }
+            }
+        }
     }
     
     

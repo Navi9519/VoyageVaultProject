@@ -14,7 +14,7 @@ struct ExploreCardComponent: View {
             var isCapital: Bool
             var flag: String
             var daysUntilTrip: Int
-            
+    
             var color1: Color
             var color2: Color
             
@@ -63,7 +63,7 @@ struct ExploreCardComponent: View {
                             HStack (spacing: 15){
                                 
                                 Button(action: addToFavoriteAction, label:{
-                                    if (addedToFavorite == false) {
+                                    if (!addedToFavorite) {
                                     Image(systemName: "heart")
                                     .resizable()
                                     .frame(width: 30, height: 30)
