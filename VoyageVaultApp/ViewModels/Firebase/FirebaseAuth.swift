@@ -135,6 +135,15 @@ class FirebaseAuth: ObservableObject {
                 
                 print("Omvanlingsfel! Kunde inte omvandla användarens data")
                 
+                do {
+                    try self.auth.signOut()
+                } catch {
+                    
+                }
+                
+                
+
+                
             }
             
             
