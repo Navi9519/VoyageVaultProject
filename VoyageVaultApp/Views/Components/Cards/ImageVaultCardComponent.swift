@@ -24,12 +24,40 @@ struct ImageVaultCardComponent: View {
             
             
             VStack {
+
                 
-                Text(title)
-                    .foregroundStyle(.black)
-                    .font(.system(size: 25))
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center).padding(.top, 20)
+                ZStack {
+                    
+                    
+                    Text(title)
+                        .foregroundStyle(.black)
+                        .font(.system(size: 25))
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center).padding(.top, 20)
+                    
+                    
+                    HStack {
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            
+                        }, label: {
+                            Image(systemName: "plus.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                
+                                .padding(.trailing,30)
+                                .padding(.top,15)
+                                
+                        }).foregroundStyle(.black)
+
+                        
+                    }
+                    .frame(maxWidth: .infinity)
+                   
+                }
+                
                
                 Spacer()
                 

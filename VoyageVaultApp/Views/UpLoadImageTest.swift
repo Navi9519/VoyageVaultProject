@@ -81,155 +81,111 @@ struct UpLoadImageTest: View {
         }
         
         
-        
     }
     
     
     
     func uploadFoto() {
         
-        // Make sure that the selected image property isn't nil
+        // Ensure there's a selected image
+        guard let selectedImage = selectedImage else {return}
         
-        guard  selectedImage != nil  else {return}
+        // Get the current user's ID
+        guard let userId = firebase.auth.currentUser?.uid else {
+            print("User not logged in")
+            return
+        }
+        
         
         // Create storeage reference
-        
         let storageRef = Storage.storage().reference()
         
-        // Turn our image into data
         
-        let imageData = selectedImage?.jpegData(compressionQuality: 0.8)
-        
-        
-        // Check that we were able to convert it to data
-        guard imageData !=  nil else {return}
-        
+        // Convert the image to data
+        guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {return}
         
         // Specify the file path and name
-        
-        
         let path = "images/\(UUID().uuidString).jpg"
         let fileRef = storageRef.child(path)
         
         
-        
         // Upload that data
-        
-        
-        let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
-            
+        let uploadTask = fileRef.putData(imageData, metadata: nil) { metadata, error in
             // Check for errors
-            
             if error == nil && metadata != nil {
                 
-                // Save a reference to the file in Firestore DB
-                
-                let db = firebase.db
-                db.collection("images").document().setData(["url":path], completion: { error in
-                    
-                    // if there were no errors, diplay the new image
-                    
-                    if error == nil {
-                        
-                       // Add the uploaded image to the list of images for display
-                        
-                        DispatchQueue.main.async {
-                            self.retrievedImages.append(self.selectedImage!)
+                // Get the download URL
+                fileRef.downloadURL { url, error in
+                    if let downloadURL = url {
+                        // now save the URL to Firestore in the user's document
+                        let db = firebase.db
+                        db.collection("user_data").document(userId).updateData(["images": FieldValue.arrayUnion([downloadURL.absoluteString])]) { error in
+                            if let error = error {
+                                print("Error updating images array: \(error.localizedDescription)")
+                            } else {
+                                DispatchQueue.main.async {
+                                    self.retrievedImages.append(selectedImage) // Append to your retrived images for display
+                                }
+                            }
                         }
-                        
-                        
-                        
-                        
                     }
-                })
-                    
-                    
-                    
-                
-                
+                }
+            } else {
+                print("Error uploading photo: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
-        
-        
-        
-        // Save a reference to the file in Firestore DB
     }
     
     
     func retrievePhotos() {
         
-        // Get the data from the database
-        
-        let db = firebase.db
-        
-        
-        db.collection("images").getDocuments { snapshot, error in
-            
-            if error == nil && snapshot != nil {
-                
-                var paths = [String]()
-                
-                // Loop through all the returned docs
-                for doc in snapshot!.documents {
-                    
-                    // extract the file path and add to array
-                    paths.append(doc["url"] as! String)
-                    
-                }
-                
-                // Loop through each file path and fetch the data from storage
-                
-                for path in paths {
-                    
-                    // get a reference to storage
-                    
-                    let storageRef = Storage.storage().reference()
-                    
-                    // Specify the path
-                    
-                    let fileRef = storageRef.child(path)
-                    
-                    
-                    
-                    // retrieve data
-                    
-                    fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                        
-                        // Check for errors
-                        
-                        if error == nil && data != nil {
-                            
-                            // Create a UIImage and put it into our array for display
-                            
-                            if let image = UIImage(data: data!) {
-                                
-                                DispatchQueue.main.async {
-                                    
-                                    retrievedImages.append(image)
-                                }
-                                
-                            }
-                            
-                        }
-                    }
-                    
-                    //
-                    
-                }
-                
-                
-            }
+        // Get the current user's ID
+        guard let userId = firebase.auth.currentUser?.uid else {
+            print("User not logged in")
+            return
         }
         
+        // Get the data from the database
+        let db = firebase.db
         
-        // Display the images
+        // Get the user's document
         
-        
-        
+        db.collection("user_data").document(userId).getDocument { document, error in
+            if let document = document, document.exists {
+                // Retrive the image array
+                if let imageArray = document.data()?["images"] as? [String] {
+                    var paths = [String]()
+                    
+                    // Loop through each URL and fetch the data
+                    for url in imageArray {
+                        paths.append(url)
+                        
+                        //Retrive data from storage using the URL
+                        let storageRef = Storage.storage().reference(forURL: url)
+                        storageRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                            if let error = error {
+                                print("Error retreving image data: \(error.localizedDescription)")
+                                return
+                            }
+                            if let data = data, let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    retrievedImages.append(image) // add the retrived image to the array
+                                }
+                            }
+                        }
+                        
+                    }
+                    
+                }
+            } else {
+                print("Document does not exist or error occurred : \(error?.localizedDescription ?? "Unkown error")")
+            }
+        }
     }
+    
 }
+    #Preview {
+        UpLoadImageTest(firebase: FirebaseAuth())
+    }
+    
 
-
-#Preview {
-    UpLoadImageTest(firebase: FirebaseAuth())
-}
