@@ -10,7 +10,9 @@ import SwiftUI
 struct FriendListView: View {
     
     @State var input: String = ""
-    
+    @State private var foundUser: UserData? // Variable to hold the found user
+    @StateObject private var userSearchData = UserSearchData(firebaseAuth: FirebaseAuth())
+    @EnvironmentObject var firebaseAuth: FirebaseAuth
     
     var body: some View {
         
@@ -40,10 +42,38 @@ struct FriendListView: View {
                     
                     VStack(spacing: 20) {
                         
-                        Text("Find friends").font(.title).bold()
+                        Text("Find friends")
+                            .font(.title)
+                            .bold()
                         
-                        SearchFieldComponent(input: $input, txtFieldText: "Search Friends", image: "magnifyingglass", searchAction: {})
+                        SearchFieldComponent(input: $input, txtFieldText: "Search Friends",
+                            image: "magnifyingglass",
+                            searchAction: {
+                            // Search for the user when the button is pressed
+                            foundUser = userSearchData.allUsers.first(where: {
+                                $0.firstName.lowercased() == input.lowercased() ||
+                                $0.surName.lowercased() == input.lowercased()
+                            })
+                        })
                         
+                    }
+                    
+                    if let user = foundUser {
+                        HStack {
+                            Text("\(user.firstName) \(user.surName)")
+                                .font(.title2)
+                                .foregroundStyle(.black)
+                            
+                            Button(action: {
+                                print("Pressed")
+                                firebaseAuth.addFriend(user: user)
+                            }, label: {
+                                Text("Add friend")
+                            })
+                        }
+                        }else if !input.isEmpty {
+                            Text("No friend found with that name.")
+                            .foregroundColor(.red)
                     }
                     
                     
