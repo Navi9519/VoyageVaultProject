@@ -12,8 +12,10 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @State var isPickerShowing = false
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @ObservedObject var storage: Firestorage
     
     
     var body: some View {
@@ -79,7 +81,28 @@ struct ProfileView: View {
                         ], color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
                         
                         
-                        ImageVaultCardComponent(title: "\(currentUserData.firstName)'s vault", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                        ImageVaultCardComponent(title: "\(currentUserData.firstName)'s vault",
+                            color1: Color("orangeColorOne"),
+                            color2: Color("orangeColorTwo"),
+                            addNewPic: {
+                                isPickerShowing = true
+                            },
+                                                retrievedImages: $storage.retrievedImages)
+                        
+                        if storage.selectedImage != nil {
+                            
+                            Button(action: {
+                                
+                                // Upload the image
+                                storage.uploadFoto()
+                                
+                            }, label: {
+                                
+                                Text("Upload photo")
+                            })
+                            
+                        }
+                        Spacer()
                         
                        
                     }.shadow(radius: 10)
@@ -98,11 +121,18 @@ struct ProfileView: View {
                 
           
                 
+            }.sheet(isPresented: $isPickerShowing, onDismiss: nil) {
+                
+                ImagePicker(selectedImage: $storage.selectedImage, isPickerShowing: $isPickerShowing)
+                
+            }
+            .onAppear {
+                storage.retrievePhotos()
             }
         
     }
 }
 
 #Preview {
-    ProfileView().environmentObject(FirebaseAuth())
+    ProfileView(storage: Firestorage(firebase: FirebaseAuth())).environmentObject(FirebaseAuth())
 }

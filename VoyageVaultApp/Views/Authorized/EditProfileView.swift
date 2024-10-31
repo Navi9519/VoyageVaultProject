@@ -112,8 +112,8 @@ struct EditProfileView: View {
                                 
                                 Text("My Images:").font(.title).bold()
                                 
-                                ImageVaultCardComponent(title: "\(currentUserData.firstName)'s vault", color1: Color("blueColorOne"), color2: Color("blueColorTwo"))
-                                
+                            /*    ImageVaultCardComponent(title: "\(currentUserData.firstName)'s vault", color1: Color("blueColorOne"), color2: Color("blueColorTwo"))
+                                */
                             }
                             
                            
