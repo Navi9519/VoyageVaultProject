@@ -63,17 +63,21 @@ struct ImageVaultCardComponent: View {
                
                 Spacer()
                 
-                VStack {
-                    
-                    // Loop through the images and display them
-                    ForEach(retrievedImages, id: \.self) { image in
-                        
-                        Image(uiImage: image).resizable().frame(width: 100, height: 100)
-                        
-                        
-                    }
-                    
+                ScrollView {
+                    VStack(alignment: .leading) {
+                               ForEach(chunkedImages(), id: \.self) { row in
+                                   HStack {
+                                       ForEach(row, id: \.self) { image in
+                                           Image(uiImage: image)
+                                               .resizable()
+                                               .frame(width: 100, height: 100)
+                                       }
+                                   }
+                               }
+                           }
                 }
+                
+
                 
                 Spacer()
             }
@@ -82,7 +86,15 @@ struct ImageVaultCardComponent: View {
         }
         .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.45).cornerRadius(20)
     }
+    
+    func chunkedImages() -> [[UIImage]] {
+            stride(from: 0, to: retrievedImages.count, by: 3).map {
+                Array(retrievedImages[$0..<min($0 + 3, retrievedImages.count)])
+            }
+        }
 }
+
+
 
 #Preview {
     ImageVaultCardComponent(title: "Ivan's vault:", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"), addNewPic: {
