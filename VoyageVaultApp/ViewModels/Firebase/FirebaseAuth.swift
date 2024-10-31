@@ -218,6 +218,62 @@ class FirebaseAuth: ObservableObject {
         }
     }
     
+    func addFriend(user: UserData) {
+        
+        guard var currentUserData = self.currentUserData else {return}
+        guard let currentUser = self.currentUser else {return}
+        
+        let friendData = [
+
+             "firstName": user.firstName,
+             "surName": user.surName,
+             "age": user.age,
+             "nationality": user.nationality,
+             "profileImg": user.profileImg ?? "",
+             "favoriteDestinations": user.favoriteDestinations.map { [
+                "name": $0.name,
+                "latitude": $0.latitude,
+                "longitude": $0.longitude,
+                "country": $0.country,
+                "population": $0.population,
+                "is_capital": $0.is_capital
+             ]},
+             "trips": user.trips.map {[
+                "name": $0.name,
+                        "latitude": $0.latitude,
+                        "longitude": $0.longitude,
+                        "country": $0.country,
+                        "population": $0.population,
+                        "is_capital": $0.is_capital
+             ]},
+             "friends": [],
+             "messages": [],
+             "images": user.images,
+            ] as [String : Any]
+       
+        
+        
+        
+        db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([
+            "friends": FieldValue.arrayUnion([friendData])
+        ]) { error in
+            
+            if let error = error {
+                print("Error updating firestore \(error.localizedDescription)")
+            } else {
+                
+                // Localy appending the new friend to the array if firestore update was succesful
+                currentUserData.friends.append(user)
+                
+            }
+             
+            
+        }
+        
+        
+            
+    }
+    
     
         
     }
