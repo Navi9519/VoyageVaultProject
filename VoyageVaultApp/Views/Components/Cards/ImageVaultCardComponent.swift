@@ -12,7 +12,9 @@ struct ImageVaultCardComponent: View {
     var title: String
     var color1: Color
     var color2: Color
-    
+    var addNewPic: () -> Void
+    @Binding var retrievedImages: [UIImage]
+
     var dynamicScreenWidth = UIScreen.main.bounds.width
     var dynamicScreenHeight = UIScreen.main.bounds.height
     
@@ -40,9 +42,9 @@ struct ImageVaultCardComponent: View {
                         
                         Spacer()
                         
-                        Button(action: {
-                            
-                        }, label: {
+                        Button(action:
+                            addNewPic
+                        , label: {
                             Image(systemName: "plus.circle")
                                 .resizable()
                                 .frame(width: 30, height: 30)
@@ -63,11 +65,13 @@ struct ImageVaultCardComponent: View {
                 
                 VStack {
                     
-                    Text("No images")
-                        .foregroundStyle(.black)
-                        .font(.system(size: 25))
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
+                    // Loop through the images and display them
+                    ForEach(retrievedImages, id: \.self) { image in
+                        
+                        Image(uiImage: image).resizable().frame(width: 100, height: 100)
+                        
+                        
+                    }
                     
                 }
                 
@@ -81,5 +85,7 @@ struct ImageVaultCardComponent: View {
 }
 
 #Preview {
-    ImageVaultCardComponent(title: "Ivan's vault:", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+    ImageVaultCardComponent(title: "Ivan's vault:", color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"), addNewPic: {
+        
+    }, retrievedImages: .constant([]))
 }
