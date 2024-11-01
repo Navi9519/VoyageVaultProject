@@ -24,6 +24,7 @@ class FirebaseAuth: ObservableObject {
     @Published var currentUser: User?
     @Published var currentUserData: UserData?
     @Published var errorMessage: String?
+    @Published var fetchedFriendsData: [FriendData] = []
     
     var userDataListener: ListenerRegistration?
     var friendDataListener: ListenerRegistration?
@@ -289,62 +290,33 @@ class FirebaseAuth: ObservableObject {
            }
     }
     
-//    func addFriend(user: UserData) {
-//        
-//        guard var currentUserData = self.currentUserData else {return}
-//        guard let currentUser = self.currentUser else {return}
-//        
-//        let friendData = [
-//
-//             "firstName": user.firstName,
-//             "surName": user.surName,
-//             "age": user.age,
-//             "nationality": user.nationality,
-//             "profileImg": user.profileImg ?? "",
-//             "favoriteDestinations": user.favoriteDestinations.map { [
-//                "name": $0.name,
-//                "latitude": $0.latitude,
-//                "longitude": $0.longitude,
-//                "country": $0.country,
-//                "population": $0.population,
-//                "is_capital": $0.is_capital
-//             ]},
-//             "trips": user.trips.map {[
-//                "name": $0.name,
-//                        "latitude": $0.latitude,
-//                        "longitude": $0.longitude,
-//                        "country": $0.country,
-//                        "population": $0.population,
-//                        "is_capital": $0.is_capital
-//             ]},
-//             "friends": [],
-//             "messages": [],
-//             "images": user.images,
-//            ] as [String : Any]
-//       
-//        
-//        
-//        
-//        db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([
-//            "friends": FieldValue.arrayUnion([friendData])
-//        ]) { error in
-//            
-//            if let error = error {
-//                print("Error updating firestore \(error.localizedDescription)")
-//            } else {
-//                
-//                // Localy appending the new friend to the array if firestore update was succesful
-//                currentUserData.friends.append(user)
-//                
-//            }
-//             
-//            
-//        }
-//        
-//        
-//            
-//    }
     
+    
+    func fetchFriendDataByIds() {
+            // Clear existing data
+            fetchedFriendsData.removeAll()
+            
+            guard let friendIds = currentUserData?.friends else { return }
+
+            // Fetch each friend's data based on the IDs
+            for friendId in friendIds {
+                db.collection(COLLECTION_FRIEND_DATA).document(friendId).getDocument { document, error in
+                    if let error = error {
+                        print("Error fetching friend data: \(error)")
+                    } else if let document = document, document.exists {
+                        do {
+                            let friendData = try document.data(as: FriendData.self)
+                            DispatchQueue.main.async {
+                                self.fetchedFriendsData.append(friendData)
+                            }
+                        } catch {
+                            print("Error decoding friend data: \(error)")
+                        }
+                    }
+                }
+            }
+        }
+
     
         
     }

@@ -92,17 +92,11 @@ struct EditProfileView: View {
                                 
                                 Text("My friends:").font(.title).bold()
                                 
-                                FriendCardComponent(firstName: "Jari", surName: "Litmanen", countryImg: "ukraine", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
+                                FriendCardComponent(firstName: "Jari", surName: "Litmanen", country: "ukraine", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
                                     LandingView()
                                 })
                                 
-                                FriendCardComponent(firstName: "Zlatan", surName: "Ibrahimovic", countryImg: "spain", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
-                                    LandingView()
-                                })
-                                
-                                FriendCardComponent(firstName: "Donald", surName: "Trump", countryImg: "spain", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
-                                    LandingView()
-                                })
+                               
                                 
                                 
                             }

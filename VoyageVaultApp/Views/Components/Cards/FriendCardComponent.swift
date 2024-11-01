@@ -11,7 +11,7 @@ struct FriendCardComponent<Destination: View>: View {
     
     var firstName: String
     var surName: String
-    var countryImg: String
+    var country: String
     var profileImg: String
     
     var color1: Color
@@ -77,7 +77,12 @@ struct FriendCardComponent<Destination: View>: View {
                                     .multilineTextAlignment(.center)
                                 
                               
-                                Image(countryImg).padding(.leading, 15)
+                                Text(country).foregroundStyle(.black)
+                                    .italic()
+                                    .font(.system(size: 20))
+                                    .fontWeight(.bold)
+                                    .frame(alignment: .center)
+                                    .multilineTextAlignment(.center)
                                 
                                 Spacer()
                                 
@@ -106,5 +111,5 @@ struct FriendCardComponent<Destination: View>: View {
 }
 
 #Preview {
-    FriendCardComponent(firstName: "David", surName: "Espinoza", countryImg: "spain", profileImg: "person.crop.circle.fill", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+    FriendCardComponent(firstName: "David", surName: "Espinoza", country: "Spain", profileImg: "person.crop.circle.fill", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
 }
