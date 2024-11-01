@@ -65,8 +65,26 @@ struct FriendListView: View {
                                 .foregroundStyle(.black)
                             
                             Button(action: {
-                                print("Pressed")
-                                firebaseAuth.addFriend(user: user)
+                                
+                                let newFriend = FriendData(
+                                    firstName: user.firstName,
+                                    surName: user.surName,
+                                    age: user.age,
+                                    nationality: user.nationality
+                                )
+                                
+                                
+                                firebaseAuth.createFriend(friendData: newFriend) { friendId in
+                                    guard let friendId = friendId else {
+                                        print("Error: Failed to retrive friend id")
+                                        return
+                                    }
+                                    
+                                    firebaseAuth.addFriend(friendId: friendId)
+                                    
+                                }
+                                
+
                             }, label: {
                                 Text("Add friend")
                             })

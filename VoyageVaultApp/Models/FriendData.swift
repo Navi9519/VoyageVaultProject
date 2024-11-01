@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
-struct FriendData: Codable {
+struct FriendData: Codable, Identifiable {
     
+    @DocumentID var id: String?
     var firstName: String
     var surName: String
     var age: String
