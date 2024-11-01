@@ -19,7 +19,7 @@ struct UserData: Codable {
     var profileImg: String?
     var favoriteDestinations: [CityData] = []
     var trips: [CityData] = []
-    var friends: [UserData] = []
+    var friends: [String] = []
     var messages: [Message] = []
     var images: [String] = []
 
