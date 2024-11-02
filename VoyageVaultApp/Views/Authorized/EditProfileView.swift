@@ -92,17 +92,51 @@ struct EditProfileView: View {
                                 
                                 Text("My friends:").font(.title).bold()
                                 
-                                FriendCardComponent(firstName: "Jari", surName: "Litmanen", countryImg: "ukraine", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
-                                    LandingView()
-                                })
+                                if firebaseAuth.fetchedFriendsData.isEmpty {
+                                    Spacer()
+                                    
+                                    Text("No friends added").font(.title).bold().foregroundStyle(.red)
+                                    Spacer()
+                                } else {
+                                    
+                                    ForEach(firebaseAuth.fetchedFriendsData) { friend in
+                                       
+                                        
+                        
+                                            FriendCardComponent(
+                                                firstName: friend.firstName,
+                                                surName: friend.surName,
+                                                country: friend.nationality,
+                                                profileImg:
+                                                    "person.crop.circle.fill",
+                                                color1: Color("blueColorOne"),
+                                                color2: Color("blueColorTwo"),
+                                                destination: {
+                                                LandingView()
+                                            })
+                                            
+                                            Button(action: {
+                                                
+                                                guard let friendId = friend.id else {
+                                                    print("No friend ID")
+                                                    return }
+                                                
+                                                print("Friend ID")
+                                                
+                                                firebaseAuth.deleteFriend(friendId: friendId)
+                                              
+                                                
+                                            }, label: {
+                                                Text("DELETE").background(.red).clipShape(.buttonBorder)
+                                            })
+                                                                                
+                                    }
+                                    
+                                }
                                 
-                                FriendCardComponent(firstName: "Zlatan", surName: "Ibrahimovic", countryImg: "spain", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
-                                    LandingView()
-                                })
+                               
                                 
-                                FriendCardComponent(firstName: "Donald", surName: "Trump", countryImg: "spain", profileImg: "person.crop.circle.fill", color1: Color("blueColorOne"), color2: Color("blueColorTwo"), destination: {
-                                    LandingView()
-                                })
+                               
                                 
                                 
                             }

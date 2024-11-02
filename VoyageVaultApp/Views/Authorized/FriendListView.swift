@@ -32,6 +32,8 @@ struct FriendListView: View {
                     Text("back")
                     
                     Spacer()
+                   
+                    NavigationLink("Edit profile", destination: EditProfileView())
                     
                     Image(systemName: "person.crop.circle.fill").resizable().scaledToFit().frame(width: 59, height: 59)
                 }.frame(width: 300)
@@ -84,6 +86,8 @@ struct FriendListView: View {
                                     
                                 }
                                 
+                                firebaseAuth.fetchFriendDataByIds()
+                                
 
                             }, label: {
                                 Text("Add friend")
@@ -101,9 +105,39 @@ struct FriendListView: View {
                         
                         Text("Your Friends:").font(.title).bold()
                         
-                        FriendCardComponent(firstName: "David", surName: "Espinoza", countryImg: "spain", profileImg: "person.crop.circle.fill", color1:  Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+                        ScrollView {
                         
-                        FriendCardComponent(firstName: "Volodomyr", surName: "Zelensky", countryImg: "ukraine", profileImg: "person.crop.circle.fill", color1:  Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+                            if firebaseAuth.fetchedFriendsData.isEmpty {
+                            
+                            Spacer()
+                            
+                            Text("No friends added").font(.title).bold().foregroundStyle(.red)
+                            
+                            Spacer()
+                            
+                        } else {
+                            
+                            ForEach(firebaseAuth.fetchedFriendsData) { friend in
+                                
+                                    
+                                    FriendCardComponent(
+                                    firstName: friend.firstName,
+                                    surName: friend.surName,
+                                    country: friend.nationality,
+                                    profileImg: "person.crop.circle.fill",
+                                    color1: Color("beigeColorOne"),
+                                    color2: Color("beigeColorTwo"),
+                                    destination: {LandingView()})
+                                    
+                                }
+                                
+                               
+                                
+                            }
+                        }
+                        
+                        
+                       
                     }
                     
                 }
@@ -114,7 +148,9 @@ struct FriendListView: View {
                 Spacer()
                 
                 
-            }.frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 40)
+            }.frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 40).onAppear {
+                firebaseAuth.fetchFriendDataByIds()
+            }
             
             
         }
@@ -123,5 +159,5 @@ struct FriendListView: View {
 }
 
 #Preview {
-    FriendListView()
+    FriendListView().environmentObject(FirebaseAuth())
 }
