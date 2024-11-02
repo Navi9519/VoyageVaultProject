@@ -318,6 +318,23 @@ class FirebaseAuth: ObservableObject {
         }
 
     
+    func deleteFriend(friendId: String) {
+        
+        let friendToDelete = fetchedFriendsData.first{ $0.id == friendId }
+        
+        guard let friendToDelete = friendToDelete else {return}
+        
+        guard let friendId = friendToDelete.id else {return}
+        
+        db.collection(COLLECTION_FRIEND_DATA).document(friendId).delete()
+        
+        guard let currentUserData = currentUserData else {return}
+        
+        db.collection(COLLECTION_USER_DATA).document(currentUserData.friends.first{ $0 == friendId} ?? "").delete()
+        
+        
+    }
+    
         
     }
 

@@ -32,6 +32,8 @@ struct FriendListView: View {
                     Text("back")
                     
                     Spacer()
+                   
+                    NavigationLink("Edit profile", destination: EditProfileView())
                     
                     Image(systemName: "person.crop.circle.fill").resizable().scaledToFit().frame(width: 59, height: 59)
                 }.frame(width: 300)
@@ -83,6 +85,8 @@ struct FriendListView: View {
                                     firebaseAuth.addFriend(friendId: friendId)
                                     
                                 }
+                                
+                                firebaseAuth.fetchFriendDataByIds()
                                 
 
                             }, label: {
