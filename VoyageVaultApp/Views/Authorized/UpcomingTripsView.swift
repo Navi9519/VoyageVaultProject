@@ -47,10 +47,11 @@ struct UpcomingTripsView: View {
                 Spacer()
                 
                 VStack (spacing: 30){
-                
-                    TripsCardComponent(country: countryManager.country?.name ?? "No Country", city: "Malaga", population: 245_345, currency: "Euro", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
-                    
-                    TripsCardComponent(country: countryManager.country?.name ?? "No Country", city: "Kiev", population: 2_900_000, currency: "ryvnia", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 142, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                    ScrollView {
+                        TripsCardComponent(country: countryManager.country?.name ?? "No Country", city: "Malaga", population: 245_345, currency: "Euro", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                        
+                        TripsCardComponent(country: countryManager.country?.name ?? "No Country", city: "Kiev", population: 2_900_000, currency: "ryvnia", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 142, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
+                    }
                 }
                 .shadow(radius: 10)
                 
