@@ -8,10 +8,12 @@
 import Foundation
 import UIKit
 import SwiftUICore
+import FirebaseFirestore
 
 
 struct UserData: Codable {
 
+    @DocumentID var id: String?
     var firstName: String
     var surName: String
     var age: String

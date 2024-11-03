@@ -305,10 +305,10 @@ class FirebaseAuth: ObservableObject {
         }
     }
     
-    func createFriend(friendData: FriendData, completion: @escaping (String?) -> Void) {
+    func createFriend(friendData: FriendData, friendId: String, completion: @escaping (String?) -> Void) {
         do {
-               // First, add the document, which automatically generates a new document ID.
-               let documentRef = db.collection(COLLECTION_FRIEND_DATA).document() // Create a document reference with a new ID
+            // Create a document with the specified friendId instead of letting Firestore generate an ID
+               let documentRef = db.collection(COLLECTION_FRIEND_DATA).document(friendId)
 
                // Now, set the data in that document reference and use the documentRef inside the completion block
                try documentRef.setData(from: friendData) { error in
@@ -317,7 +317,7 @@ class FirebaseAuth: ObservableObject {
                        completion(nil)
                    } else {
                        // Return the document ID of the new friend on success
-                       completion(documentRef.documentID)
+                       completion(friendId)
                    }
                }
            } catch let error {
@@ -364,10 +364,17 @@ class FirebaseAuth: ObservableObject {
         
         db.collection(COLLECTION_FRIEND_DATA).document(friendId).delete()
         
-        guard let currentUserData = currentUserData else {return}
+        guard let currentUser = currentUser else {return}
         
-        db.collection(COLLECTION_USER_DATA).document(currentUserData.friends.first{ $0 == friendId} ?? "").delete()
-        
+        db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([
+                       "friends": FieldValue.arrayRemove([friendId])
+                ]) { error in
+                    if let error = error {
+                        print("Failed to remove friend ID from user's friends array: (error)")
+                    } else {
+                        print("Successfully removed friend ID from user's friends array")
+                    }
+                }
         
     }
     

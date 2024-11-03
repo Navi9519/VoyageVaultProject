@@ -57,6 +57,8 @@ struct FriendListView: View {
                     }
                     
                     if let user = foundUser {
+                        
+                        
                         HStack {
                             Text("\(user.firstName) \(user.surName)")
                                 .font(.title2)
@@ -64,14 +66,18 @@ struct FriendListView: View {
                             
                             Button(action: {
                                 
+                                guard let friendId = user.id else {return}
+
+                                
                                 let newFriend = FriendData(
+                                    id: friendId,
                                     firstName: user.firstName,
                                     surName: user.surName,
                                     age: user.age,
                                     nationality: user.nationality
                                 )
                                 
-                                firebaseAuth.createFriend(friendData: newFriend) { friendId in
+                                firebaseAuth.createFriend(friendData: newFriend, friendId: friendId) { friendId in
                                     guard let friendId = friendId else {
                                         print("Error: Failed to retrive friend id")
                                         return
