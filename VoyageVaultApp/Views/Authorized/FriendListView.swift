@@ -79,15 +79,13 @@ struct FriendListView: View {
                                 
                                 firebaseAuth.createFriend(friendData: newFriend, friendId: friendId) { friendId in
                                     guard let friendId = friendId else {
-                                        print("Error: Failed to retrive friend id")
+                        
                                         return
                                     }
+                                    
                                     firebaseAuth.addFriend(friendId: friendId)
                                 }
-                              print("////////FIREBASE.FRIENDS///////////")
-                                print(firebaseAuth.friends)
-                                print("////////FIREBASE.FetchedFriendsDATA//////////")
-                                print(firebaseAuth.currentUserFriendsData)
+                             
                                 
                             }, label: {
                                 Text("Add friend")

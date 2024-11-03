@@ -296,13 +296,24 @@ class FirebaseAuth: ObservableObject {
             return
         }
         
-        db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData(["friends": FieldValue.arrayUnion([friendId])]) { error in
-            if let error = error {
-                print("Faild to add friend to current users friend list \(error)")
-            } else {
-                print("Friend added to current users friend list")
-            }
+        if currentUser.uid == friendId {
+            
+            print("You cant add yourself as a friend")
         }
+       
+        else {
+            
+            db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData(["friends": FieldValue.arrayUnion([friendId])]) { error in
+                if let error = error {
+                    print("Faild to add friend to current users friend list \(error)")
+                } else {
+                    print("Friend added to current users friend list")
+                }
+            }
+            
+        }
+        
+      
     }
     
     func createFriend(friendData: FriendData, friendId: String, completion: @escaping (String?) -> Void) {
