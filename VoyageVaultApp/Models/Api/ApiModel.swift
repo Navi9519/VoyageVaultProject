@@ -13,6 +13,7 @@ import Foundation
 struct CountryData: Codable {
     var name: String
     var unicodeFlag: String
+
 }
 
 // This struct represents the entire API response of country API

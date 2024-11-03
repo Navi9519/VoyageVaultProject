@@ -10,6 +10,8 @@ import SwiftUI
 struct UpcomingTripsView: View {
     
     @StateObject var countryManager = CountryManager()
+    @EnvironmentObject var firebaseAuth: FirebaseAuth
+
     
     var body: some View {
         ZStack {
@@ -58,36 +60,62 @@ struct UpcomingTripsView: View {
                     
                     
                     ScrollView {
-                        TripsCardComponent(country: countryManager.country?.name ?? "No Country", city: "Malaga", population: 245_345, currency: "Euro", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+                      
+                        ForEach(firebaseAuth.trips, id: \.name) { trip in
+                            
+                            let countryData = countryManager.countries[trip.country]
+
+                            TripsCardComponent(
+                                country: countryData?.name ?? "Unknown Country",
+                                city: trip.name,
+                                population: trip.population,
+                                isCapital: trip.is_capital,
+                                flag: countryData?.unicodeFlag ?? "No flag avalible",
+                                daysUntilTrip: calculateDaysUntilTrip(
+                                            from: trip.departureDate
+                                ),
+                                color1: Color("orangeColorOne"),
+                                color2: Color("orangeColorTwo")
+                            ).task {
+                                // Only fetch if the country data isn't already cached
+                                if countryData == nil {
+                                    do {
+                                        try await countryManager.getCountryByIso(iso: trip.country)
+                                    } catch {
+                                        print("Failed to fetch country data: \(error)")
+                                    }
+                                }
+                            }
+                        }
+                            
+                        }
                         
-                        TripsCardComponent(country: countryManager.country?.name ?? "No Country", city: "Kiev", population: 2_900_000, currency: "ryvnia", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 142, color1: Color("orangeColorOne"), color2: Color("orangeColorTwo"))
                     }
                 }
                 .shadow(radius: 10)
                 
                 
-                //Test button
-//                Button("test", action: {
-//                    Task {
-//                        do {
-//                            
-//                            try await countryManager.getCountryByIso(iso: "SE")
-//                            print("clicked")
-//                            
-//                        } catch let error{
-//                            print(error.localizedDescription)
-//                        }
-//                    }
-//                })
+               
                 
              
                 
                 Spacer()
             }
+            .onAppear {
+                if let userId = firebaseAuth.currentUser?.uid {
+                    firebaseAuth.fetchTrips(for: userId) // Fetch trips when view appears
+                }
+            }
         }
     }
-}
+    
+    private func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
+           guard let departureDate = departureDate else { return 0 }
+           let calendar = Calendar.current
+           return calendar.dateComponents([.day], from: Date(), to: departureDate).day ?? 0
+       }
+
 
 #Preview {
-    UpcomingTripsView()
+    UpcomingTripsView().environmentObject(FirebaseAuth())
 }

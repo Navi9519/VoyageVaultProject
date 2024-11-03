@@ -71,7 +71,6 @@ struct AddNewTripView: View {
                                         if var city = countryManager.city {
                                             city.departureDate = selectedDate
                                             selectedCity = city
-                                            print(city)
                                         }
                                         
                                     } catch {

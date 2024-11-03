@@ -114,7 +114,7 @@ struct ExploreView: View {
                         .cornerRadius(20)
                         
                     } else {
-                        Text("Write something in the search bar")
+                        Text("Search for a country above")
                     }
                     
                     
