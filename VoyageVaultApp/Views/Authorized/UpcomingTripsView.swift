@@ -11,7 +11,6 @@ struct UpcomingTripsView: View {
     
     @StateObject var countryManager = CountryManager()
     @EnvironmentObject var firebaseAuth: FirebaseAuth
-
     
     var body: some View {
         ZStack {
@@ -31,15 +30,14 @@ struct UpcomingTripsView: View {
                     
                     Text("Upcoming Trips")
                         .font(.system(size: 30))
-                            .bold()
-                            .multilineTextAlignment(.center)
+                        .bold()
+                        .multilineTextAlignment(.center)
 
                     Spacer()
                     
                     Image(systemName: "person.circle")
                         .resizable()
                         .frame(width: 70,height: 70)
-                    
                 }
                 .frame(maxWidth: .infinity)
                 .padding(30)
@@ -52,12 +50,11 @@ struct UpcomingTripsView: View {
                     
                     NavLinkComponent(
                         text: "Add new trip",
-                        width: 150, height: 50,
+                        width: 150,
+                        height: 50,
                         destination: {
                             AddNewTripView()
                         })
-                    
-                    
                     
                     ScrollView {
                       
@@ -71,12 +68,11 @@ struct UpcomingTripsView: View {
                                 population: trip.population,
                                 isCapital: trip.is_capital,
                                 flag: countryData?.unicodeFlag ?? "No flag avalible",
-                                daysUntilTrip: calculateDaysUntilTrip(
-                                            from: trip.departureDate
-                                ),
+                                daysUntilTrip: calculateDaysUntilTrip(from: trip.departureDate),
                                 color1: Color("orangeColorOne"),
                                 color2: Color("orangeColorTwo")
-                            ).task {
+                            )
+                            .task {
                                 // Only fetch if the country data isn't already cached
                                 if countryData == nil {
                                     do {
@@ -87,34 +83,28 @@ struct UpcomingTripsView: View {
                                 }
                             }
                         }
-                            
-                        }
-                        
                     }
                 }
-                .shadow(radius: 10)
-                
-                
-               
-                
-             
-                
-                Spacer()
             }
-            .onAppear {
-                if let userId = firebaseAuth.currentUser?.uid {
-                    firebaseAuth.fetchTrips(for: userId) // Fetch trips when view appears
-                }
+            .shadow(radius: 10)
+                
+            Spacer()
+            
+        }
+        .onAppear {
+            if let userId = firebaseAuth.currentUser?.uid {
+                firebaseAuth.fetchTrips(for: userId) // Fetch trips when view appears
             }
         }
     }
+}
     
-    private func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
-           guard let departureDate = departureDate else { return 0 }
-           let calendar = Calendar.current
-           return calendar.dateComponents([.day], from: Date(), to: departureDate).day ?? 0
-       }
-
+private func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
+        guard let departureDate = departureDate else { return 0 }
+    
+        let calendar = Calendar.current
+        return calendar.dateComponents([.day], from: Date(), to: departureDate).day ?? 0
+}
 
 #Preview {
     UpcomingTripsView().environmentObject(FirebaseAuth())

@@ -2,10 +2,7 @@ import Foundation
 
 class CountryManager: ObservableObject {
     
-    // Denna kan vara onödig, behövs eventuellt inte eftersom vi har country: CountryData som sparar samma sak
-    // Dictionary to hold country data keyed by ISO code
-        @Published var countries: [String: CountryData] = [:]
-    
+    @Published var countries: [String: CountryData] = [:]  // Dictionary to hold country data keyed by ISO code
     @Published var country: CountryData?  // Updated to store CountryData (name and flag)
     @Published var city: CityData?
 
