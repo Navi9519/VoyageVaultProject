@@ -25,7 +25,7 @@ class FirebaseAuth: ObservableObject {
     @Published var currentUser: User?
     @Published var currentUserData: UserData?
     @Published var errorMessage: String?
-    @Published var fetchedFriendsData: [FriendData] = []
+    @Published var currentUserFriendsData: [FriendData] = []
     
     var userDataListener: ListenerRegistration?
     var friendDataListener: ListenerRegistration?
@@ -334,7 +334,7 @@ class FirebaseAuth: ObservableObject {
     
     func fetchFriendDataByIds() {
             // Clear existing data
-            fetchedFriendsData.removeAll()
+            currentUserFriendsData.removeAll()
             
             guard let friendIds = currentUserData?.friends else { return }
 
@@ -347,7 +347,7 @@ class FirebaseAuth: ObservableObject {
                         do {
                             let friendData = try document.data(as: FriendData.self)
                             DispatchQueue.main.async {
-                                self.fetchedFriendsData.append(friendData)
+                                self.currentUserFriendsData.append(friendData)
                             }
                         } catch {
                             print("Error decoding friend data: \(error)")
@@ -360,7 +360,7 @@ class FirebaseAuth: ObservableObject {
     
     func deleteFriend(friendId: String) {
         
-        let friendToDelete = fetchedFriendsData.first{ $0.id == friendId }
+        let friendToDelete = currentUserFriendsData.first{ $0.id == friendId }
         
         guard let friendToDelete = friendToDelete else {return}
         

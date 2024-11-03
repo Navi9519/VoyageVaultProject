@@ -87,7 +87,7 @@ struct FriendListView: View {
                               print("////////FIREBASE.FRIENDS///////////")
                                 print(firebaseAuth.friends)
                                 print("////////FIREBASE.FetchedFriendsDATA//////////")
-                                print(firebaseAuth.fetchedFriendsData)
+                                print(firebaseAuth.currentUserFriendsData)
                                 
                             }, label: {
                                 Text("Add friend")
@@ -105,7 +105,7 @@ struct FriendListView: View {
                             .bold()
                         
                         ScrollView {
-                            if firebaseAuth.fetchedFriendsData.isEmpty {
+                            if firebaseAuth.currentUserFriendsData.isEmpty {
                             
                                 Spacer()
                                 
@@ -117,7 +117,7 @@ struct FriendListView: View {
                                 Spacer()
                             } else {
                             
-                                ForEach(firebaseAuth.fetchedFriendsData) { friend in
+                                ForEach(firebaseAuth.currentUserFriendsData) { friend in
                                         
                                         FriendCardComponent(
                                         firstName: friend.firstName,
