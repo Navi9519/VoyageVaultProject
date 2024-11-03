@@ -35,6 +35,7 @@ struct CityData: Codable {
     var country: String
     var population: Int
     var is_capital: Bool
+    var departureDate: Date?    // Date to departure
 }
 
 

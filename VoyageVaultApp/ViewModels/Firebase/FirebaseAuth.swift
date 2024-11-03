@@ -186,6 +186,41 @@ class FirebaseAuth: ObservableObject {
         }
     }
     
+    func addTrip(city: CityData) {
+        
+        guard var currentUserData = self.currentUserData else {return}
+        guard let currentUser = self.currentUser else {return}
+        
+        let cityData = [
+                "name": city.name,
+                "latitude": city.latitude,
+                "longitude": city.longitude,
+                "country": city.country,
+                "population": city.population,
+                "is_capital": city.is_capital,
+                "departureDate": city.departureDate ?? NSNull() // Use NSNull() to omit if no date
+            ] as [String : Any]
+        
+        db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([
+            "trips": FieldValue.arrayUnion([cityData])
+        ]) { error in
+            
+            if let error = error {
+                print("Error updating firestore \(error.localizedDescription)")
+            } else {
+                
+                // Localy appending the new city to the array if firestore update was succesful
+                currentUserData.trips.append(city)
+                
+            }
+             
+            
+        }
+        
+        
+            
+    }
+    
     
     func addFavoriteDestiantion(city: CityData) {
         

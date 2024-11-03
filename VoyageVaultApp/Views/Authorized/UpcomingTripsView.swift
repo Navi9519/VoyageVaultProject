@@ -47,6 +47,16 @@ struct UpcomingTripsView: View {
                 Spacer()
                 
                 VStack (spacing: 30){
+                    
+                    NavLinkComponent(
+                        text: "Add new trip",
+                        width: 150, height: 50,
+                        destination: {
+                            AddNewTripView()
+                        })
+                    
+                    
+                    
                     ScrollView {
                         TripsCardComponent(country: countryManager.country?.name ?? "No Country", city: "Malaga", population: 245_345, currency: "Euro", flag: countryManager.country?.unicodeFlag ?? "", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
                         
@@ -55,23 +65,22 @@ struct UpcomingTripsView: View {
                 }
                 .shadow(radius: 10)
                 
-                Spacer()
                 
                 //Test button
-                Button("test", action: {
-                    Task {
-                        do {
-                            
-                            try await countryManager.getCountryByIso(iso: "SE")
-                            print("clicked")
-                            
-                        } catch let error{
-                            print(error.localizedDescription)
-                        }
-                    }
-                })
+//                Button("test", action: {
+//                    Task {
+//                        do {
+//                            
+//                            try await countryManager.getCountryByIso(iso: "SE")
+//                            print("clicked")
+//                            
+//                        } catch let error{
+//                            print(error.localizedDescription)
+//                        }
+//                    }
+//                })
                 
-                NavLinkComponent(text: "Add new trip", width: 150, height: 50, destination: {AddNewTripView()}).shadow(radius: 10)
+             
                 
                 Spacer()
             }

@@ -10,7 +10,7 @@
 struct DatePickerCardComponent: View {
     
     var location: String
-    @State var travelDate: Date = Date.now
+    @Binding var travelDate: Date
     
     var color1: Color
     var color2: Color
@@ -35,7 +35,7 @@ struct DatePickerCardComponent: View {
                 
                 Spacer()
                 
-                DatePicker(selection: $travelDate, in: ...Date.now, displayedComponents: .date) {
+                DatePicker(selection: $travelDate, in: Date.now..., displayedComponents: .date) {
                     
                     Text("Select a date:").font(.title2).bold().lineLimit(1)
                 }.frame(width: 290).foregroundStyle(.black)
@@ -54,7 +54,7 @@ struct DatePickerCardComponent: View {
     
         
         #Preview {
-            DatePickerCardComponent(location: "Malaga", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
+            DatePickerCardComponent(location: "Malaga", travelDate: .constant(Date()), color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
         }
         
 
