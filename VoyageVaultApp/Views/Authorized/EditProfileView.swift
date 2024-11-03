@@ -113,7 +113,7 @@ struct EditProfileView: View {
                                             FriendCardComponent(
                                                 firstName: friend.firstName,
                                                 surName: friend.surName,
-                                                country: friend.nationality,
+                                                country: friend.nationality, deleteFriend: {},
                                                 profileImg:
                                                     "person.crop.circle.fill",
                                                 color1: Color("blueColorOne"),

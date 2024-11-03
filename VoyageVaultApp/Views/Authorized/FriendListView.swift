@@ -120,6 +120,7 @@ struct FriendListView: View {
                                         firstName: friend.firstName,
                                         surName: friend.surName,
                                         country: friend.nationality,
+                                        deleteFriend: {},
                                         profileImg: "person.crop.circle.fill",
                                         color1: Color("beigeColorOne"),
                                         color2: Color("beigeColorTwo"),
