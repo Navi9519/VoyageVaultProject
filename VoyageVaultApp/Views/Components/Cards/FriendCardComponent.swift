@@ -61,7 +61,9 @@ struct FriendCardComponent<Destination: View>: View {
         
                                 Spacer()
                                 
-                                Image(systemName: "envelope.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30).padding(.trailing, 20)
+                                Image(systemName: "envelope.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30)
+                                
+                              
                                 
                             }.frame(maxWidth: dynamicScreenWidth * 0.90)
                             
@@ -88,7 +90,7 @@ struct FriendCardComponent<Destination: View>: View {
                                 Spacer()
                             
                                 Button(action: deleteFriend, label: {
-                                    Image(systemName: "trash.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30).padding(.trailing, 20)
+                                    Image(systemName: "trash.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30)
                                 })
                                 
                             }.frame(maxWidth: dynamicScreenWidth * 0.90)

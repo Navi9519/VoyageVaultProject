@@ -121,7 +121,12 @@ struct FriendListView: View {
                                         firstName: friend.firstName,
                                         surName: friend.surName,
                                         country: friend.nationality,
-                                        deleteFriend: {},
+                                        deleteFriend: {
+                                            
+                                            guard let friendId = friend.id else {return}
+                                            
+                                            firebaseAuth.deleteFriend(friendId: friendId)
+                                        },
                                         profileImg: "person.crop.circle.fill",
                                         color1: Color("beigeColorOne"),
                                         color2: Color("beigeColorTwo"),
