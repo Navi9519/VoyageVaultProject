@@ -306,6 +306,10 @@ class FirebaseAuth: ObservableObject {
     }
     
     func createFriend(friendData: FriendData, friendId: String, completion: @escaping (String?) -> Void) {
+        
+        
+        
+        
         do {
             // Create a document with the specified friendId instead of letting Firestore generate an ID
                let documentRef = db.collection(COLLECTION_FRIEND_DATA).document(friendId)
@@ -361,9 +365,7 @@ class FirebaseAuth: ObservableObject {
         guard let friendToDelete = friendToDelete else {return}
         
         guard let friendId = friendToDelete.id else {return}
-        
-        db.collection(COLLECTION_FRIEND_DATA).document(friendId).delete()
-        
+
         guard let currentUser = currentUser else {return}
         
         db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([

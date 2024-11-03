@@ -84,7 +84,10 @@ struct FriendListView: View {
                                     }
                                     firebaseAuth.addFriend(friendId: friendId)
                                 }
-                                firebaseAuth.fetchFriendDataByIds()
+                              print("////////FIREBASE.FRIENDS///////////")
+                                print(firebaseAuth.friends)
+                                print("////////FIREBASE.FetchedFriendsDATA//////////")
+                                print(firebaseAuth.fetchedFriendsData)
                                 
                             }, label: {
                                 Text("Add friend")
