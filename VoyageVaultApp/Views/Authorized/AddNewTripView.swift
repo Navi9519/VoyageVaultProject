@@ -11,8 +11,22 @@ struct AddNewTripView: View {
     
     @State var input = ""
     
+    @StateObject var countryManager = CountryManager ()
+    @EnvironmentObject  var firebaseAuth: FirebaseAuth
+    
+    @State var selectedCity: CityData? = nil
+    @State var selectedDate: Date = Date()
+
     var dynamicScreenWidth = UIScreen.main.bounds.width
     var dynamicScreenHeight = UIScreen.main.bounds.height
+    
+    // Date formatter to display only the date
+       private var dateFormatter: DateFormatter {
+           let formatter = DateFormatter()
+           formatter.dateStyle = .medium // Choose a date style like .short, .medium, or .long
+           formatter.timeStyle = .none // Hide the time
+           return formatter
+       }
 
     var body: some View {
         
@@ -34,7 +48,8 @@ struct AddNewTripView: View {
                     Spacer()
                     
                     Image(systemName: "person.crop.circle.fill").resizable().scaledToFit().frame(width: 59, height: 59)
-                }.frame(width: 300)
+                }
+                .frame(width: 300)
                 
                 
                
@@ -44,24 +59,55 @@ struct AddNewTripView: View {
                         
                         Text("Add a new adventure!").font(.title).bold()
                         
-                        SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass", searchAction: {})
-                        
+                        SearchFieldComponent(
+                            input: $input,
+                            txtFieldText: "Search Location",
+                            image: "magnifyingglass",
+                            searchAction: {
+                                Task {
+                                    do {
+                                        try await countryManager.getCityByName(cityName: input)
+                                        
+                                        if var city = countryManager.city {
+                                            city.departureDate = selectedDate
+                                            selectedCity = city
+                                        }
+                                        
+                                    } catch {
+                                        print("Error fetching city data: \(error)")
+                                    }
+                                }
+                        })
                     }
-                    
-                
-                    
+                        
                 }
-                
     
                 
                 VStack(spacing: 80) {
                     
-                    DatePickerCardComponent(location: "Malaga", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
+                    DatePickerCardComponent(
+                        location: selectedCity?.name ?? "No county selected",
+                        travelDate: $selectedDate,
+                        color1: Color("beigeColorOne"),
+                        color2: Color("backgroundTwo"))
+                    .onChange( of: selectedDate) { newDate in
+                        selectedCity?.departureDate = newDate
+                    }
                 
                     
-                    BtnComponent(text: "Add", width: 200, height: 80, colorOne: "blueColorTwo", colorTwo: "blueColorTwo", txtColor: .black) {
+                    BtnComponent(
+                        text: "Add",
+                        width: 200, height: 80,
+                        colorOne: "blueColorTwo",
+                        colorTwo: "blueColorTwo",
+                        txtColor: .black) {
                         
-                        print("Add new trip")
+                            if let city = selectedCity {
+                                print("Adding trip to \(city.name) on \(dateFormatter.string(from: city.departureDate ?? Date() ))")
+                                
+                                firebaseAuth.addTrip(city: city)
+                                
+                            }
                     }
                 }
                 

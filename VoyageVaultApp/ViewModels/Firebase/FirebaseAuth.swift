@@ -20,6 +20,7 @@ class FirebaseAuth: ObservableObject {
     let COLLECTION_USER_DATA = "user_data"
     
     @Published var friends: [FriendData] = []
+    @Published var trips: [CityData] = [] // Store fetched trips
     
     @Published var currentUser: User?
     @Published var currentUserData: UserData?
@@ -186,6 +187,41 @@ class FirebaseAuth: ObservableObject {
         }
     }
     
+    func addTrip(city: CityData) {
+        
+        guard var currentUserData = self.currentUserData else {return}
+        guard let currentUser = self.currentUser else {return}
+        
+        let cityData = [
+                "name": city.name,
+                "latitude": city.latitude,
+                "longitude": city.longitude,
+                "country": city.country,
+                "population": city.population,
+                "is_capital": city.is_capital,
+                "departureDate": city.departureDate ?? NSNull() // Use NSNull() to omit if no date
+            ] as [String : Any]
+        
+        db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([
+            "trips": FieldValue.arrayUnion([cityData])
+        ]) { error in
+            
+            if let error = error {
+                print("Error updating firestore \(error.localizedDescription)")
+            } else {
+                
+                // Localy appending the new city to the array if firestore update was succesful
+                currentUserData.trips.append(city)
+                
+            }
+             
+            
+        }
+        
+        
+            
+    }
+    
     
     func addFavoriteDestiantion(city: CityData) {
         
@@ -334,6 +370,31 @@ class FirebaseAuth: ObservableObject {
         
         
     }
+    
+    func fetchTrips(for userId: String) {
+          db.collection(COLLECTION_USER_DATA).document(userId).getDocument { (document, error) in
+              if let document = document, document.exists {
+                  if let tripsData = document.data()?["trips"] as? [[String: Any]] {
+                      self.trips = tripsData.compactMap { data in
+                          // Assuming you can decode the data back into CityData
+                          let name = data["name"] as? String ?? ""
+                          let latitude = data["latitude"] as? Double ?? 0.0
+                          let longitude = data["longitude"] as? Double ?? 0.0
+                          let country = data["country"] as? String ?? ""
+                          let population = data["population"] as? Int ?? 0
+                          let is_capital = data["is_capital"] as? Bool ?? false
+                          let departureDate = (data["departureDate"] as? Timestamp)?.dateValue()
+                          
+                          return CityData(name: name, latitude: latitude, longitude: longitude, country: country, population: population, is_capital: is_capital, departureDate: departureDate)
+                      }
+                  }
+              } else {
+                  print("Document does not exist")
+              }
+          }
+      }
+    
+    
     
         
     }
