@@ -48,7 +48,7 @@ class Firestorage: ObservableObject {
         
         
         // Upload that data
-        let uploadTask = fileRef.putData(imageData, metadata: nil) { metadata, error in
+        _ = fileRef.putData(imageData, metadata: nil) { metadata, error in
             // Check for errors
             if error == nil && metadata != nil {
                 

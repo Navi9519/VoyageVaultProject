@@ -12,22 +12,22 @@ struct ExploreView: View {
     
     
     @EnvironmentObject  var firebaseAuth: FirebaseAuth
+    @StateObject var countryManager = CountryManager()
     
     let locationManager = LocationManager()
     
-    @StateObject var countryManager = CountryManager()
-    
     @State var position = MapCameraPosition
-        .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 54.5260, longitude: 15.2551), span: MKCoordinateSpan(latitudeDelta: 40.0, longitudeDelta: 40.0)))
+        .region(MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+            latitude: 54.5260, longitude: 15.2551),
+            span: MKCoordinateSpan(latitudeDelta: 40.0, longitudeDelta: 40.0)))
     
     @State var input = ""
     @State var addToFavorite: Bool = false
     @State var selectedCountry: Country? = nil
     @State var selectedCity: CityData? = nil
     
-    
     var body: some View {
-        
         ZStack {
             
             Image("background_pic")
@@ -36,13 +36,11 @@ struct ExploreView: View {
                 .ignoresSafeArea()
             
             VStack(alignment: .center, spacing: 40) {
-                
                 ZStack (alignment: .trailing){
                     
                     Spacer()
                     
                     VStack {
-                        
                         Text("Explore")
                             .font(.title)
                             .bold()
@@ -64,24 +62,27 @@ struct ExploreView: View {
                 
                 VStack(spacing: 20) {
                     
-                    SearchFieldComponent(input: $input, txtFieldText: "Search Location", image: "magnifyingglass", searchAction: {
-                        
-                        Task {
-                            do {
-                                try await countryManager.getCityByName(cityName: input)
-                                
-                                if let city = countryManager.city {
-                                    position = .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude), span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)))
+                    SearchFieldComponent(
+                        input: $input,
+                        txtFieldText: "Search Location",
+                        image: "magnifyingglass",
+                        searchAction: {
+                            
+                            Task {
+                                do {
+                                    try await countryManager.getCityByName(cityName: input)
+                                    
+                                    if let city = countryManager.city {
+                                        position = .region(MKCoordinateRegion(
+                                            center: CLLocationCoordinate2D(
+                                            latitude: city.latitude, longitude: city.longitude),
+                                            span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)))
+                                    }
+                                } catch {
+                                    print("Error fetching city data: \(error)")
                                 }
-                                
-                            } catch {
-                                print("Error fetching city data: \(error)")
                             }
-                        }
-                        
                     })
-                    
-                    
                     
                     if let city = countryManager.city {
                         
@@ -89,26 +90,30 @@ struct ExploreView: View {
                             
                             UserAnnotation()
                             
-                            Annotation("", coordinate: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude), content: {
+                            Annotation("",
+                                coordinate: CLLocationCoordinate2D(
+                                latitude: city.latitude,
+                                longitude: city.longitude),
+                                content: {
                                 
-                                Button(action: {
-                                    print("\(city.name) pressed!")
-                                    Task {
-                                        try await countryManager.getCountryByIso(iso: city.country)
+                                    Button(action: {
+                                        print("\(city.name) pressed!")
+                                        Task {
+                                            try await countryManager.getCountryByIso(iso: city.country)
+                                        }
                                         
-                                    }
-                                    
-                                    withAnimation {
-                                        self.selectedCity = city
-                                        self.addToFavorite = firebaseAuth.currentUserData?.favoriteDestinations.contains() {$0.name == city.name} ?? false
-                                    }
-                                }, label: {
-                                    Text(city.name)
-                                        .frame(width: 20,height: 20,alignment: .center)
-                                        .background(.red)
+                                        withAnimation {
+                                            self.selectedCity = city
+                                            self.addToFavorite = firebaseAuth.currentUserData?
+                                                .favoriteDestinations.contains()
+                                                {$0.name == city.name} ?? false
+                                        }
+                                    }, label: {
+                                        Text(city.name)
+                                            .frame(width: 20,height: 20,alignment: .center)
+                                            .background(.red)
+                                    })
                                 })
-                                
-                            })
                         }
                         .frame(width: 380, height: 400)
                         .cornerRadius(20)
@@ -132,8 +137,8 @@ struct ExploreView: View {
                                 addedToFavorite: $addToFavorite,
                                 
                                 addToFavoriteAction: {
-                                    addToFavorite.toggle()
                                     
+                                    addToFavorite.toggle()
                                     
                                     if addToFavorite == true {
                                         firebaseAuth.addFavoriteDestiantion(city: selectedCity)
@@ -143,29 +148,17 @@ struct ExploreView: View {
                                     
                                     guard let user = firebaseAuth.currentUserData else {return}
                                     print(user.favoriteDestinations)
-                                    /*  ForEach(user.favoriteDestinations) {
-                                     destination in
-                                     } */
-                                    
                                 })
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
                         }
                     }
-                    
-                    
                 }
-                
                 
                 Spacer()
                 
-                
-            }.frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 40)
-            
-            // TODO: Popup view for selected location, when location is clicked the view with the selected City with corresponding data should appear. Create popup component with data from API
-            
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 40)
         }
-        
-        
     }
 }
 

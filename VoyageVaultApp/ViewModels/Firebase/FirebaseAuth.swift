@@ -298,7 +298,7 @@ class FirebaseAuth: ObservableObject {
         
         db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData(["friends": FieldValue.arrayUnion([friendId])]) { error in
             if let error = error {
-                print("Faild to add friend to current users friend list")
+                print("Faild to add friend to current users friend list \(error)")
             } else {
                 print("Friend added to current users friend list")
             }

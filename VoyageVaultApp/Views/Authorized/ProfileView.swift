@@ -12,11 +12,10 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @State var isPickerShowing = false
-    
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     @ObservedObject var storage: Firestorage
     
+    @State var isPickerShowing = false
     
     var body: some View {
         ZStack {
@@ -30,14 +29,11 @@ struct ProfileView: View {
                 if let currentUserData = firebaseAuth.currentUserData  {
                     
                     HStack {
-                        
-                       
-                        
                         VStack (alignment: .leading){
                            
                             Text(currentUserData.firstName)
                                 .font(.title2)
-                           
+
                             Text(currentUserData.surName)
                                 .bold()
                                 .font(.title)
@@ -49,8 +45,6 @@ struct ProfileView: View {
                             Text("Nationality: \(currentUserData.nationality)")
                                 .bold()
                                 .font(.title2)
-                            
-                                
                         }
                         
                         Spacer()
@@ -61,75 +55,56 @@ struct ProfileView: View {
                             Image(systemName: "person.circle")
                                 .resizable()
                                 .frame(width: 70,height: 70)
-                        }).foregroundStyle(.black)
-
-                        
-                       
-                        
+                        })
+                        .foregroundStyle(.black)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(30)
                     .padding(.top,30)
                     
-                    
                     VStack (spacing: 30){
                         
-                        FavoriteDestinationsCardComponent(title: "\(currentUserData.firstName)'s favorite cities:", cities: [
-                            CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
-                            CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
-                            CityTest(id: 3, name: "Tokyo", flag: "🇯🇵")
-                        ], color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
+                        FavoriteDestinationsCardComponent(
+                            title: "\(currentUserData.firstName)'s favorite cities:",
+                            cities: [
+                                CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
+                                CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
+                                CityTest(id: 3, name: "Tokyo", flag: "🇯🇵")
+                            ],
+                            color1: Color("beigeColorOne"),
+                            color2: Color("backgroundTwo"))
                         
-                        
-                        ImageVaultCardComponent(title: "\(currentUserData.firstName)'s vault",
+                        ImageVaultCardComponent(
+                            title: "\(currentUserData.firstName)'s vault",
                             color1: Color("orangeColorOne"),
                             color2: Color("orangeColorTwo"),
                             addNewPic: {
                                 isPickerShowing = true
                             },
-                                                retrievedImages: $storage.retrievedImages)
+                            retrievedImages: $storage.retrievedImages)
                         
                         if storage.selectedImage != nil {
                             
                             Button(action: {
-                                
                                 // Upload the image
                                 storage.uploadFoto()
                                 
                             }, label: {
-                                
                                 Text("Upload photo")
                             })
                             
                         }
                         Spacer()
-                        
-                       
-                    }.shadow(radius: 10)
-                    
-                    
-                    
-                    
-                   
-                    
-                    
+                    }
+                    .shadow(radius: 10)
                 }
-                    
-                }
-                
-               
-                
-          
-                
-            }.sheet(isPresented: $isPickerShowing, onDismiss: nil) {
-                
+            }
+        }.sheet(isPresented: $isPickerShowing, onDismiss: nil) {
                 ImagePicker(selectedImage: $storage.selectedImage, isPickerShowing: $isPickerShowing)
-                
-            }
-            .onAppear {
-                storage.retrievePhotos()
-            }
-        
+        }
+        .onAppear {
+            storage.retrievePhotos()
+        }
     }
 }
 
