@@ -99,7 +99,7 @@ struct EditProfileView: View {
                                 
                                 Text("My friends:").font(.title).bold()
                                 
-                                if firebaseAuth.fetchedFriendsData.isEmpty {
+                                if firebaseAuth.currentUserFriendsData.isEmpty {
                                     Spacer()
                                     Text("No friends added")
                                         .font(.title)
@@ -108,12 +108,12 @@ struct EditProfileView: View {
                                     Spacer()
                                 } else {
                                     
-                                    ForEach(firebaseAuth.fetchedFriendsData) { friend in
+                                    ForEach(firebaseAuth.currentUserFriendsData) { friend in
                                         
                                             FriendCardComponent(
                                                 firstName: friend.firstName,
                                                 surName: friend.surName,
-                                                country: friend.nationality,
+                                                country: friend.nationality, deleteFriend: {},
                                                 profileImg:
                                                     "person.crop.circle.fill",
                                                 color1: Color("blueColorOne"),

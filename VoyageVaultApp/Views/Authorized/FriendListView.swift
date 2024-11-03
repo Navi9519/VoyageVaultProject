@@ -79,12 +79,13 @@ struct FriendListView: View {
                                 
                                 firebaseAuth.createFriend(friendData: newFriend, friendId: friendId) { friendId in
                                     guard let friendId = friendId else {
-                                        print("Error: Failed to retrive friend id")
+                        
                                         return
                                     }
+                                    
                                     firebaseAuth.addFriend(friendId: friendId)
                                 }
-                                firebaseAuth.fetchFriendDataByIds()
+                             
                                 
                             }, label: {
                                 Text("Add friend")
@@ -102,7 +103,7 @@ struct FriendListView: View {
                             .bold()
                         
                         ScrollView {
-                            if firebaseAuth.fetchedFriendsData.isEmpty {
+                            if firebaseAuth.currentUserFriendsData.isEmpty {
                             
                                 Spacer()
                                 
@@ -114,12 +115,18 @@ struct FriendListView: View {
                                 Spacer()
                             } else {
                             
-                                ForEach(firebaseAuth.fetchedFriendsData) { friend in
+                                ForEach(firebaseAuth.currentUserFriendsData) { friend in
                                         
                                         FriendCardComponent(
                                         firstName: friend.firstName,
                                         surName: friend.surName,
                                         country: friend.nationality,
+                                        deleteFriend: {
+                                            
+                                            guard let friendId = friend.id else {return}
+                                            
+                                            firebaseAuth.deleteFriend(friendId: friendId)
+                                        },
                                         profileImg: "person.crop.circle.fill",
                                         color1: Color("beigeColorOne"),
                                         color2: Color("beigeColorTwo"),

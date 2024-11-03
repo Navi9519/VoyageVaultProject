@@ -12,6 +12,7 @@ struct FriendCardComponent<Destination: View>: View {
     var firstName: String
     var surName: String
     var country: String
+    var deleteFriend: () ->  Void
     var profileImg: String
     
     var color1: Color
@@ -60,7 +61,9 @@ struct FriendCardComponent<Destination: View>: View {
         
                                 Spacer()
                                 
-                                Image(systemName: "envelope.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30).padding(.trailing, 20)
+                                Image(systemName: "envelope.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30)
+                                
+                              
                                 
                             }.frame(maxWidth: dynamicScreenWidth * 0.90)
                             
@@ -85,6 +88,10 @@ struct FriendCardComponent<Destination: View>: View {
                                     .multilineTextAlignment(.center)
                                 
                                 Spacer()
+                            
+                                Button(action: deleteFriend, label: {
+                                    Image(systemName: "trash.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30)
+                                })
                                 
                             }.frame(maxWidth: dynamicScreenWidth * 0.90)
                             
@@ -111,5 +118,5 @@ struct FriendCardComponent<Destination: View>: View {
 }
 
 #Preview {
-    FriendCardComponent(firstName: "David", surName: "Espinoza", country: "Spain", profileImg: "person.crop.circle.fill", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+    FriendCardComponent(firstName: "David", surName: "Espinoza", country: "Spain", deleteFriend: {}, profileImg: "person.crop.circle.fill", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
 }
