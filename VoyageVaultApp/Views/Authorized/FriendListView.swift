@@ -15,7 +15,6 @@ struct FriendListView: View {
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     
     var body: some View {
-        
         ZStack {
             
             Image("background_pic")
@@ -24,40 +23,37 @@ struct FriendListView: View {
                 .ignoresSafeArea()
             
             VStack(alignment: .center, spacing: 40) {
-                
-                
-                
                 HStack {
-                    
-                    Text("back")
                     
                     Spacer()
                    
                     NavigationLink("Edit profile", destination: EditProfileView())
                     
-                    Image(systemName: "person.crop.circle.fill").resizable().scaledToFit().frame(width: 59, height: 59)
-                }.frame(width: 300)
+                    Image(systemName: "person.crop.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 59, height: 59)
+                }
+                .frame(width: 300)
                 
-                
-               
                 VStack(spacing: 30) {
-                    
                     VStack(spacing: 20) {
                         
                         Text("Find friends")
                             .font(.title)
                             .bold()
                         
-                        SearchFieldComponent(input: $input, txtFieldText: "Search Friends",
+                        SearchFieldComponent(
+                            input: $input,
+                            txtFieldText: "Search Friends",
                             image: "magnifyingglass",
                             searchAction: {
                             // Search for the user when the button is pressed
-                            foundUser = userSearchData.allUsers.first(where: {
-                                $0.firstName.lowercased() == input.lowercased() ||
-                                $0.surName.lowercased() == input.lowercased()
+                                foundUser = userSearchData.allUsers.first(where: {
+                                    $0.firstName.lowercased() == input.lowercased() ||
+                                    $0.surName.lowercased() == input.lowercased()
+                                })
                             })
-                        })
-                        
                     }
                     
                     if let user = foundUser {
@@ -75,86 +71,69 @@ struct FriendListView: View {
                                     nationality: user.nationality
                                 )
                                 
-                                
                                 firebaseAuth.createFriend(friendData: newFriend) { friendId in
                                     guard let friendId = friendId else {
                                         print("Error: Failed to retrive friend id")
                                         return
                                     }
-                                    
                                     firebaseAuth.addFriend(friendId: friendId)
-                                    
                                 }
-                                
                                 firebaseAuth.fetchFriendDataByIds()
                                 
-
                             }, label: {
                                 Text("Add friend")
                             })
                         }
-                        }else if !input.isEmpty {
-                            Text("No friend found with that name.")
-                            .foregroundColor(.red)
+                    }else if !input.isEmpty {
+                        Text("No friend found with that name.")
+                        .foregroundColor(.red)
                     }
-                    
                     
                     VStack(spacing: 20) {
                         
-                        // TODO: Make this a list view of actuall users from DB
-                        
-                        Text("Your Friends:").font(.title).bold()
+                        Text("Your Friends:")
+                            .font(.title)
+                            .bold()
                         
                         ScrollView {
-                        
                             if firebaseAuth.fetchedFriendsData.isEmpty {
                             
-                            Spacer()
-                            
-                            Text("No friends added").font(.title).bold().foregroundStyle(.red)
-                            
-                            Spacer()
-                            
-                        } else {
-                            
-                            ForEach(firebaseAuth.fetchedFriendsData) { friend in
+                                Spacer()
                                 
-                                    
-                                    FriendCardComponent(
-                                    firstName: friend.firstName,
-                                    surName: friend.surName,
-                                    country: friend.nationality,
-                                    profileImg: "person.crop.circle.fill",
-                                    color1: Color("beigeColorOne"),
-                                    color2: Color("beigeColorTwo"),
-                                    destination: {LandingView()})
-                                    
-                                }
+                                Text("No friends added")
+                                        .font(.title)
+                                        .bold()
+                                        .foregroundStyle(.red)
                                 
-                               
-                                
+                                Spacer()
+                            } else {
+                            
+                                ForEach(firebaseAuth.fetchedFriendsData) { friend in
+                                        
+                                        FriendCardComponent(
+                                        firstName: friend.firstName,
+                                        surName: friend.surName,
+                                        country: friend.nationality,
+                                        profileImg: "person.crop.circle.fill",
+                                        color1: Color("beigeColorOne"),
+                                        color2: Color("beigeColorTwo"),
+                                        destination: {LandingView()})
+                                        
+                                    }
                             }
                         }
-                        
-                        
-                       
                     }
-                    
                 }
-                
-               
-                
-                
+            
                 Spacer()
                 
-                
-            }.frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 40).onAppear {
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.top, 40)
+            .onAppear {
                 firebaseAuth.fetchFriendDataByIds()
             }
-            
-            
         }
-
     }
 }
 
