@@ -109,9 +109,19 @@ struct ExploreView: View {
                                                 {$0.name == city.name} ?? false
                                         }
                                     }, label: {
-                                        Text(city.name)
-                                            .frame(width: 20,height: 20,alignment: .center)
-                                            .background(.red)
+                                        ZStack {
+                                            Image(systemName: "circle")
+                                                .resizable()
+                                                .frame(width: 80, height: 80)
+                                                .foregroundStyle(.red)
+                                                .background(.gray.opacity(0.5))
+                                                .clipShape(.rect(cornerRadius: 40))
+                                            Text(city.name)
+                                                .frame(width: .infinity,height: .infinity,alignment: .center)
+                                                .foregroundStyle(.black)
+                                                .bold()
+                                        }
+                                        
                                     })
                                 })
                         }
