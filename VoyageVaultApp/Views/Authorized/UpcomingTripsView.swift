@@ -35,9 +35,10 @@ struct UpcomingTripsView: View {
 
                     Spacer()
                     
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .frame(width: 70,height: 70)
+                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
+                        firebaseAuth.signOutUser()
+                    })
+                    
                 }
                 .frame(maxWidth: .infinity)
                 .padding(30)
@@ -107,5 +108,5 @@ private func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
 }
 
 #Preview {
-    UpcomingTripsView().environmentObject(FirebaseAuth())
+    UpcomingTripsView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
 }

@@ -27,11 +27,12 @@ struct AddNewTripView: View {
             
             VStack(alignment: .center, spacing: 60) {
                 HStack {
+                   
                     Spacer()
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 59, height: 59)
+                    
+                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
+                        firebaseAuth.signOutUser()
+                    })
                 }
                 .frame(width: 300)
                
@@ -109,5 +110,5 @@ struct AddNewTripView: View {
 }
 
 #Preview {
-    AddNewTripView()
+    AddNewTripView().environmentObject(Firestorage(firebase: FirebaseAuth()))
 }

@@ -174,5 +174,5 @@ struct EditProfileView: View {
 }
 
 #Preview {
-    EditProfileView().environmentObject(FirebaseAuth())
+    EditProfileView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
 }
