@@ -65,7 +65,7 @@ struct ProfileView: View {
                                 title: "\(currentUserData.firstName)'s favorite cities:",
                                 cities: currentUserData.favoriteDestinations,
                                 color1: Color("beigeColorOne"),
-                                color2: Color("backgroundTwo"))
+                                color2: Color("backgroundTwo"), showRemoveBtn: true)
                         } else {
                             Text("No favorite destinations added yet.")
                         }

@@ -14,6 +14,7 @@ struct TripsCardComponent: View {
     var isCapital: Bool
     var flag: String
     var daysUntilTrip: Int
+    var deleteTrip: () ->  Void
     
     var color1: Color
     var color2: Color
@@ -74,9 +75,14 @@ struct TripsCardComponent: View {
                         Image(systemName: "pencil")
                             .resizable()
                             .frame(width: 30, height: 30)
-                        Image(systemName: "trash")
-                            .resizable()
-                            .frame(width: 30, height: 30)
+                        
+                        Button(action: deleteTrip, label: {
+                            Image(systemName: "trash")
+                                .resizable()
+                                .frame(width: 30, height: 30).foregroundStyle(.black)
+                            
+                        })
+                       
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -97,5 +103,5 @@ struct TripsCardComponent: View {
 }
 
 #Preview {
-    TripsCardComponent(country: "Spain", city: "Malaga", population: 571_026, isCapital: false, flag: "🇪🇸", daysUntilTrip: 24, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
+    TripsCardComponent(country: "Spain", city: "Malaga", population: 571_026, isCapital: false, flag: "🇪🇸", daysUntilTrip: 24, deleteTrip: {}, color1: Color("beigeColorOne"), color2: Color("beigeColorTwo"))
 }
