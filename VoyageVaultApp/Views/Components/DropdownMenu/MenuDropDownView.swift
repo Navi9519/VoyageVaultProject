@@ -24,7 +24,7 @@ struct MenuDropDownView<DestinationOne: View, DestinationTwo: View>: View {
             }.foregroundStyle(.black)
             
             NavigationLink(destination: destinationTwo) {
-                Label("Setting", systemImage: "gearshape")
+                Label("Settings", systemImage: "gearshape")
             }.foregroundStyle(.black)
             
 
