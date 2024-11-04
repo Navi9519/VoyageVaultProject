@@ -120,6 +120,41 @@ class Firestorage: ObservableObject {
             }
         }
     }
+    
+    func retriveFriendPhotos(userId: String) {
+        
+        let db = firebase.db
+        
+        db.collection("user_data").document(userId).getDocument { document, error in
+
+            if let document = document, document.exists {
+                if let imageArray = document.data()?["images"] as? [String] {
+                    
+                    DispatchQueue.main.async {
+                        self.retrievedImages = []
+                    }
+                    
+                    for url in imageArray {
+                        let storageRef = Storage.storage().reference(forURL: url)
+                        storageRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                            if let error = error {
+                                print("Error retriving image data: \(error.localizedDescription)")
+                                return
+                            }
+                            if let data = data, let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    self.retrievedImages.append(image)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                print("Document does not exist or error occurred")
+            }
+        }
+        
+    }
 
     
 }

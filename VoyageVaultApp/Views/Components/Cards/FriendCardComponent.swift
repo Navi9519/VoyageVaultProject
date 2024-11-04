@@ -110,5 +110,5 @@ struct FriendCardComponent<Destination: View>: View {
 }
 
 #Preview {
-    FriendCardComponent(firstName: "David", surName: "Espinoza", country: "Spain", deleteFriend: {}, profileImg: "person.crop.circle.fill", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {FriendProfileView(storage: Firestorage(firebase: FirebaseAuth()))})
+    FriendCardComponent(firstName: "David", surName: "Espinoza", country: "Spain", deleteFriend: {}, profileImg: "person.crop.circle.fill", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {FriendProfileView(storage: Firestorage(firebase: FirebaseAuth()), friendId: "")})
 }

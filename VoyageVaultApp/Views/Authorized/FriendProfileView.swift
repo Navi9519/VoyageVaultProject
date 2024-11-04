@@ -11,6 +11,9 @@ struct FriendProfileView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     @ObservedObject var storage: Firestorage
+    var friendId: String
+    
+    @State private var currentFriendData: UserData? // @State to hold the retrieved friend data
     
     var body: some View {
         ZStack {
@@ -21,23 +24,23 @@ struct FriendProfileView: View {
             
             VStack {
                 
-                if let currentUserData = firebaseAuth.currentUserData  {
+                if let currentFriendData = currentFriendData  {
                     
                     HStack {
                         VStack (alignment: .leading){
-                           
-                            Text(currentUserData.firstName)
+                            
+                            Text(currentFriendData.firstName)
                                 .font(.title2)
-
-                            Text(currentUserData.surName)
+                            
+                            Text(currentFriendData.surName)
                                 .bold()
                                 .font(.title)
                             
-                            Text("Age: \(currentUserData.age)")
+                            Text("Age: \(currentFriendData.age)")
                                 .bold()
                                 .font(.title2)
                             
-                            Text("Nationality: \(currentUserData.nationality)")
+                            Text("Nationality: \(currentFriendData.nationality)")
                                 .bold()
                                 .font(.title2)
                         }
@@ -60,7 +63,7 @@ struct FriendProfileView: View {
                     VStack (spacing: 30){
                         
                         FavoriteDestinationsCardComponent(
-                            title: "\(currentUserData.firstName)'s favorite cities:",
+                            title: "\(currentFriendData.firstName)'s favorite cities:",
                             cities: [
                                 CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
                                 CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
@@ -70,26 +73,41 @@ struct FriendProfileView: View {
                             color2: Color("backgroundTwo"))
                         
                         ImageVaultCardComponent(
-                            title: "\(currentUserData.firstName)'s vault",
+                            title: "\(currentFriendData.firstName)'s vault",
                             color1: Color("orangeColorOne"),
                             color2: Color("orangeColorTwo"),
                             addNewPic: {
-                                // Remove this button from this view
+                                print(friendId)
                             },
                             retrievedImages: $storage.retrievedImages)
-    
+                        
                         Spacer()
                     }
                     .shadow(radius: 10)
+                } else {
+                    Text("Loading friend data...")
+                        .font(.title)
+                        .foregroundStyle(.gray)
                 }
             }
         }
         .onAppear {
-            storage.retrievePhotos()
+            // Trigger data fetching when the view appears
+            firebaseAuth.getFriendData(friendId: friendId) { friendData in
+                if let friendData = friendData {
+                    DispatchQueue.main.async {
+                        self.currentFriendData = friendData
+                    }
+                } else {
+                    print("Failed to load friend data.")
+                }
+            }
+            storage.retriveFriendPhotos(userId: friendId)  // Retrieve friend's images
         }
     }
 }
 
+
 #Preview {
-    FriendProfileView(storage: Firestorage(firebase: FirebaseAuth())).environmentObject(FirebaseAuth())
+    FriendProfileView(storage: Firestorage(firebase: FirebaseAuth()), friendId: "").environmentObject(FirebaseAuth())
 }

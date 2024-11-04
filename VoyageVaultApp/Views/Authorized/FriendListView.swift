@@ -130,7 +130,7 @@ struct FriendListView: View {
                                         profileImg: "person.crop.circle.fill",
                                         color1: Color("beigeColorOne"),
                                         color2: Color("beigeColorTwo"),
-                                        destination: {FriendProfileView(storage: Firestorage(firebase: firebaseAuth))})
+                                        destination: {FriendProfileView(storage: Firestorage(firebase: firebaseAuth), friendId: friend.id ?? "")})
                                         
                                     }
                             }
