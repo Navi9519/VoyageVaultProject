@@ -237,9 +237,6 @@
                     "is_capital": city.is_capital
                 ] as [String : Any]
            
-            //updateData() -> Updates only the specified fields without affecting other fields in the document.
-            // FieldValue.arrayUnion([cityData]) is a special Firestore function that adds new items to an array field while avoiding duplicates.
-            //For individual field updates or incremental additions (like adding a favorite city), updateData with FieldValue.arrayUnion is more efficient and safe.
             
             
             db.collection(COLLECTION_USER_DATA).document(currentUser.uid).updateData([
@@ -250,7 +247,7 @@
                     print("Error updating firestore \(error.localizedDescription)")
                 } else {
                     
-                    // Localy appending the new city to the array if firestore update was succesful
+                   
                     currentUserData.favoriteDestinations.append(city)
                     
                 }
@@ -317,7 +314,7 @@
                     print("Trip removed successfully.")
                     if let index = currentUserData.trips.firstIndex(where: { $0.name == city.name }) {
                         currentUserData.trips.remove(at: index)
-                        self.trips.removeAll { $0.name == city.name } // Update local trips
+                        self.trips.removeAll { $0.name == city.name }
                     }
                 }
             }
@@ -355,21 +352,18 @@
         }
         
         func createFriend(friendData: FriendData, friendId: String, completion: @escaping (String?) -> Void) {
-            
-            
-            
+          
             
             do {
-                // Create a document with the specified friendId instead of letting Firestore generate an ID
+                
                    let documentRef = db.collection(COLLECTION_FRIEND_DATA).document(friendId)
 
-                   // Now, set the data in that document reference and use the documentRef inside the completion block
                    try documentRef.setData(from: friendData) { error in
                        if let error = error {
                            print("Failed to add friend data: \(error.localizedDescription)")
                            completion(nil)
                        } else {
-                           // Return the document ID of the new friend on success
+                           
                            completion(friendId)
                        }
                    }
@@ -382,12 +376,12 @@
         
         
         func fetchFriendDataByIds() {
-                // Clear existing data
+                
                 currentUserFriendsData.removeAll()
                 
                 guard let friendIds = currentUserData?.friends else { return }
 
-                // Fetch each friend's data based on the IDs
+                
                 for friendId in friendIds {
                     db.collection(COLLECTION_FRIEND_DATA).document(friendId).getDocument { document, error in
                         if let error = error {
