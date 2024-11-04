@@ -281,7 +281,9 @@
                 if let error = error {
                     print("Error updating Firestore: \(error.localizedDescription)")
                 } else {
-                    // Locally remove the city from the array if Firestore update was successful
+                    
+                    print("Destination removed successfully.")
+                    
                     if let index = currentUserData.favoriteDestinations.firstIndex(where: { $0.name == city.name }) {
                         currentUserData.favoriteDestinations.remove(at: index)
                         
