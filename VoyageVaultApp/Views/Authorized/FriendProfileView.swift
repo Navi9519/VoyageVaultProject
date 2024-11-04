@@ -10,7 +10,7 @@ import SwiftUI
 struct FriendProfileView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
-    @ObservedObject var storage: Firestorage
+    @EnvironmentObject var storage: Firestorage
     var friendId: String
     
     @State private var currentFriendData: UserData? // @State to hold the retrieved friend data
@@ -62,12 +62,15 @@ struct FriendProfileView: View {
                     
                     VStack (spacing: 30){
                         
-                        FavoriteDestinationsCardComponent(
-                            title: "\(currentFriendData.firstName)'s favorite cities:",
-                            cities: [
-                            ],
-                            color1: Color("beigeColorOne"),
-                            color2: Color("backgroundTwo"))
+                        if !currentFriendData.favoriteDestinations.isEmpty {
+                            FavoriteDestinationsCardComponent(
+                                title: "\(currentFriendData.firstName)'s favorite cities:",
+                                cities: currentFriendData.favoriteDestinations,
+                                color1: Color("beigeColorOne"),
+                                color2: Color("backgroundTwo"))
+                        } else {
+                            Text("No favorite destinations added yet.")
+                        }
                         
                         ImageVaultCardComponent(
                             title: "\(currentFriendData.firstName)'s vault",
@@ -106,5 +109,5 @@ struct FriendProfileView: View {
 
 
 #Preview {
-    FriendProfileView(storage: Firestorage(firebase: FirebaseAuth()), friendId: "").environmentObject(FirebaseAuth())
+    FriendProfileView(friendId: "").environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
 }
