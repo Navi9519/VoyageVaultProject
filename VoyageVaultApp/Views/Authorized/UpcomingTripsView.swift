@@ -35,9 +35,12 @@ struct UpcomingTripsView: View {
 
                     Spacer()
                     
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .frame(width: 70,height: 70)
+                    MenuDropDownView(destination: {
+                        EditProfileView()
+                    }, action: {
+                        firebaseAuth.signOutUser()
+                    })
+                    
                 }
                 .frame(maxWidth: .infinity)
                 .padding(30)

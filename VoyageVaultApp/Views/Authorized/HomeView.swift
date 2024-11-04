@@ -30,19 +30,20 @@ struct HomeView: View {
                             Text(currentUserData.surName)
                                 .bold()
                                 .font(.title)
-                                .padding(.top,0.5)
+                                 .padding(.top,0.5)
                         }
                         
                         Spacer()
                         
-                        Button(action: {
+                       
+                        MenuDropDownView(destination: {
+                            EditProfileView()
+                        }, action: {
                             firebaseAuth.signOutUser()
-                        }, label: {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .frame(width: 70,height: 70)
                         })
-                        .foregroundStyle(.black)
+                   
+                        
+
                     }
                     .frame(maxWidth: .infinity)
                     .padding(30)

@@ -27,12 +27,12 @@ struct FriendListView: View {
                     
                     Spacer()
                    
-                    NavigationLink("Edit profile", destination: EditProfileView())
-                    
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 59, height: 59)
+                
+                    MenuDropDownView(destination: {
+                        EditProfileView()
+                    }, action: {
+                        firebaseAuth.signOutUser()
+                    })
                 }
                 .frame(width: 300)
                 
