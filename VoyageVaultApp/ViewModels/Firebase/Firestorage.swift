@@ -125,15 +125,20 @@ class Firestorage: ObservableObject {
         
         let db = firebase.db
         
+        // Get the user's document
         db.collection("user_data").document(userId).getDocument { document, error in
 
             if let document = document, document.exists {
+                
+                // Retrieve the image array
                 if let imageArray = document.data()?["images"] as? [String] {
                     
+                    // Clear existing images before appending new ones to avoid duplicates
                     DispatchQueue.main.async {
                         self.retrievedImages = []
                     }
                     
+                    // Loop through each URL and fetch the data
                     for url in imageArray {
                         let storageRef = Storage.storage().reference(forURL: url)
                         storageRef.getData(maxSize: 5 * 1024 * 1024) { data, error in

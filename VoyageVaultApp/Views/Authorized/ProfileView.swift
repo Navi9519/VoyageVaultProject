@@ -64,15 +64,15 @@ struct ProfileView: View {
                     
                     VStack (spacing: 30){
                         
-                        FavoriteDestinationsCardComponent(
-                            title: "\(currentUserData.firstName)'s favorite cities:",
-                            cities: [
-                                CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
-                                CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
-                                CityTest(id: 3, name: "Tokyo", flag: "🇯🇵")
-                            ],
-                            color1: Color("beigeColorOne"),
-                            color2: Color("backgroundTwo"))
+                        if !currentUserData.favoriteDestinations.isEmpty {
+                            FavoriteDestinationsCardComponent(
+                                title: "\(currentUserData.firstName)'s favorite cities:",
+                                cities: currentUserData.favoriteDestinations,
+                                color1: Color("beigeColorOne"),
+                                color2: Color("backgroundTwo"))
+                        } else {
+                            Text("No favorite destinations added yet.")
+                        }
                         
                         ImageVaultCardComponent(
                             title: "\(currentUserData.firstName)'s vault",

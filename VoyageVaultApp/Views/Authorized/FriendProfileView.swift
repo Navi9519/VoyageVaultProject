@@ -65,9 +65,6 @@ struct FriendProfileView: View {
                         FavoriteDestinationsCardComponent(
                             title: "\(currentFriendData.firstName)'s favorite cities:",
                             cities: [
-                                CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
-                                CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
-                                CityTest(id: 3, name: "Tokyo", flag: "🇯🇵")
                             ],
                             color1: Color("beigeColorOne"),
                             color2: Color("backgroundTwo"))

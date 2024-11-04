@@ -9,23 +9,25 @@ import SwiftUI
 
 
 
-struct CityTest: Identifiable {
-    
-    var id: Int
-    var name: String
-    var flag: String
-    
-}
+//struct CityTest: Identifiable {
+//    
+//    var id: Int
+//    var name: String
+//    var flag: String
+//    
+//}
 
 
 struct FavoriteDestinationsCardComponent: View {
     
     
     var title: String
-    var cities: [CityTest]
+    var cities: [CityData]
    
     var color1: Color
     var color2: Color
+    
+    @StateObject var countryManager = CountryManager()
     
     var dynamicScreenWidth = UIScreen.main.bounds.width
     var dynamicScreenHeight = UIScreen.main.bounds.height
@@ -45,18 +47,27 @@ struct FavoriteDestinationsCardComponent: View {
                         .font(.system(size: 25))
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
-                  
-
+                        .padding(.vertical,10)
                     
-                    
-                    ForEach(Array(cities.enumerated()), id: \.element.id) { index, city in
-                        VStack {
-                            
-                            Text("\(index + 1). \(city.name) \(city.flag)").bold()
+                    ScrollView {
+                        ForEach(cities, id: \.name) { city in
+                            HStack {
+                                Text(countryManager.countries[city.country]?.unicodeFlag ?? "🏳️")
+                                
+                                Text("\(city.name), \(city.country)")
+                            }
+                            .task {
+                                if countryManager.countries[city.country] == nil {
+                                    do {
+                                        try await countryManager.getCountryByIso(iso: city.country)
+                                    } catch {
+                                        print("Failed to fetch country flag for \(city.country) : \(error)")
+                                    }
+                                }
+                            }
                         }
-                        
-                        
                     }
+
                     
                 }
                 .padding(.horizontal,20)
@@ -69,8 +80,8 @@ struct FavoriteDestinationsCardComponent: View {
 
 #Preview {
     FavoriteDestinationsCardComponent(title: "Ivans favorite cities:", cities: [
-        CityTest(id: 1, name: "Prague", flag: "🇨🇿"),
-        CityTest(id: 2, name: "Berlin", flag: "🇩🇪"),
-        CityTest(id: 3, name: "Tokyo", flag: "🇯🇵")
+        CityData(name: "Stockholm", latitude: 2323, longitude: 23233, country: "SE", population: 9999999, is_capital: false),
+        CityData(name: "Malaga", latitude: 2323, longitude: 23233, country: "ES", population: 9999999, is_capital: false)
+        
     ], color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
 }

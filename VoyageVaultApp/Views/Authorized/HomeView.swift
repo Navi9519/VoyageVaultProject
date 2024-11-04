@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 struct HomeView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
-    
+
     var body: some View {
         ZStack {
             Image("background_pic")
