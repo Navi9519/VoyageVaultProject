@@ -49,11 +49,23 @@ struct HomeView: View {
                     .padding(.top,30)
                     
                     VStack {
-                        Text("Time until your next trip: ")
-                            .foregroundStyle(.white)
-                            .font(.title3)
-                        Text("24 days, 16 hours and 5 min")
-                            .foregroundStyle(.white)
+                        
+                        
+                        if let soonestCity = soonestTrip(), let departureDate = soonestCity.departureDate {
+                            Text("Time until your next trip: ")
+                                .foregroundStyle(.white)
+                                .font(.title3)
+                            Text("\(calculateDaysUntilTrip(from: departureDate)) days")
+                                .foregroundStyle(.white)
+
+                        } else {
+                            Text("No upcoming trips right now")
+                                .foregroundStyle(.white)
+                                .font(.title3)
+
+
+                        }
+                        
                     }
                     .shadow(radius: 10)
 
@@ -90,6 +102,19 @@ struct HomeView: View {
                 }
             }
         }
+    }
+    
+    private func soonestTrip() -> CityData? {
+        return firebaseAuth.currentUserData?.trips
+               .sorted { $0.departureDate ?? Date.distantFuture < $1.departureDate ?? Date.distantFuture }
+               .first
+       }
+    
+    private func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
+            guard let departureDate = departureDate else { return 0 }
+        
+            let calendar = Calendar.current
+            return calendar.dateComponents([.day], from: Date(), to: departureDate).day ?? 0
     }
 }
 
