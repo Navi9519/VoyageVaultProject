@@ -70,6 +70,7 @@ struct UpcomingTripsView: View {
                                 isCapital: trip.is_capital,
                                 flag: countryData?.unicodeFlag ?? "No flag avalible",
                                 daysUntilTrip: calculateDaysUntilTrip(from: trip.departureDate),
+                                deleteTrip: {},
                                 color1: Color("orangeColorOne"),
                                 color2: Color("orangeColorTwo")
                             )
