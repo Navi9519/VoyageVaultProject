@@ -12,8 +12,6 @@ struct FriendProfileView: View {
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     @ObservedObject var storage: Firestorage
     
-    @State var isPickerShowing = false
-    
     var body: some View {
         ZStack {
             Image("background_pic")
@@ -76,28 +74,15 @@ struct FriendProfileView: View {
                             color1: Color("orangeColorOne"),
                             color2: Color("orangeColorTwo"),
                             addNewPic: {
-                                isPickerShowing = true
+                                // Remove this button from this view
                             },
                             retrievedImages: $storage.retrievedImages)
-                        
-                        if storage.selectedImage != nil {
-                            
-                            Button(action: {
-                                // Upload the image
-                                storage.uploadFoto()
-                                
-                            }, label: {
-                                Text("Upload photo")
-                            })
-                            
-                        }
+    
                         Spacer()
                     }
                     .shadow(radius: 10)
                 }
             }
-        }.sheet(isPresented: $isPickerShowing, onDismiss: nil) {
-                ImagePicker(selectedImage: $storage.selectedImage, isPickerShowing: $isPickerShowing)
         }
         .onAppear {
             storage.retrievePhotos()
