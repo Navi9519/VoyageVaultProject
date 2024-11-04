@@ -13,7 +13,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
-    @ObservedObject var storage: Firestorage
+    @EnvironmentObject var storage: Firestorage
     
     @State var isPickerShowing = false
     
@@ -49,14 +49,10 @@ struct ProfileView: View {
                         
                         Spacer()
                         
-                        Button(action: {
+                        MenuDropDownView(destinationOne: {ProfileView()}, destinationTwo: {EditProfileView()}, action: {
                             firebaseAuth.signOutUser()
-                        }, label: {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .frame(width: 70,height: 70)
                         })
-                        .foregroundStyle(.black)
+                        
                     }
                     .frame(maxWidth: .infinity)
                     .padding(30)
@@ -109,5 +105,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(storage: Firestorage(firebase: FirebaseAuth())).environmentObject(FirebaseAuth())
+    ProfileView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
 }

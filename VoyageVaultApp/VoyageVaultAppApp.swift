@@ -22,12 +22,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct VoyageVaultAppApp: App {
     
     @StateObject var firebaseAuth = FirebaseAuth()
+    @StateObject var firestorage = Firestorage(firebase: FirebaseAuth())
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(firebaseAuth)
+            ContentView().environmentObject(firebaseAuth).environmentObject(firestorage)
         }
     }
 }

@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct MenuDropDownView<Destination: View>: View {
+struct MenuDropDownView<DestinationOne: View, DestinationTwo: View>: View {
     
-    var destination: () -> Destination
+    var destinationOne: () -> DestinationOne
+    var destinationTwo: () -> DestinationTwo
     var action: () -> Void
     
     var body: some View {
@@ -17,8 +18,13 @@ struct MenuDropDownView<Destination: View>: View {
         Menu {
             // First option with its own action
             
-            NavigationLink(destination: destination) {
-                Label("Edit Profile", systemImage: "person.circle")
+            
+            NavigationLink(destination: destinationOne) {
+                Label("My Profile", systemImage: "person.circle")
+            }.foregroundStyle(.black)
+            
+            NavigationLink(destination: destinationTwo) {
+                Label("Setting", systemImage: "gearshape")
             }.foregroundStyle(.black)
             
 
@@ -38,5 +44,5 @@ struct MenuDropDownView<Destination: View>: View {
 }
 
 #Preview {
-    MenuDropDownView(destination: {EditProfileView()}, action: {})
+    MenuDropDownView(destinationOne: {ProfileView()}, destinationTwo: {EditProfileView()}, action: {})
 }

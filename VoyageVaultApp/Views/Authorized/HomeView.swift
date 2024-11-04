@@ -36,12 +36,10 @@ struct HomeView: View {
                         Spacer()
                         
                        
-                        MenuDropDownView(destination: {
-                            EditProfileView()
-                        }, action: {
+                        MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
                             firebaseAuth.signOutUser()
                         })
-                   
+                        
                         
 
                     }
@@ -95,5 +93,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView().environmentObject(FirebaseAuth())
+    HomeView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
 }

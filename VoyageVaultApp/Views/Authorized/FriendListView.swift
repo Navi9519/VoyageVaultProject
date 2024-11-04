@@ -28,11 +28,10 @@ struct FriendListView: View {
                     Spacer()
                    
                 
-                    MenuDropDownView(destination: {
-                        EditProfileView()
-                    }, action: {
+                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
                         firebaseAuth.signOutUser()
                     })
+                    
                 }
                 .frame(width: 300)
                 
@@ -151,5 +150,5 @@ struct FriendListView: View {
 }
 
 #Preview {
-    FriendListView().environmentObject(FirebaseAuth())
+    FriendListView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
 }
