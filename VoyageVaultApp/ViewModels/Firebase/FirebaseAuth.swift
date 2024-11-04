@@ -415,6 +415,35 @@ class FirebaseAuth: ObservableObject {
       }
     
     
+    func getFriendData(friendId: String, completion: @escaping (UserData?) -> Void){
+        
+        //Acces the friends document in the user_data collection
+        db.collection(COLLECTION_USER_DATA).document(friendId).getDocument { document, error in
+            if let error = error {
+                print("Error fetching friend data: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let document = document, document.exists else {
+                print("No data found for friend with ID \(friendId)")
+                completion(nil)
+                return
+            }
+            
+            do {
+                // Decode the document into a UserData instans
+                let friendData = try document.data(as: UserData.self)
+                completion(friendData)
+            }catch let error{
+                print("Error decoding friend data: \(error.localizedDescription)")
+                completion(nil)
+            }
+            
+        }
+        
+    }
+    
     
         
     }

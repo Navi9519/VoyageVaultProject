@@ -25,10 +25,7 @@ struct FriendCardComponent<Destination: View>: View {
     
     
     var body: some View {
-        NavigationLink (destination: destination) {
             ZStack {
-                
-                
                 
                 LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
                 
@@ -36,16 +33,14 @@ struct FriendCardComponent<Destination: View>: View {
                 HStack(alignment: .center) {
                     
                    
-                    
-                    Image(systemName: profileImg)
-                        .resizable()
-                        .frame(width: 59, height: 59)
-                        .shadow(radius: 5).padding(.leading, 30)
-                    
-                    
+                    NavigationLink(destination: destination, label: {
+                        Image(systemName: profileImg)
+                            .resizable()
+                            .frame(width: 59, height: 59)
+                            .shadow(radius: 5).padding(.leading, 30)
+                    })
                     
                     HStack (spacing: 10) {
-                        
                         
                         VStack() {
                             
@@ -57,13 +52,10 @@ struct FriendCardComponent<Destination: View>: View {
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.center)
-                                
         
                                 Spacer()
                                 
                                 Image(systemName: "envelope.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30)
-                                
-                              
                                 
                             }.frame(maxWidth: dynamicScreenWidth * 0.90)
                             
@@ -111,12 +103,12 @@ struct FriendCardComponent<Destination: View>: View {
             }
             .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.18) // Frame for the entire card
             .clipShape(.buttonBorder)
-        }
+        
     }
     
     
 }
 
 #Preview {
-    FriendCardComponent(firstName: "David", surName: "Espinoza", country: "Spain", deleteFriend: {}, profileImg: "person.crop.circle.fill", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {LandingView()})
+    FriendCardComponent(firstName: "David", surName: "Espinoza", country: "Spain", deleteFriend: {}, profileImg: "person.crop.circle.fill", color1: Color("beigeColorOne"), color2: Color("backgroundTwo"), destination: {FriendProfileView(storage: Firestorage(firebase: FirebaseAuth()), friendId: "")})
 }

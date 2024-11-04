@@ -1,21 +1,19 @@
 //
-//  ProfileView.swift
+//  FriendProfileView.swift
 //  VoyageVaultApp
 //
-//  Created by Ivan Dedic on 2024-10-25.
+//  Created by Nicholas Nieminen on 2024-11-04.
 //
-
-import Foundation
-
 
 import SwiftUI
 
-struct ProfileView: View {
+struct FriendProfileView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     @ObservedObject var storage: Firestorage
+    var friendId: String
     
-    @State var isPickerShowing = false
+    @State private var currentFriendData: UserData? // @State to hold the retrieved friend data
     
     var body: some View {
         ZStack {
@@ -26,23 +24,23 @@ struct ProfileView: View {
             
             VStack {
                 
-                if let currentUserData = firebaseAuth.currentUserData  {
+                if let currentFriendData = currentFriendData  {
                     
                     HStack {
                         VStack (alignment: .leading){
-                           
-                            Text(currentUserData.firstName)
+                            
+                            Text(currentFriendData.firstName)
                                 .font(.title2)
-
-                            Text(currentUserData.surName)
+                            
+                            Text(currentFriendData.surName)
                                 .bold()
                                 .font(.title)
                             
-                            Text("Age: \(currentUserData.age)")
+                            Text("Age: \(currentFriendData.age)")
                                 .bold()
                                 .font(.title2)
                             
-                            Text("Nationality: \(currentUserData.nationality)")
+                            Text("Nationality: \(currentFriendData.nationality)")
                                 .bold()
                                 .font(.title2)
                         }
@@ -64,50 +62,49 @@ struct ProfileView: View {
                     
                     VStack (spacing: 30){
                         
-                        if !currentUserData.favoriteDestinations.isEmpty {
-                            FavoriteDestinationsCardComponent(
-                                title: "\(currentUserData.firstName)'s favorite cities:",
-                                cities: currentUserData.favoriteDestinations,
-                                color1: Color("beigeColorOne"),
-                                color2: Color("backgroundTwo"))
-                        } else {
-                            Text("No favorite destinations added yet.")
-                        }
+                        FavoriteDestinationsCardComponent(
+                            title: "\(currentFriendData.firstName)'s favorite cities:",
+                            cities: [
+                            ],
+                            color1: Color("beigeColorOne"),
+                            color2: Color("backgroundTwo"))
                         
                         ImageVaultCardComponent(
-                            title: "\(currentUserData.firstName)'s vault",
+                            title: "\(currentFriendData.firstName)'s vault",
                             color1: Color("orangeColorOne"),
                             color2: Color("orangeColorTwo"),
                             addNewPic: {
-                                isPickerShowing = true
+                                print(friendId)
                             },
                             retrievedImages: $storage.retrievedImages)
                         
-                        if storage.selectedImage != nil {
-                            
-                            Button(action: {
-                                // Upload the image
-                                storage.uploadFoto()
-                                
-                            }, label: {
-                                Text("Upload photo")
-                            })
-                            
-                        }
                         Spacer()
                     }
                     .shadow(radius: 10)
+                } else {
+                    Text("Loading friend data...")
+                        .font(.title)
+                        .foregroundStyle(.gray)
                 }
             }
-        }.sheet(isPresented: $isPickerShowing, onDismiss: nil) {
-                ImagePicker(selectedImage: $storage.selectedImage, isPickerShowing: $isPickerShowing)
         }
         .onAppear {
-            storage.retrievePhotos()
+            // Trigger data fetching when the view appears
+            firebaseAuth.getFriendData(friendId: friendId) { friendData in
+                if let friendData = friendData {
+                    DispatchQueue.main.async {
+                        self.currentFriendData = friendData
+                    }
+                } else {
+                    print("Failed to load friend data.")
+                }
+            }
+            storage.retriveFriendPhotos(userId: friendId)  // Retrieve friend's images
         }
     }
 }
 
+
 #Preview {
-    ProfileView(storage: Firestorage(firebase: FirebaseAuth())).environmentObject(FirebaseAuth())
+    FriendProfileView(storage: Firestorage(firebase: FirebaseAuth()), friendId: "").environmentObject(FirebaseAuth())
 }

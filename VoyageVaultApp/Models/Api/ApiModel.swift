@@ -6,8 +6,8 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
-import Foundation
 
 // This struct represents the nested "data" object in the API response to get flag
 struct CountryData: Codable {
@@ -28,8 +28,9 @@ struct CountryRequest: Encodable {
     let iso2: String
 }
 
-struct CityData: Codable {
+struct CityData: Codable, Identifiable {
     
+    var id: String?
     var name: String
     var latitude: Double
     var longitude: Double
