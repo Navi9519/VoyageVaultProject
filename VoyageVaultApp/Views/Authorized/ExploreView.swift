@@ -40,26 +40,27 @@
                     
                         VStack(alignment: .center, spacing: 15) {
                             
-                            HStack(alignment: .center) {
+                            HStack() {
                                 
                         
                                 Spacer()
                                 
                                 Text("Explore")
                                     .font(.title)
-                                    .bold()
+                                    .bold().padding(.leading, 60)
                                 
+                              
                                 Spacer()
                                 
                                 MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
                                     db.signOutUser()
-                                })
+                                }).padding(.trailing, 8)
                                 
                                 
                                 
                                 
                                 
-                            }.frame(width: .infinity, height: 40)
+                            }
                             
                             
                             Text("Find your next adventure!")
@@ -143,7 +144,7 @@
                             .cornerRadius(20)
                             
                         } else {
-                            Text("Search for a country above")
+                            Text("Search for a city above")
                         }
                         
                         
