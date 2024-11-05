@@ -13,6 +13,7 @@
         
         @EnvironmentObject  var db: DbConnection
         @StateObject var countryManager = CountryManager()
+        @Environment(\.colorScheme) var colorScheme
         
         let locationManager = LocationManager()
         
@@ -28,9 +29,12 @@
         @State var selectedCity: CityData? = nil
         
         var body: some View {
+            
+            let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+            
             ZStack {
                 
-                Image("background_pic")
+                Image(backgroundImage)
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
@@ -52,10 +56,10 @@
                               
                                 Spacer()
                                 
-                                MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
-                                    db.signOutUser()
-                                }).padding(.trailing, 8)
                                 
+                                MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
+                                    firebaseAuth.signOutUser()
+                                })
                                 
                                 
                                 

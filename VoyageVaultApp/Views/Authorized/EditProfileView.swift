@@ -10,6 +10,7 @@ import SwiftUI
 struct EditProfileView: View {
     
     @EnvironmentObject var db: DbConnection
+    @Environment(\.colorScheme) var colorScheme
     
     @State var firstName: String = ""
     @State var surName: String = ""
@@ -19,8 +20,13 @@ struct EditProfileView: View {
     @State var nationality: String = ""
     
     var body: some View {
+        
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+        
         ZStack {
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -79,6 +85,74 @@ struct EditProfileView: View {
                         }
                         .padding(.vertical, 30)
                         
+                        VStack (spacing: 30){
+                            VStack {
+                               
+                                Text("My Cities:")
+                                    .font(.title)
+                                    .bold()
+                                
+                                FavoriteDestinationsCardComponent(
+                                    title: "\(currentUserData.firstName)'s favorite cities:",
+                                    cities: [
+                                    ],
+                                    color1: Color("blueColorOne"),
+                                    color2: Color("blueColorTwo"))
+                            }
+                            
+                            VStack {
+                                
+                                Text("My friends:")
+                                    .font(.title)
+                                    .bold()
+                                
+                                if firebaseAuth.currentUserFriendsData.isEmpty {
+                                    Spacer()
+                                    Text("No friends added")
+                                        .font(.title)
+                                        .bold()
+                                        .foregroundStyle(.red)
+                                    Spacer()
+                                } else {
+                                    
+                                    ForEach(firebaseAuth.currentUserFriendsData) { friend in
+                                        
+                                            FriendCardComponent(
+                                                firstName: friend.firstName,
+                                                surName: friend.surName,
+                                                country: friend.nationality, deleteFriend: {},
+                                                profileImg:
+                                                    "person.crop.circle.fill",
+                                                color1: Color("blueColorOne"),
+                                                color2: Color("blueColorTwo"),
+                                                destination: {
+                                                LandingView()
+                                            })
+                                            
+                                            Button(action: {
+                                                
+                                                guard let friendId = friend.id else {
+                                                    print("No friend ID")
+                                                    return }
+                                                
+                                                print("Friend ID")
+                                                
+                                                firebaseAuth.deleteFriend(friendId: friendId)
+                                              
+                                            }, label: {
+                                                Text("DELETE")
+                                                    .background(.red)
+                                                    .clipShape(.buttonBorder)
+                                            })
+                                    }
+                                }
+                            }
+                            
+                            VStack {
+                                
+                                Text("My Images:").font(.title).bold()
+    
+                            }
                             
                             Button(action: {
                                 
@@ -109,5 +183,5 @@ struct EditProfileView: View {
     }
 
 #Preview {
-    EditProfileView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
+    EditProfileView().environmentObject(DbConnection())
 }

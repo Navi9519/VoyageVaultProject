@@ -13,11 +13,15 @@ struct FriendListView: View {
     @State private var foundUser: UserData? // Variable to hold the found user
    
     @EnvironmentObject var db: DbConnection
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
+        
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
         ZStack {
             
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

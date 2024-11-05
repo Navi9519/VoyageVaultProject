@@ -11,16 +11,21 @@
         
         @StateObject var countryManager = CountryManager ()
         @EnvironmentObject  var db: DbConnection
-        
+        @Environment(\.colorScheme) var colorScheme
+    
         @State var selectedCity: CityData? = nil
         @State var selectedDate: Date = Date()
         @State var input = ""
         
         var body: some View {
             
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+
             ZStack {
                 
-                Image("background_pic")
+                Image(backgroundImage)
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
@@ -83,7 +88,7 @@
                             width: 200, height: 80,
                             colorOne: "blueColorOne",
                             colorTwo: "blueColorTwo",
-                            txtColor: .black) {
+                            txtColor: textColor) {
                                 
                                 if let city = selectedCity, let departureDate = city.departureDate  {
                                     print("Adding trip to \(city.name) on \(dateFormatter.string(from: departureDate))")

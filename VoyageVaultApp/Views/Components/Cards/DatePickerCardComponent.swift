@@ -8,9 +8,10 @@
     import SwiftUI
 
 struct DatePickerCardComponent: View {
-    
+        
     var location: String
     @Binding var travelDate: Date
+    @Environment(\.colorScheme) var colorScheme
     
     var color1: Color
     var color2: Color
@@ -19,10 +20,10 @@ struct DatePickerCardComponent: View {
     var dynamicScreenWidth = UIScreen.main.bounds.width
     var dynamicScreenHeight = UIScreen.main.bounds.height
     
-    
-    
-    
     var body: some View {
+        
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+
         ZStack {
             
             LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
@@ -31,14 +32,21 @@ struct DatePickerCardComponent: View {
                 
                 Spacer()
                 
-                Text("Destination: \(location)").font(.title2).bold()
+                Text("Destination: \(location)")
+                    .font(.title2)
+                    .bold()
                 
                 Spacer()
                 
                 DatePicker(selection: $travelDate, in: Date.now..., displayedComponents: .date) {
                     
-                    Text("Select a date:").font(.title2).bold().lineLimit(1)
-                }.frame(width: 290).foregroundStyle(.black)
+                    Text("Select a date:")
+                        .font(.title2)
+                        .bold()
+                        .lineLimit(1)
+                }
+                .frame(width: 290)
+                .foregroundStyle(textColor)
                 
                 Spacer()
                 

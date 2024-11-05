@@ -30,6 +30,7 @@ struct FavoriteDestinationsCardComponent: View {
     
     @EnvironmentObject var db: DbConnection
     @StateObject var countryManager = CountryManager()
+    @Environment(\.colorScheme) var colorScheme
     
     var dynamicScreenWidth = UIScreen.main.bounds.width
     var dynamicScreenHeight = UIScreen.main.bounds.height
@@ -38,6 +39,8 @@ struct FavoriteDestinationsCardComponent: View {
     
     var body: some View {
         
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+        
         ZStack {
             
             LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
@@ -45,7 +48,7 @@ struct FavoriteDestinationsCardComponent: View {
                 
                 VStack (spacing: 10) {
                     Text(title)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(textColor)
                         .font(.system(size: 25))
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)

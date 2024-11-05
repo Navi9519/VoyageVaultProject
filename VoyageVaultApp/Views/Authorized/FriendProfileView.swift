@@ -11,13 +11,17 @@
         
         @EnvironmentObject var db: DbConnection
         @EnvironmentObject var storage: Firestorage
-        var friendId: String
+        @Environment(\.colorScheme) var colorScheme
+    var friendId: String
         
         @State private var currentFriendData: UserData? // @State to hold the retrieved friend data
         
         var body: some View {
-            ZStack {
-                Image("background_pic")
+            
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
+        ZStack {
+                Image(backgroundImage)
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()

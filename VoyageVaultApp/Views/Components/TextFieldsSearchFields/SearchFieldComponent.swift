@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchFieldComponent: View {
-    
+    @Environment(\.colorScheme) var colorScheme
     @Binding var input: String
     var txtFieldText: String
     var image: String
@@ -16,29 +16,30 @@ struct SearchFieldComponent: View {
     
     var body: some View {
         
-        TextField(txtFieldText, text: $input).frame(width: 300, height: 40)
-            .background(.white).cornerRadius(25).textInputAutocapitalization(.never).overlay(
-                
-               
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+        
+        TextField(txtFieldText, text: $input)
+            .frame(width: 300, height: 40)
+            .background(.white)
+            .cornerRadius(25)
+            .textInputAutocapitalization(.never)
+            .overlay(
                 
                 HStack {
                     
                     Spacer()
                     
-                    Button(action: searchAction, label: {
-                        Image(systemName: image)
+                    Button(
+                        action: searchAction,
+                        label: {
+                            Image(systemName: image)
                         
                             
-                    }).frame(width: 20).foregroundStyle(.black)
-            
-                    
+                    })
+                    .frame(width: 20)
+                    .foregroundStyle(.black)
                 }
             )
-
-    
-        
-    
-        
     }
 }
 
