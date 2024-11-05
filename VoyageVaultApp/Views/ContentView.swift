@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var firebaseAuth: DbConnection
     
     var body: some View {
         
@@ -38,5 +38,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView().environmentObject(FirebaseAuth())
+    ContentView().environmentObject(DbConnection())
 }

@@ -11,8 +11,8 @@ struct FriendListView: View {
     
     @State var input: String = ""
     @State private var foundUser: UserData? // Variable to hold the found user
-    @StateObject private var userSearchData = UserSearchData(firebaseAuth: FirebaseAuth())
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+   
+    @EnvironmentObject var db: DbConnection
     
     var body: some View {
         ZStack {
@@ -28,8 +28,8 @@ struct FriendListView: View {
                     Spacer()
                    
                 
-                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
-                        firebaseAuth.signOutUser()
+                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
+                        db.signOutUser()
                     })
                     
                 }
@@ -48,7 +48,7 @@ struct FriendListView: View {
                             image: "magnifyingglass",
                             searchAction: {
                             // Search for the user when the button is pressed
-                                foundUser = userSearchData.allUsers.first(where: {
+                                foundUser = db.allUsers.first(where: {
                                     $0.firstName.lowercased() == input.lowercased() ||
                                     $0.surName.lowercased() == input.lowercased()
                                 })
@@ -76,13 +76,13 @@ struct FriendListView: View {
                                     nationality: user.nationality
                                 )
                                 
-                                firebaseAuth.createFriend(friendData: newFriend, friendId: friendId) { friendId in
+                                db.createFriend(friendData: newFriend, friendId: friendId) { friendId in
                                     guard let friendId = friendId else {
                         
                                         return
                                     }
                                     
-                                    firebaseAuth.addFriend(friendId: friendId)
+                                    db.addFriend(friendId: friendId)
                                 }
                              
                                 
@@ -102,7 +102,7 @@ struct FriendListView: View {
                             .bold()
                         
                         ScrollView {
-                            if firebaseAuth.currentUserFriendsData.isEmpty {
+                            if db.currentUserFriendsData.isEmpty {
                             
                                 Spacer()
                                 
@@ -114,7 +114,7 @@ struct FriendListView: View {
                                 Spacer()
                             } else {
                             
-                                ForEach(firebaseAuth.currentUserFriendsData) { friend in
+                                ForEach(db.currentUserFriendsData) { friend in
                                         
                                         FriendCardComponent(
                                         firstName: friend.firstName,
@@ -124,17 +124,20 @@ struct FriendListView: View {
                                             
                                             guard let friendId = friend.id else {return}
                                             
-                                            firebaseAuth.deleteFriend(friendId: friendId)
+                                            db.deleteFriend(friendId: friendId)
                                         },
                                         profileImg: "person.crop.circle.fill",
                                         color1: Color("beigeColorOne"),
                                         color2: Color("beigeColorTwo"),
-                                        destination: {FriendProfileView( friendId: friend.id ?? "").environmentObject(Firestorage(firebase: firebaseAuth))})
+                                        destination: {FriendProfileView( friendId: friend.id ?? "").environmentObject(Firestorage(firebase: db))})
                                         
                                     }
                             }
                         }
                     }
+                }.onAppear {
+                    
+                    db.fetchUsers()
                 }
             
                 Spacer()
@@ -143,12 +146,12 @@ struct FriendListView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.top, 40)
             .onAppear {
-                firebaseAuth.fetchFriendDataByIds()
+                db.fetchFriendDataByIds()
             }
         }
     }
 }
 
 #Preview {
-    FriendListView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+    FriendListView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
 }

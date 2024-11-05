@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditProfileView: View {
     
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var db: DbConnection
     
     @State var firstName: String = ""
     @State var surName: String = ""
@@ -28,7 +28,7 @@ struct EditProfileView: View {
             ScrollView {
                 VStack {
                     
-                    if let currentUserData = firebaseAuth.currentUserData  {
+                    if let currentUserData = db.currentUserData  {
                         
                         VStack(spacing: 15) {
                             
@@ -109,5 +109,5 @@ struct EditProfileView: View {
     }
 
 #Preview {
-    EditProfileView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+    EditProfileView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
 }

@@ -11,7 +11,7 @@
     struct ExploreView: View {
         
         
-        @EnvironmentObject  var firebaseAuth: FirebaseAuth
+        @EnvironmentObject  var db: DbConnection
         @StateObject var countryManager = CountryManager()
         
         let locationManager = LocationManager()
@@ -50,8 +50,8 @@
                                 
                                 Spacer()
                                 
-                                MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
-                                    firebaseAuth.signOutUser()
+                                MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
+                                    db.signOutUser()
                                 })
                                 
                                 
@@ -117,7 +117,7 @@
                                             
                                             withAnimation {
                                                 self.selectedCity = city
-                                                self.addToFavorite = firebaseAuth.currentUserData?
+                                                self.addToFavorite = db.currentUserData?
                                                     .favoriteDestinations.contains()
                                                     {$0.name == city.name} ?? false
                                             }
@@ -164,12 +164,12 @@
                                         addToFavorite.toggle()
                                         
                                         if addToFavorite == true {
-                                            firebaseAuth.addFavoriteDestiantion(city: selectedCity)
+                                            db.addFavoriteDestiantion(city: selectedCity)
                                         } else {
-                                            firebaseAuth.removeFavoriteDestination(city: selectedCity)
+                                            db.removeFavoriteDestination(city: selectedCity)
                                         }
                                         
-                                        guard let user = firebaseAuth.currentUserData else {return}
+                                        guard let user = db.currentUserData else {return}
                                         print(user.favoriteDestinations)
                                     })
                                     .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -186,5 +186,5 @@
     }
 
     #Preview {
-        ExploreView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+        ExploreView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
     }

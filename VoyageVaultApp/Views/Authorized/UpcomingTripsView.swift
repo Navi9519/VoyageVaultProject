@@ -10,7 +10,7 @@ import SwiftUI
 struct UpcomingTripsView: View {
     
     @StateObject var countryManager = CountryManager()
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var db: DbConnection
     
     var body: some View {
         ZStack {
@@ -37,8 +37,8 @@ struct UpcomingTripsView: View {
 
                     Spacer()
                     
-                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
-                        firebaseAuth.signOutUser()
+                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
+                        db.signOutUser()
                     })
                     
                 }
@@ -65,7 +65,7 @@ struct UpcomingTripsView: View {
                         
                         
                       
-                        ForEach(firebaseAuth.trips, id: \.name) { trip in
+                        ForEach(db.trips, id: \.name) { trip in
                           
                             
                             let countryData = countryManager.countries[trip.country]
@@ -80,7 +80,7 @@ struct UpcomingTripsView: View {
                                 daysUntilTrip: calculateDaysUntilTrip(from: trip.departureDate),
                                 deleteTrip: {
                                     
-                                    firebaseAuth.removeTrip(city: trip)
+                                    db.removeTrip(city: trip)
                                     
                                 },
                                 color1: Color("orangeColorOne"),
@@ -106,8 +106,8 @@ struct UpcomingTripsView: View {
             
         }
         .onAppear {
-            if let userId = firebaseAuth.currentUser?.uid {
-                firebaseAuth.fetchTrips(for: userId) // Fetch trips when view appears
+            if let userId = db.currentUser?.uid {
+                db.fetchTrips(for: userId) // Fetch trips when view appears
             }
         }
     }
@@ -121,5 +121,5 @@ private func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
 }
 
 #Preview {
-    UpcomingTripsView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+    UpcomingTripsView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
 }

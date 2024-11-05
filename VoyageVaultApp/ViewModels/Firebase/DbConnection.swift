@@ -11,7 +11,7 @@
     import FirebaseFirestore
 
 
-    class FirebaseAuth: ObservableObject {
+    class DbConnection: ObservableObject {
         
         var db = Firestore.firestore()
         let auth = Auth.auth()
@@ -20,7 +20,8 @@
         let COLLECTION_USER_DATA = "user_data"
         
         @Published var friends: [FriendData] = []
-        @Published var trips: [CityData] = [] // Store fetched trips
+        @Published var trips: [CityData] = [] 
+        @Published var allUsers: [UserData] = []
         
         @Published var currentUser: User?
         @Published var currentUserData: UserData?
@@ -186,6 +187,31 @@
                 }
             }
         }
+        
+        
+        
+        func fetchUsers() {
+            db.collection(COLLECTION_USER_DATA).getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching users: \(error.localizedDescription)")
+                    return
+                }
+
+                if let documents = snapshot?.documents {
+                    
+                    self.allUsers = documents.compactMap { document in
+                        do {
+                            let userData = try document.data(as: UserData.self)
+                            return userData
+                        } catch {
+                            print("Error decoding UserData: \(error.localizedDescription)")
+                            return nil
+                        }
+                    }
+                }
+            }
+        }
+        
         
         func addTrip(city: CityData) {
             

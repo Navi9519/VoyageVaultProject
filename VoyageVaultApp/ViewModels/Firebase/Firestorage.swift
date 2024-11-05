@@ -17,9 +17,9 @@ class Firestorage: ObservableObject {
     @Published var selectedImage: UIImage?
     @Published var retrievedImages = [UIImage]()
     
-    @ObservedObject var firebase: FirebaseAuth
+    @ObservedObject var firebase: DbConnection
     
-    init(firebase: FirebaseAuth) {
+    init(firebase: DbConnection) {
         self.firebase = firebase
     }
     
