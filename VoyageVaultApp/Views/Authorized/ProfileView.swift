@@ -53,7 +53,10 @@ struct ProfileView: View {
                         
                         Spacer()
                         
-                        MenuDropDownView(destinationOne: {ProfileView()}, destinationTwo: {EditProfileView()}, action: {
+                        MenuDropDownView(
+                            destinationOne: {ProfileView()},
+                            destinationTwo: {EditProfileView()},
+                            action: {
                             db.signOutUser()
                         })
                         

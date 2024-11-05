@@ -41,7 +41,8 @@ struct HomeView: View {
                         Spacer()
                         
                        
-                        MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
+                        MenuDropDownView(
+                            destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
                             db.signOutUser()
                         })
                         
