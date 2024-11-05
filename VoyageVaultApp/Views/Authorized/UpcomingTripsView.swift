@@ -24,20 +24,16 @@ struct UpcomingTripsView: View {
                 .ignoresSafeArea()
             
             VStack {
-                
-             
-                
-                HStack {
-                    Image(systemName: "arrowshape.backward.circle")
-                        .resizable()
-                        .frame(width: 70,height: 70)
+              
+                HStack(alignment: .center, spacing: 10) {
+                 
                         
                     Spacer()
                     
                     Text("Upcoming Trips")
                         .font(.system(size: 30))
                         .bold()
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(.center).padding(.leading, 40)
 
                     Spacer()
                     
@@ -46,8 +42,7 @@ struct UpcomingTripsView: View {
                     })
                     
                 }
-                .frame(maxWidth: .infinity)
-                .padding(30)
+                .frame(maxWidth: .infinity).padding()
                 .padding(.top,30)
                 .shadow(radius: 1)
                 

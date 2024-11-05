@@ -59,12 +59,14 @@
                                 
                                 MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
                                     db.signOutUser()
-                                })
+                                }).padding(.trailing, 9)
                                 
                                 
                                 
                                 
-                            }
+                            }.frame(maxWidth: .infinity).padding()
+                                .padding(.top,30)
+                                .shadow(radius: 1)
                             
                             
                             Text("Find your next adventure!")
