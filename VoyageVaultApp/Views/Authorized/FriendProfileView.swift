@@ -53,7 +53,7 @@
                             
                             MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
                                 db.signOutUser()
-                            }).foregroundStyle(.white)
+                            })
                         }
                         .frame(maxWidth: .infinity)
                         .padding(30)
