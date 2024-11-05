@@ -42,6 +42,7 @@
                             
                             HStack(alignment: .center) {
                                 
+                        
                                 Spacer()
                                 
                                 Text("Explore")

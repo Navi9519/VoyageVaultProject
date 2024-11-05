@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var firebaseAuth: DbConnection
+    @EnvironmentObject var db: DbConnection
     
     var body: some View {
         
-        if firebaseAuth.currentUser != nil {
+        if db.currentUser != nil {
             
             NavigationStack {
                 
