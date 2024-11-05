@@ -51,14 +51,9 @@
                             
                             Spacer()
                             
-                            Button(action: {
+                            MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
                                 db.signOutUser()
-                            }, label: {
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .frame(width: 70,height: 70)
-                            })
-                            .foregroundStyle(.black)
+                            }).foregroundStyle(.white)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(30)
