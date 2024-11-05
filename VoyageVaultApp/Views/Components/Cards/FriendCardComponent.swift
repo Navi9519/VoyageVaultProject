@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FriendCardComponent<Destination: View>: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var firstName: String
     var surName: String
     var country: String
@@ -25,6 +27,9 @@ struct FriendCardComponent<Destination: View>: View {
     
     
     var body: some View {
+        
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+
             ZStack {
                 
                 LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
@@ -37,7 +42,8 @@ struct FriendCardComponent<Destination: View>: View {
                         Image(systemName: profileImg)
                             .resizable()
                             .frame(width: 59, height: 59)
-                            .shadow(radius: 5).padding(.leading, 30)
+                            .shadow(radius: 5)
+                            .padding(.leading, 30)
                     })
                     
                     HStack (spacing: 10) {
@@ -48,14 +54,18 @@ struct FriendCardComponent<Destination: View>: View {
                             
                             HStack () {
                                 Text("\(firstName) \(surName)")
-                                    .foregroundStyle(.black)
+                                    .foregroundStyle(textColor)
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.center)
         
                                 Spacer()
                                 
-                                Image(systemName: "envelope.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30)
+                                Image(systemName: "envelope.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundStyle(textColor)
+                                    .frame(width: 30, height: 30)
                                 
                             }.frame(maxWidth: dynamicScreenWidth * 0.90)
                             
@@ -64,7 +74,7 @@ struct FriendCardComponent<Destination: View>: View {
                             HStack {
                                 
                                 Text("Country:")
-                                    .foregroundStyle(.black)
+                                    .foregroundStyle(textColor)
                                     .italic()
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
@@ -72,7 +82,8 @@ struct FriendCardComponent<Destination: View>: View {
                                     .multilineTextAlignment(.center)
                                 
                               
-                                Text(country).foregroundStyle(.black)
+                                Text(country)
+                                    .foregroundStyle(textColor)
                                     .italic()
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
@@ -82,12 +93,14 @@ struct FriendCardComponent<Destination: View>: View {
                                 Spacer()
                             
                                 Button(action: deleteFriend, label: {
-                                    Image(systemName: "trash.fill").resizable().scaledToFit().foregroundStyle(.black).frame(width: 30, height: 30)
+                                    Image(systemName: "trash.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundStyle(textColor)
+                                        .frame(width: 30, height: 30)
                                 })
                                 
                             }.frame(maxWidth: dynamicScreenWidth * 0.90)
-                            
-                            
                             
                             Spacer()
                             

@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct LandingView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
+        
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+
     
         ZStack {
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeCardComponent<Destination: View>: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var title: String
     var description: String
     var image: String
@@ -23,6 +25,9 @@ struct HomeCardComponent<Destination: View>: View {
     
     
     var body: some View {
+        
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+        
         NavigationLink (destination: destination) {
             ZStack {
                 
@@ -37,13 +42,13 @@ struct HomeCardComponent<Destination: View>: View {
                     
                     VStack (spacing: 10) {
                         Text(title)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(textColor)
                             .font(.system(size: 25))
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
                         
                         Text(description)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(textColor)
                             .italic()
                             .font(.system(size: 15))
                             .fontWeight(.semibold)

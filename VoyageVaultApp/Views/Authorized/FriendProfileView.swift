@@ -11,13 +11,17 @@ struct FriendProfileView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     @EnvironmentObject var storage: Firestorage
+    @Environment(\.colorScheme) var colorScheme
     var friendId: String
     
     @State private var currentFriendData: UserData? // @State to hold the retrieved friend data
     
     var body: some View {
+        
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
         ZStack {
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

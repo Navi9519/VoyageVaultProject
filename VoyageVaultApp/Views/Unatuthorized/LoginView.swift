@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     
@@ -16,13 +18,14 @@ struct LoginView: View {
     
     
     var body: some View {
+        
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
         ZStack {
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            
-            
             
             VStack() {
                 

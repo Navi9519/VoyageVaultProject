@@ -11,6 +11,7 @@ struct AddNewTripView: View {
     
     @StateObject var countryManager = CountryManager ()
     @EnvironmentObject  var firebaseAuth: FirebaseAuth
+    @Environment(\.colorScheme) var colorScheme
     
     @State var selectedCity: CityData? = nil
     @State var selectedDate: Date = Date()
@@ -18,9 +19,13 @@ struct AddNewTripView: View {
     
     var body: some View {
         
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+
         ZStack {
             
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -83,7 +88,7 @@ struct AddNewTripView: View {
                         width: 200, height: 80,
                         colorOne: "blueColorOne",
                         colorTwo: "blueColorTwo",
-                        txtColor: .black) {
+                        txtColor: textColor) {
                             
                             if let city = selectedCity, let departureDate = city.departureDate  {
                                 print("Adding trip to \(city.name) on \(dateFormatter.string(from: departureDate))")
@@ -110,5 +115,5 @@ struct AddNewTripView: View {
 }
 
 #Preview {
-    AddNewTripView().environmentObject(Firestorage(firebase: FirebaseAuth()))
+    AddNewTripView().environmentObject(Firestorage(firebase: FirebaseAuth())).environmentObject(FirebaseAuth())
 }

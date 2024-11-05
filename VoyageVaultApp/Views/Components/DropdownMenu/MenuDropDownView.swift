@@ -9,11 +9,15 @@ import SwiftUI
 
 struct MenuDropDownView<DestinationOne: View, DestinationTwo: View>: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var destinationOne: () -> DestinationOne
     var destinationTwo: () -> DestinationTwo
     var action: () -> Void
     
     var body: some View {
+        
+        let iconColor = colorScheme == .dark ? Color.white : Color.black
         
         Menu {
             // First option with its own action
@@ -37,7 +41,8 @@ struct MenuDropDownView<DestinationOne: View, DestinationTwo: View>: View {
             
             Image(systemName: "person.circle")
                 .resizable()
-                .frame(width: 70,height: 70).foregroundStyle(.black)
+                .frame(width: 70,height: 70)
+                .foregroundStyle(iconColor)
                 
         }
     }

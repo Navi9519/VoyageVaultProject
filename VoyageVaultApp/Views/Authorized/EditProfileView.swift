@@ -10,6 +10,7 @@ import SwiftUI
 struct EditProfileView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @Environment(\.colorScheme) var colorScheme
     
     @State var firstName: String = ""
     @State var surName: String = ""
@@ -19,8 +20,13 @@ struct EditProfileView: View {
     @State var nationality: String = ""
     
     var body: some View {
+        
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+        
         ZStack {
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -82,7 +88,9 @@ struct EditProfileView: View {
                         VStack (spacing: 30){
                             VStack {
                                
-                                Text("My Cities:").font(.title).bold()
+                                Text("My Cities:")
+                                    .font(.title)
+                                    .bold()
                                 
                                 FavoriteDestinationsCardComponent(
                                     title: "\(currentUserData.firstName)'s favorite cities:",
@@ -94,7 +102,9 @@ struct EditProfileView: View {
                             
                             VStack {
                                 
-                                Text("My friends:").font(.title).bold()
+                                Text("My friends:")
+                                    .font(.title)
+                                    .bold()
                                 
                                 if firebaseAuth.currentUserFriendsData.isEmpty {
                                     Spacer()

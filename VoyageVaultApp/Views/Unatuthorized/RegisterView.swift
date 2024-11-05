@@ -11,6 +11,7 @@ struct RegisterView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     @State var firstName: String = ""
     @State var surName: String = ""
@@ -26,9 +27,10 @@ struct RegisterView: View {
     
     var body: some View {
         
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
         
         ZStack {
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

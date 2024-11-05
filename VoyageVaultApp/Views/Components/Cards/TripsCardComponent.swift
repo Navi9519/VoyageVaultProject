@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TripsCardComponent: View {
+    
+    @Environment(\.colorScheme) var colorScheme
+
     var country: String
     var city: String
     var population: Int
@@ -25,6 +28,9 @@ struct TripsCardComponent: View {
     
     
     var body: some View {
+        
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+
         ZStack {
             
             LinearGradient(colors: [color1, color2], startPoint: .leading, endPoint: .trailing)
@@ -43,13 +49,13 @@ struct TripsCardComponent: View {
                     
                     VStack (spacing: 10) {
                         Text(city)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(textColor)
                             .font(.system(size: 40))
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
                         
                         Text("in \(daysUntilTrip) days")
-                            .foregroundStyle(.black)
+                            .foregroundStyle(textColor)
                             .italic()
                             .font(.system(size: 18))
                             .fontWeight(.semibold)

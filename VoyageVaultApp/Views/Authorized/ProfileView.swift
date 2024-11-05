@@ -14,12 +14,16 @@ struct ProfileView: View {
     
     @EnvironmentObject var firebaseAuth: FirebaseAuth
     @EnvironmentObject var storage: Firestorage
+    @Environment(\.colorScheme) var colorScheme
     
     @State var isPickerShowing = false
     
     var body: some View {
+        
+        let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
+        
         ZStack {
-            Image("background_pic")
+            Image(backgroundImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
