@@ -108,20 +108,23 @@ struct HomeView: View {
         }
     }
     
-    private func soonestTrip() -> CityData? {
+    func soonestTrip() -> CityData? {
         return db.currentUserData?.trips
-               .sorted { $0.departureDate ?? Date.distantFuture < $1.departureDate ?? Date.distantFuture }
-               .first
-       }
+            .sorted { $0.departureDate ?? Date.distantFuture < $1.departureDate ?? Date.distantFuture }
+            .first
+    }
     
-    private func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
-            guard let departureDate = departureDate else { return 0 }
+    func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
+        guard let departureDate = departureDate else { return 0 }
         
-            let calendar = Calendar.current
-            return calendar.dateComponents([.day], from: Date(), to: departureDate).day ?? 0
+        let calendar = Calendar.current
+        return calendar.dateComponents([.day], from: Date(), to: departureDate).day ?? 0
     }
 }
 
 #Preview {
-    HomeView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
+    HomeView()
+        .environmentObject(DbConnection())
+        .environmentObject(Firestorage(firebase: DbConnection()))
+    
 }

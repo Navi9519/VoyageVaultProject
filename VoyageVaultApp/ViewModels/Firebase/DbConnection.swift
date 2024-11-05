@@ -441,7 +441,7 @@
                            "friends": FieldValue.arrayRemove([friendId])
                     ]) { error in
                         if let error = error {
-                            print("Failed to remove friend ID from user's friends array: (error)")
+                            print("Failed to remove friend ID from user's friends array: \(error)")
                         } else {
                             print("Successfully removed friend ID from user's friends array")
                             self.fetchFriendDataByIds()
