@@ -25,7 +25,6 @@
         
         @State var input = ""
         @State var addToFavorite: Bool = false
-        @State var selectedCountry: Country? = nil
         @State var selectedCity: CityData? = nil
         
         var body: some View {

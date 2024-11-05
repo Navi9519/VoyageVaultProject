@@ -191,6 +191,7 @@
         
         
         func fetchUsers() {
+           
             db.collection(COLLECTION_USER_DATA).getDocuments { snapshot, error in
                 if let error = error {
                     print("Error fetching users: \(error.localizedDescription)")
@@ -346,6 +347,29 @@
             }
         }
 
+        
+        
+        func createFriend(friendData: FriendData, friendId: String, completion: @escaping (String?) -> Void) {
+          
+            
+            do {
+                
+                   let documentRef = db.collection(COLLECTION_FRIEND_DATA).document(friendId)
+
+                   try documentRef.setData(from: friendData) { error in
+                       if let error = error {
+                           print("Failed to add friend data: \(error.localizedDescription)")
+                           completion(nil)
+                       } else {
+                           
+                           completion(friendId)
+                       }
+                   }
+               } catch let error {
+                   print("Failed to create friend document: \(error.localizedDescription)")
+                   completion(nil)
+               }
+        }
 
         
         
@@ -377,29 +401,7 @@
           
         }
         
-        func createFriend(friendData: FriendData, friendId: String, completion: @escaping (String?) -> Void) {
-          
-            
-            do {
-                
-                   let documentRef = db.collection(COLLECTION_FRIEND_DATA).document(friendId)
-
-                   try documentRef.setData(from: friendData) { error in
-                       if let error = error {
-                           print("Failed to add friend data: \(error.localizedDescription)")
-                           completion(nil)
-                       } else {
-                           
-                           completion(friendId)
-                       }
-                   }
-               } catch let error {
-                   print("Failed to create friend document: \(error.localizedDescription)")
-                   completion(nil)
-               }
-        }
-        
-        
+  
         
         func fetchFriendDataByIds() {
                 

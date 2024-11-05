@@ -81,10 +81,8 @@ struct FriendListView: View {
                                 )
                                 
                                 db.createFriend(friendData: newFriend, friendId: friendId) { friendId in
-                                    guard let friendId = friendId else {
-                        
-                                        return
-                                    }
+                                    
+                                    guard let friendId = friendId else {return}
                                     
                                     db.addFriend(friendId: friendId)
                                 }
