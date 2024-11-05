@@ -16,7 +16,6 @@ struct SearchFieldComponent: View {
     
     var body: some View {
         
-        let textColor = colorScheme == .dark ? Color.white : Color.black
         
         TextField(txtFieldText, text: $input)
             .frame(width: 300, height: 40)

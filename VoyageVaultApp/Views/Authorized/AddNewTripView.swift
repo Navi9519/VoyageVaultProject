@@ -12,6 +12,7 @@
         @StateObject var countryManager = CountryManager ()
         @EnvironmentObject  var db: DbConnection
         @Environment(\.colorScheme) var colorScheme
+        @Environment(\.dismiss) var dismiss
     
         @State var selectedCity: CityData? = nil
         @State var selectedDate: Date = Date()
@@ -90,9 +91,10 @@
                             colorTwo: "blueColorTwo",
                             txtColor: textColor) {
                                 
-                                if let city = selectedCity, let departureDate = city.departureDate  {
-                                    print("Adding trip to \(city.name) on \(dateFormatter.string(from: departureDate))")
+                                if let city = selectedCity {
+                                    print("Adding trip to \(city.name)")
                                     db.addTrip(city: city)
+                                    dismiss()
                                 }
                         }
                     }
@@ -104,14 +106,6 @@
                 .padding(.top, 40)
             }
         }
-        
-           // Date formatter to display only the date and not time
-           private var dateFormatter: DateFormatter {
-               let formatter = DateFormatter()
-               formatter.dateStyle = .medium
-               formatter.timeStyle = .none
-               return formatter
-           }
     }
 
     #Preview {

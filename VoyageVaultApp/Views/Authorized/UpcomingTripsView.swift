@@ -106,7 +106,7 @@ struct UpcomingTripsView: View {
         }
         .onAppear {
             if let userId = db.currentUser?.uid {
-                db.fetchTrips(for: userId) // Fetch trips when view appears
+                db.fetchTrips(for: userId) 
             }
         }
     }

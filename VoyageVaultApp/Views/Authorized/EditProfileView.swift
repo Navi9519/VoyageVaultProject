@@ -23,7 +23,7 @@ struct EditProfileView: View {
         
         let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
         
-        let textColor = colorScheme == .dark ? Color.white : Color.black
+     
         
         ZStack {
             Image(backgroundImage)

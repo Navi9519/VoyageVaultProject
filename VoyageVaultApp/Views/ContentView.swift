@@ -29,11 +29,6 @@ struct ContentView: View {
                 
             }
         }
-        
-        
-       
-        
-       
     }
 }
 

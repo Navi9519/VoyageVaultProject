@@ -52,5 +52,5 @@ struct LandingView: View {
 
 
 #Preview {
-    LandingView()
+    LandingView().environmentObject(DbConnection())
 }
