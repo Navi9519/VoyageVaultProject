@@ -10,7 +10,7 @@ import SwiftUI
 struct UpcomingTripsView: View {
     
     @StateObject var countryManager = CountryManager()
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var db: DbConnection
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -24,6 +24,8 @@ struct UpcomingTripsView: View {
                 .ignoresSafeArea()
             
             VStack {
+                
+             
                 
                 HStack {
                     Image(systemName: "arrowshape.backward.circle")
@@ -39,8 +41,8 @@ struct UpcomingTripsView: View {
 
                     Spacer()
                     
-                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
-                        firebaseAuth.signOutUser()
+                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
+                        db.signOutUser()
                     })
                     
                 }
@@ -61,11 +63,17 @@ struct UpcomingTripsView: View {
                             AddNewTripView()
                         })
                     
+                    
+                    
                     ScrollView {
+                        
+                        
                       
-                        ForEach(firebaseAuth.trips, id: \.name) { trip in
+                        ForEach(db.trips, id: \.name) { trip in
+                          
                             
                             let countryData = countryManager.countries[trip.country]
+                            
 
                             TripsCardComponent(
                                 country: countryData?.name ?? "Unknown Country",
@@ -74,6 +82,11 @@ struct UpcomingTripsView: View {
                                 isCapital: trip.is_capital,
                                 flag: countryData?.unicodeFlag ?? "No flag avalible",
                                 daysUntilTrip: calculateDaysUntilTrip(from: trip.departureDate),
+                                deleteTrip: {
+                                    
+                                    db.removeTrip(city: trip)
+                                    
+                                },
                                 color1: Color("orangeColorOne"),
                                 color2: Color("orangeColorTwo")
                             )
@@ -97,8 +110,8 @@ struct UpcomingTripsView: View {
             
         }
         .onAppear {
-            if let userId = firebaseAuth.currentUser?.uid {
-                firebaseAuth.fetchTrips(for: userId) // Fetch trips when view appears
+            if let userId = db.currentUser?.uid {
+                db.fetchTrips(for: userId) // Fetch trips when view appears
             }
         }
     }
@@ -112,5 +125,5 @@ private func calculateDaysUntilTrip(from departureDate: Date?) -> Int {
 }
 
 #Preview {
-    UpcomingTripsView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+    UpcomingTripsView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
 }

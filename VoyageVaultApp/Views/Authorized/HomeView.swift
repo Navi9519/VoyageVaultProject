@@ -10,7 +10,7 @@ import FirebaseStorage
 
 struct HomeView: View {
     
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var db: DbConnection
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -25,7 +25,7 @@ struct HomeView: View {
             
             VStack {
                 
-                if let currentUserData = firebaseAuth.currentUserData  {
+                if let currentUserData = db.currentUserData  {
                     
                     HStack {
                         
@@ -41,8 +41,8 @@ struct HomeView: View {
                         Spacer()
                         
                        
-                        MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
-                            firebaseAuth.signOutUser()
+                        MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
+                            db.signOutUser()
                         })
                         
                         
@@ -109,7 +109,7 @@ struct HomeView: View {
     }
     
     private func soonestTrip() -> CityData? {
-        return firebaseAuth.currentUserData?.trips
+        return db.currentUserData?.trips
                .sorted { $0.departureDate ?? Date.distantFuture < $1.departureDate ?? Date.distantFuture }
                .first
        }
@@ -123,5 +123,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+    HomeView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
 }

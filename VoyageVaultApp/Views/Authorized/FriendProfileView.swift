@@ -1,117 +1,117 @@
-//
-//  FriendProfileView.swift
-//  VoyageVaultApp
-//
-//  Created by Nicholas Nieminen on 2024-11-04.
-//
+    //
+    //  FriendProfileView.swift
+    //  VoyageVaultApp
+    //
+    //  Created by Nicholas Nieminen on 2024-11-04.
+    //
 
-import SwiftUI
+    import SwiftUI
 
-struct FriendProfileView: View {
-    
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
-    @EnvironmentObject var storage: Firestorage
-    @Environment(\.colorScheme) var colorScheme
-    var friendId: String
-    
-    @State private var currentFriendData: UserData? // @State to hold the retrieved friend data
-    
-    var body: some View {
+    struct FriendProfileView: View {
         
+        @EnvironmentObject var db: DbConnection
+        @EnvironmentObject var storage: Firestorage
+        @Environment(\.colorScheme) var colorScheme
+    var friendId: String
+        
+        @State private var currentFriendData: UserData? // @State to hold the retrieved friend data
+        
+        var body: some View {
+            
         let backgroundImage = colorScheme == .dark ? "darkBackgroundPic" : "lightBackgroundPic"
         
         ZStack {
-            Image(backgroundImage)
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-            
-            VStack {
+                Image(backgroundImage)
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
                 
-                if let currentFriendData = currentFriendData  {
+                VStack {
                     
-                    HStack {
-                        VStack (alignment: .leading){
+                    if let currentFriendData = currentFriendData  {
+                        
+                        HStack {
+                            VStack (alignment: .leading){
+                                
+                                Text(currentFriendData.firstName)
+                                    .font(.title2)
+                                
+                                Text(currentFriendData.surName)
+                                    .bold()
+                                    .font(.title)
+                                
+                                Text("Age: \(currentFriendData.age)")
+                                    .bold()
+                                    .font(.title2)
+                                
+                                Text("Nationality: \(currentFriendData.nationality)")
+                                    .bold()
+                                    .font(.title2)
+                            }
                             
-                            Text(currentFriendData.firstName)
-                                .font(.title2)
+                            Spacer()
                             
-                            Text(currentFriendData.surName)
-                                .bold()
-                                .font(.title)
-                            
-                            Text("Age: \(currentFriendData.age)")
-                                .bold()
-                                .font(.title2)
-                            
-                            Text("Nationality: \(currentFriendData.nationality)")
-                                .bold()
-                                .font(.title2)
+                            Button(action: {
+                                db.signOutUser()
+                            }, label: {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .frame(width: 70,height: 70)
+                            })
+                            .foregroundStyle(.black)
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding(30)
+                        .padding(.top,30)
                         
-                        Spacer()
-                        
-                        Button(action: {
-                            firebaseAuth.signOutUser()
-                        }, label: {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .frame(width: 70,height: 70)
-                        })
-                        .foregroundStyle(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(30)
-                    .padding(.top,30)
-                    
-                    VStack (spacing: 30){
-                        
-                        if !currentFriendData.favoriteDestinations.isEmpty {
-                            FavoriteDestinationsCardComponent(
-                                title: "\(currentFriendData.firstName)'s favorite cities:",
-                                cities: currentFriendData.favoriteDestinations,
-                                color1: Color("beigeColorOne"),
-                                color2: Color("backgroundTwo"))
-                        } else {
-                            Text("No favorite destinations added yet.")
+                        VStack (spacing: 30){
+                            
+                            if !currentFriendData.favoriteDestinations.isEmpty {
+                                FavoriteDestinationsCardComponent(
+                                    title: "\(currentFriendData.firstName)'s favorite cities:",
+                                    cities: currentFriendData.favoriteDestinations,
+                                    color1: Color("beigeColorOne"),
+                                    color2: Color("backgroundTwo"))
+                            } else {
+                                Text("No favorite destinations added yet.")
+                            }
+                            
+                            ImageVaultCardComponent(
+                                title: "\(currentFriendData.firstName)'s vault",
+                                color1: Color("orangeColorOne"),
+                                color2: Color("orangeColorTwo"),
+                                addNewPic: {
+                                    print(friendId)
+                                },
+                                retrievedImages: $storage.retrievedImages)
+                            
+                            Spacer()
                         }
-                        
-                        ImageVaultCardComponent(
-                            title: "\(currentFriendData.firstName)'s vault",
-                            color1: Color("orangeColorOne"),
-                            color2: Color("orangeColorTwo"),
-                            addNewPic: {
-                                print(friendId)
-                            },
-                            retrievedImages: $storage.retrievedImages)
-                        
-                        Spacer()
+                        .shadow(radius: 10)
+                    } else {
+                        Text("Loading friend data...")
+                            .font(.title)
+                            .foregroundStyle(.gray)
                     }
-                    .shadow(radius: 10)
-                } else {
-                    Text("Loading friend data...")
-                        .font(.title)
-                        .foregroundStyle(.gray)
                 }
             }
-        }
-        .onAppear {
-            // Trigger data fetching when the view appears
-            firebaseAuth.getFriendData(friendId: friendId) { friendData in
-                if let friendData = friendData {
-                    DispatchQueue.main.async {
-                        self.currentFriendData = friendData
+            .onAppear {
+                // Trigger data fetching when the view appears
+                db.getFriendData(friendId: friendId) { friendData in
+                    if let friendData = friendData {
+                        DispatchQueue.main.async {
+                            self.currentFriendData = friendData
+                        }
+                    } else {
+                        print("Failed to load friend data.")
                     }
-                } else {
-                    print("Failed to load friend data.")
                 }
+                storage.retriveFriendPhotos(userId: friendId)  // Retrieve friend's images
             }
-            storage.retriveFriendPhotos(userId: friendId)  // Retrieve friend's images
         }
     }
-}
 
 
-#Preview {
-    FriendProfileView(friendId: "").environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
-}
+    #Preview {
+        FriendProfileView(friendId: "7HEimSn7rJYTNQUA7of5a8Fj21n1").environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
+    }

@@ -12,7 +12,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var db: DbConnection
     @EnvironmentObject var storage: Firestorage
     @Environment(\.colorScheme) var colorScheme
     
@@ -30,7 +30,7 @@ struct ProfileView: View {
             
             VStack {
                 
-                if let currentUserData = firebaseAuth.currentUserData  {
+                if let currentUserData = db.currentUserData  {
                     
                     HStack {
                         VStack (alignment: .leading){
@@ -54,7 +54,7 @@ struct ProfileView: View {
                         Spacer()
                         
                         MenuDropDownView(destinationOne: {ProfileView()}, destinationTwo: {EditProfileView()}, action: {
-                            firebaseAuth.signOutUser()
+                            db.signOutUser()
                         })
                         
                     }
@@ -69,7 +69,7 @@ struct ProfileView: View {
                                 title: "\(currentUserData.firstName)'s favorite cities:",
                                 cities: currentUserData.favoriteDestinations,
                                 color1: Color("beigeColorOne"),
-                                color2: Color("backgroundTwo"))
+                                color2: Color("backgroundTwo"), showRemoveBtn: true)
                         } else {
                             Text("No favorite destinations added yet.")
                         }
@@ -109,5 +109,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+    ProfileView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
 }

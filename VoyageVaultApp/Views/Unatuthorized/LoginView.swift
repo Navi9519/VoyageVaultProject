@@ -11,7 +11,7 @@ struct LoginView: View {
     @Environment(\.colorScheme) var colorScheme
 
     
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var firebaseAuth: DbConnection
     
     @State var email = ""
     @State var password = ""
@@ -90,5 +90,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView().environmentObject(FirebaseAuth())
+    LoginView().environmentObject(DbConnection())
 }

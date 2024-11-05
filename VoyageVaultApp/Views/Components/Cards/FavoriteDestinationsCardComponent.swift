@@ -26,7 +26,9 @@ struct FavoriteDestinationsCardComponent: View {
    
     var color1: Color
     var color2: Color
+    var showRemoveBtn: Bool = false
     
+    @EnvironmentObject var db: DbConnection
     @StateObject var countryManager = CountryManager()
     @Environment(\.colorScheme) var colorScheme
     
@@ -55,9 +57,30 @@ struct FavoriteDestinationsCardComponent: View {
                     ScrollView {
                         ForEach(cities, id: \.name) { city in
                             HStack {
+                                Spacer()
+                                
                                 Text(countryManager.countries[city.country]?.unicodeFlag ?? "🏳️")
                                 
                                 Text("\(city.name), \(city.country)")
+                                
+                                Spacer()
+                                
+                                if showRemoveBtn {
+                                    
+                                    Button(action: {
+                                        
+                                        db.removeFavoriteDestination(city: city)
+                                        
+                                    }, label: {
+                                        Image(systemName: "trash")
+                                            .resizable().scaledToFit().frame(width: 20, height: 20)
+                                            .foregroundStyle(.black)
+                                        
+                                    })
+
+                                    
+                                }
+                                
                             }
                             .task {
                                 if countryManager.countries[city.country] == nil {
@@ -86,5 +109,5 @@ struct FavoriteDestinationsCardComponent: View {
         CityData(name: "Stockholm", latitude: 2323, longitude: 23233, country: "SE", population: 9999999, is_capital: false),
         CityData(name: "Malaga", latitude: 2323, longitude: 23233, country: "ES", population: 9999999, is_capital: false)
         
-    ], color1: Color("beigeColorOne"), color2: Color("backgroundTwo"))
+    ], color1: Color("beigeColorOne"), color2: Color("backgroundTwo")).environmentObject(DbConnection())
 }

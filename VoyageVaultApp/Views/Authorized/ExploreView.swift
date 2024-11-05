@@ -11,7 +11,7 @@
     struct ExploreView: View {
         
         
-        @EnvironmentObject  var firebaseAuth: FirebaseAuth
+        @EnvironmentObject  var db: DbConnection
         @StateObject var countryManager = CountryManager()
         @Environment(\.colorScheme) var colorScheme
         
@@ -44,14 +44,16 @@
                     
                         VStack(alignment: .center, spacing: 15) {
                             
-                            HStack(alignment: .center) {
+                            HStack() {
                                 
+                        
                                 Spacer()
                                 
                                 Text("Explore")
                                     .font(.title)
-                                    .bold()
+                                    .bold().padding(.leading, 60)
                                 
+                              
                                 Spacer()
                                 
                                 
@@ -62,7 +64,7 @@
                                 
                                 
                                 
-                            }.frame(width: .infinity, height: 40)
+                            }
                             
                             
                             Text("Find your next adventure!")
@@ -121,7 +123,7 @@
                                             
                                             withAnimation {
                                                 self.selectedCity = city
-                                                self.addToFavorite = firebaseAuth.currentUserData?
+                                                self.addToFavorite = db.currentUserData?
                                                     .favoriteDestinations.contains()
                                                     {$0.name == city.name} ?? false
                                             }
@@ -146,7 +148,7 @@
                             .cornerRadius(20)
                             
                         } else {
-                            Text("Search for a country above")
+                            Text("Search for a city above")
                         }
                         
                         
@@ -168,12 +170,12 @@
                                         addToFavorite.toggle()
                                         
                                         if addToFavorite == true {
-                                            firebaseAuth.addFavoriteDestiantion(city: selectedCity)
+                                            db.addFavoriteDestiantion(city: selectedCity)
                                         } else {
-                                            firebaseAuth.removeFavoriteDestination(city: selectedCity)
+                                            db.removeFavoriteDestination(city: selectedCity)
                                         }
                                         
-                                        guard let user = firebaseAuth.currentUserData else {return}
+                                        guard let user = db.currentUserData else {return}
                                         print(user.favoriteDestinations)
                                     })
                                     .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -190,5 +192,5 @@
     }
 
     #Preview {
-        ExploreView().environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+        ExploreView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
     }
