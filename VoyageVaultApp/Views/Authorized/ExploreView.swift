@@ -57,8 +57,8 @@
                                 Spacer()
                                 
                                 
-                                MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
-                                    firebaseAuth.signOutUser()
+                                MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
+                                    db.signOutUser()
                                 })
                                 
                                 

@@ -58,7 +58,7 @@ struct EditProfileView: View {
                                     colorOne: "blueColorOne",
                                     colorTwo: "blueColorTwo",
                                     input: $surName)
-                                    .padding(.top, 20)
+                                .padding(.top, 20)
                             }
                             
                             HStack(alignment: .bottom, spacing: 20) {
@@ -77,9 +77,9 @@ struct EditProfileView: View {
                                     colorOne: "blueColorOne",
                                     colorTwo: "blueColorTwo",
                                     input: $nationality)
-                                    .padding(.top, 20)
+                                .padding(.top, 20)
                             }
-                        
+                            
                             Spacer()
                             
                         }
@@ -87,7 +87,7 @@ struct EditProfileView: View {
                         
                         VStack (spacing: 30){
                             VStack {
-                               
+                                
                                 Text("My Cities:")
                                     .font(.title)
                                     .bold()
@@ -106,7 +106,7 @@ struct EditProfileView: View {
                                     .font(.title)
                                     .bold()
                                 
-                                if firebaseAuth.currentUserFriendsData.isEmpty {
+                                if db.currentUserFriendsData.isEmpty {
                                     Spacer()
                                     Text("No friends added")
                                         .font(.title)
@@ -115,35 +115,35 @@ struct EditProfileView: View {
                                     Spacer()
                                 } else {
                                     
-                                    ForEach(firebaseAuth.currentUserFriendsData) { friend in
+                                    ForEach(db.currentUserFriendsData) { friend in
                                         
-                                            FriendCardComponent(
-                                                firstName: friend.firstName,
-                                                surName: friend.surName,
-                                                country: friend.nationality, deleteFriend: {},
-                                                profileImg:
-                                                    "person.crop.circle.fill",
-                                                color1: Color("blueColorOne"),
-                                                color2: Color("blueColorTwo"),
-                                                destination: {
+                                        FriendCardComponent(
+                                            firstName: friend.firstName,
+                                            surName: friend.surName,
+                                            country: friend.nationality, deleteFriend: {},
+                                            profileImg:
+                                                "person.crop.circle.fill",
+                                            color1: Color("blueColorOne"),
+                                            color2: Color("blueColorTwo"),
+                                            destination: {
                                                 LandingView()
                                             })
+                                        
+                                        Button(action: {
                                             
-                                            Button(action: {
-                                                
-                                                guard let friendId = friend.id else {
-                                                    print("No friend ID")
-                                                    return }
-                                                
-                                                print("Friend ID")
-                                                
-                                                firebaseAuth.deleteFriend(friendId: friendId)
-                                              
-                                            }, label: {
-                                                Text("DELETE")
-                                                    .background(.red)
-                                                    .clipShape(.buttonBorder)
-                                            })
+                                            guard let friendId = friend.id else {
+                                                print("No friend ID")
+                                                return }
+                                            
+                                            print("Friend ID")
+                                            
+                                            db.deleteFriend(friendId: friendId)
+                                            
+                                        }, label: {
+                                            Text("DELETE")
+                                                .background(.red)
+                                                .clipShape(.buttonBorder)
+                                        })
                                     }
                                 }
                             }
@@ -151,13 +151,13 @@ struct EditProfileView: View {
                             VStack {
                                 
                                 Text("My Images:").font(.title).bold()
-    
+                                
                             }
                             
                             Button(action: {
                                 
                                 // TODO: Edit method to change the data in DB
-                        
+                                
                             }, label: {
                                 Text("Save edit")
                             }).frame(width: 185, height: 40)
@@ -165,13 +165,13 @@ struct EditProfileView: View {
                                 .font(.system(size: 20))
                                 .bold()
                                 .background(
-                                LinearGradient(colors: [
-                                    Color("blueColorOne"),
-                                    Color("blueColorTwo")
-                                ],
-                                startPoint: .leading,
-                                endPoint: .trailing)
-                            )
+                                    LinearGradient(colors: [
+                                        Color("blueColorOne"),
+                                        Color("blueColorTwo")
+                                    ],
+                                                   startPoint: .leading,
+                                                   endPoint: .trailing)
+                                )
                                 .clipShape(.buttonBorder)
                                 .shadow(radius: 10)
                         }
@@ -181,7 +181,8 @@ struct EditProfileView: View {
             }
         }
     }
+}
 
 #Preview {
-    EditProfileView().environmentObject(DbConnection())
+    EditProfileView().environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
 }
