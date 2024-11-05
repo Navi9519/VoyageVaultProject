@@ -12,6 +12,7 @@
         @StateObject var countryManager = CountryManager ()
         @EnvironmentObject  var db: DbConnection
         @Environment(\.colorScheme) var colorScheme
+        @Environment(\.dismiss) var dismiss
     
         @State var selectedCity: CityData? = nil
         @State var selectedDate: Date = Date()
@@ -93,6 +94,7 @@
                                 if let city = selectedCity, let departureDate = city.departureDate  {
                                     print("Adding trip to \(city.name) on \(dateFormatter.string(from: departureDate))")
                                     db.addTrip(city: city)
+                                    dismiss()
                                 }
                         }
                     }
