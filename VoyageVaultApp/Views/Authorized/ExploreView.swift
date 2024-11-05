@@ -38,7 +38,7 @@
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                VStack(alignment: .center, spacing: 40) {
+                VStack(alignment: .center, spacing: 20) {
                     ZStack (alignment: .trailing){
                     
                         VStack(alignment: .center, spacing: 15) {
@@ -64,7 +64,6 @@
                                 
                                 
                             }.frame(maxWidth: .infinity).padding()
-                                .padding(.top,30)
                                 .shadow(radius: 1)
                             
                             
@@ -80,7 +79,7 @@
                     }
                     .frame(maxWidth: .infinity)
                     
-                    VStack(spacing: 20) {
+                    VStack(spacing: 10) {
                         
                         SearchFieldComponent(
                             input: $input,
@@ -187,7 +186,7 @@
                     Spacer()
                     
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 40)
+                .frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 5)
             }
         }
     }

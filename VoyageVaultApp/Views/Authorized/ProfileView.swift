@@ -62,7 +62,7 @@ struct ProfileView: View {
                     .padding(30)
                     .padding(.top,30)
                     
-                    VStack (spacing: 30){
+                    VStack (spacing: 15){
                         
                         if !currentUserData.favoriteDestinations.isEmpty {
                             FavoriteDestinationsCardComponent(
@@ -73,15 +73,6 @@ struct ProfileView: View {
                         } else {
                             Text("No favorite destinations added yet.")
                         }
-                        
-                        ImageVaultCardComponent(
-                            title: "\(currentUserData.firstName)'s vault",
-                            color1: Color("orangeColorOne"),
-                            color2: Color("orangeColorTwo"),
-                            addNewPic: {
-                                isPickerShowing = true
-                            },
-                            retrievedImages: $storage.retrievedImages)
                         
                         if storage.selectedImage != nil {
                             
@@ -94,6 +85,17 @@ struct ProfileView: View {
                             })
                             
                         }
+                        
+                        ImageVaultCardComponent(
+                            title: "\(currentUserData.firstName)'s vault",
+                            color1: Color("orangeColorOne"),
+                            color2: Color("orangeColorTwo"),
+                            addNewPic: {
+                                isPickerShowing = true
+                            },
+                            retrievedImages: $storage.retrievedImages)
+                        
+                       
                         Spacer()
                     }
                     .shadow(radius: 10)
