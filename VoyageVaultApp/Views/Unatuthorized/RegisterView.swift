@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var firebaseAuth: DbConnection
     @Environment(\.dismiss) private var dismiss
     
     @State var firstName: String = ""
@@ -159,5 +159,5 @@ struct RegisterView: View {
     }
 
 #Preview {
-    RegisterView().environmentObject(FirebaseAuth())
+    RegisterView().environmentObject(DbConnection())
 }

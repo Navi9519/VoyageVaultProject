@@ -10,7 +10,7 @@ import SwiftUI
 struct AddNewTripView: View {
     
     @StateObject var countryManager = CountryManager ()
-    @EnvironmentObject  var firebaseAuth: FirebaseAuth
+    @EnvironmentObject  var db: DbConnection
     
     @State var selectedCity: CityData? = nil
     @State var selectedDate: Date = Date()
@@ -30,8 +30,8 @@ struct AddNewTripView: View {
                    
                     Spacer()
                     
-                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: firebaseAuth))}, destinationTwo: {EditProfileView()}, action: {
-                        firebaseAuth.signOutUser()
+                    MenuDropDownView(destinationOne: {ProfileView().environmentObject(Firestorage(firebase: db))}, destinationTwo: {EditProfileView()}, action: {
+                        db.signOutUser()
                     })
                 }
                 .frame(width: 300)
@@ -87,7 +87,7 @@ struct AddNewTripView: View {
                             
                             if let city = selectedCity, let departureDate = city.departureDate  {
                                 print("Adding trip to \(city.name) on \(dateFormatter.string(from: departureDate))")
-                                firebaseAuth.addTrip(city: city)
+                                db.addTrip(city: city)
                             }
                     }
                 }
@@ -110,5 +110,5 @@ struct AddNewTripView: View {
 }
 
 #Preview {
-    AddNewTripView().environmentObject(Firestorage(firebase: FirebaseAuth()))
+    AddNewTripView().environmentObject(Firestorage(firebase: DbConnection()))
 }

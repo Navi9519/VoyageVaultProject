@@ -28,7 +28,7 @@ struct FavoriteDestinationsCardComponent: View {
     var color2: Color
     var showRemoveBtn: Bool = false
     
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var db: DbConnection
     @StateObject var countryManager = CountryManager()
     
     var dynamicScreenWidth = UIScreen.main.bounds.width
@@ -66,7 +66,7 @@ struct FavoriteDestinationsCardComponent: View {
                                     
                                     Button(action: {
                                         
-                                        firebaseAuth.removeFavoriteDestination(city: city)
+                                        db.removeFavoriteDestination(city: city)
                                         
                                     }, label: {
                                         Image(systemName: "trash")
@@ -106,5 +106,5 @@ struct FavoriteDestinationsCardComponent: View {
         CityData(name: "Stockholm", latitude: 2323, longitude: 23233, country: "SE", population: 9999999, is_capital: false),
         CityData(name: "Malaga", latitude: 2323, longitude: 23233, country: "ES", population: 9999999, is_capital: false)
         
-    ], color1: Color("beigeColorOne"), color2: Color("backgroundTwo")).environmentObject(FirebaseAuth())
+    ], color1: Color("beigeColorOne"), color2: Color("backgroundTwo")).environmentObject(DbConnection())
 }

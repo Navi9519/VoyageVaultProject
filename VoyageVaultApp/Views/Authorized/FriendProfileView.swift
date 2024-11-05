@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FriendProfileView: View {
     
-    @EnvironmentObject var firebaseAuth: FirebaseAuth
+    @EnvironmentObject var db: DbConnection
     @EnvironmentObject var storage: Firestorage
     var friendId: String
     
@@ -48,7 +48,7 @@ struct FriendProfileView: View {
                         Spacer()
                         
                         Button(action: {
-                            firebaseAuth.signOutUser()
+                            db.signOutUser()
                         }, label: {
                             Image(systemName: "person.circle")
                                 .resizable()
@@ -93,7 +93,7 @@ struct FriendProfileView: View {
         }
         .onAppear {
             // Trigger data fetching when the view appears
-            firebaseAuth.getFriendData(friendId: friendId) { friendData in
+            db.getFriendData(friendId: friendId) { friendData in
                 if let friendData = friendData {
                     DispatchQueue.main.async {
                         self.currentFriendData = friendData
@@ -109,5 +109,5 @@ struct FriendProfileView: View {
 
 
 #Preview {
-    FriendProfileView(friendId: "").environmentObject(FirebaseAuth()).environmentObject(Firestorage(firebase: FirebaseAuth()))
+    FriendProfileView(friendId: "").environmentObject(DbConnection()).environmentObject(Firestorage(firebase: DbConnection()))
 }
