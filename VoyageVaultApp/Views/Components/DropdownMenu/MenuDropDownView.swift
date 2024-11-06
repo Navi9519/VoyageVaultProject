@@ -20,7 +20,6 @@ struct MenuDropDownView<DestinationOne: View, DestinationTwo: View>: View {
         let iconColor = colorScheme == .dark ? Color.white : Color.black
         
         Menu {
-            // First option with its own action
             
             
             NavigationLink(destination: destinationOne) {
@@ -32,7 +31,6 @@ struct MenuDropDownView<DestinationOne: View, DestinationTwo: View>: View {
             }.foregroundStyle(.black)
             
 
-            // Second option with a different action
             Button(action: action) {
                 Label("Log Out", systemImage: "iphone.and.arrow.forward.outward")
             }

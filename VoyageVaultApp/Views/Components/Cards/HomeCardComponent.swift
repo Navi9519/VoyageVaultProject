@@ -18,7 +18,7 @@ struct HomeCardComponent<Destination: View>: View {
     var color1: Color
     var color2: Color
     
-    var destination: () -> Destination // By using a closure, the destination view is created only when it’s required
+    var destination: () -> Destination
     
     var dynamicScreenWidth = UIScreen.main.bounds.width
     var dynamicScreenHeight = UIScreen.main.bounds.height
@@ -57,11 +57,11 @@ struct HomeCardComponent<Destination: View>: View {
                         
                     }
                     .padding(.horizontal,20)
-                    //.padding(.vertical,10) // Optional
+                  
                 }
                 .padding()
             }
-            .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.18) // Frame for the entire card
+            .frame(maxWidth: dynamicScreenWidth * 0.90, maxHeight: dynamicScreenHeight * 0.18) 
             .clipShape(.buttonBorder)
         }
     }

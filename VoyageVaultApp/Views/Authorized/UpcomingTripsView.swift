@@ -88,7 +88,7 @@ struct UpcomingTripsView: View {
                                 color2: Color("orangeColorTwo")
                             )
                             .task {
-                                // Only fetch if the country data isn't already cached
+                            
                                 if countryData == nil {
                                     do {
                                         try await countryManager.getCountryByIso(iso: trip.country)

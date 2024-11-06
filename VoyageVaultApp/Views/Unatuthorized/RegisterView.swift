@@ -129,7 +129,7 @@ struct RegisterView: View {
     }
     
     
-    // Method to check for valid inputs, if valid, return true
+  
     private func validateInputs() -> Bool {
             if firstName.count < 2 {
                 errorMessage = "First name must be at least 2 characters long."

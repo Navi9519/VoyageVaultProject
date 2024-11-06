@@ -103,8 +103,7 @@
                         print("Failed to load friend data.")
                     }
                 }
-                storage.retriveFriendPhotos(userId: friendId)  // Retrieve friend's images
-            }
+                storage.retriveFriendPhotos(userId: friendId)            }
         }
     }
 

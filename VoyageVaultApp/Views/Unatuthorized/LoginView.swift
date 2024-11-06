@@ -47,7 +47,6 @@ struct LoginView: View {
                 
                 SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $password)
                 
-                // TODO: Change this navigation to HomeView() when HomeView is created
                 
                 
                 BtnComponent(text: "Login", width: 86, height: 40, colorOne: "backgroundOne", colorTwo: "backgroundTwo", txtColor: .white){

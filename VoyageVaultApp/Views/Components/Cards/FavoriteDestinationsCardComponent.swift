@@ -8,16 +8,6 @@
 import SwiftUI
 
 
-
-//struct CityTest: Identifiable {
-//    
-//    var id: Int
-//    var name: String
-//    var flag: String
-//    
-//}
-
-
 struct FavoriteDestinationsCardComponent: View {
     
     

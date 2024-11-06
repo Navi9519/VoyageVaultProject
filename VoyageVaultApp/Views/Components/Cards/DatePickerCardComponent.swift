@@ -53,7 +53,7 @@ struct DatePickerCardComponent: View {
                 }.frame(maxWidth: dynamicScreenWidth * 0.9, maxHeight: dynamicScreenHeight * 0.3)
                 
             }
-            .frame(maxWidth: dynamicScreenWidth * 0.9, maxHeight: dynamicScreenHeight * 0.25) // Frame for the entire card
+            .frame(maxWidth: dynamicScreenWidth * 0.9, maxHeight: dynamicScreenHeight * 0.25) 
             .clipShape(.buttonBorder)
         }
         

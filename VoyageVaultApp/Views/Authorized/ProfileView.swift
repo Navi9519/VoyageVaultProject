@@ -80,7 +80,7 @@ struct ProfileView: View {
                         if storage.selectedImage != nil {
                             
                             Button(action: {
-                                // Upload the image
+                                
                                 storage.uploadFoto()
                                 
                             }, label: {

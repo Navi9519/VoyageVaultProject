@@ -156,7 +156,7 @@ struct EditProfileView: View {
                             
                             Button(action: {
                                 
-                                // TODO: Edit method to change the data in DB
+                               
                                 
                             }, label: {
                                 Text("Save edit")

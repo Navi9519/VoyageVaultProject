@@ -54,7 +54,7 @@ struct FriendListView: View {
                             txtFieldText: "Search Friends",
                             image: "magnifyingglass",
                             searchAction: {
-                            // Search for the user when the button is pressed
+                            
                                 foundUser = db.allUsers.first(where: {
                                     $0.firstName.lowercased() == input.lowercased() ||
                                     $0.surName.lowercased() == input.lowercased()
