@@ -49,7 +49,7 @@ struct RegisterView: View {
                 .frame(height: dynamicScreenHeight / 3)
                 
                 
-                VStack {
+                VStack(spacing: 10) {
                     HStack (alignment: .bottom, spacing: 20) {
                         TxtFieldComponentSmall(title: "First name", txtFieldText: "Enter first name", txtColor: Color(.white), colorOne: "backgroundOne",  colorTwo: "backgroundTwo", input: $firstName)
                         
@@ -70,10 +70,8 @@ struct RegisterView: View {
                     
                     SecureTxtFieldComponent(title: "Password", txtFieldText: "Enter password", image: "lock.fill", colorOne: "backgroundOne", colorTwo: "backgroundTwo", input: $password).padding(.top, 20)
                     
-                    Spacer()
+
                     
-        
-                
                    
                     if let errorMessage = errorMessage ??  firebaseAuth.errorMessage {
                         
@@ -86,7 +84,6 @@ struct RegisterView: View {
                     }
                     
                     
-                    Spacer()
                     
                     Button(action: {
                         
